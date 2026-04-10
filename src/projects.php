@@ -119,9 +119,7 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
                         <p class="text-on-surface-variant leading-relaxed mb-6 font-medium">
                             <?= htmlspecialchars($project['description']) ?>
                         </p>
-                        <div class="project-card-divider"></div>
-                        <code class="project-card-code"><?= htmlspecialchars($project['code_snippet']) ?></code>
-                    </div>
+
                 </article>
             <?php endforeach; ?>
         </div>
