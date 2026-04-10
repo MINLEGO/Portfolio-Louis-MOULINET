@@ -45,7 +45,7 @@
     --surface: #f6f6f6;
     --on-surface: #2d2f2f;
     --surface-container-highest: #dbdddd;
-    --tertiary-container: #ff9287;
+    --tertiary-container: #ffedea;
     --inverse-surface: #0c0f0f;
     --on-primary: #ceffd0;
     --secondary-dim: #425160;
@@ -85,6 +85,13 @@
     font-family: 'JT Marnie';
     src: url('./media/jt-marnie/JTMarnie-Bold.otf') format('opentype');
     font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'JT Marnie';
+    src: url('./media/jt-marnie/JTMarnie-ExtraBold.otf') format('opentype');
+    font-weight: 900;
     font-style: normal;
 }
 
@@ -250,6 +257,10 @@ pre {
     column-gap: 4rem;
 }
 
+.gap-y-4 {
+    row-gap: 1rem;
+}
+
 .gap-y-32 {
     row-gap: 8rem;
 }
@@ -353,6 +364,14 @@ pre {
     .md\:w-1\/3 {
         width: 33.333333%;
     }
+
+    .md\:mt-16 {
+        margin-top: 4rem;
+    }
+
+    .md\:mt-8 {
+        margin-top: 2rem;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -389,6 +408,10 @@ pre {
    ========================================= */
 .p-2 {
     padding: 0.5rem;
+}
+
+.p-3 {
+    padding: 0.75rem;
 }
 
 .p-6 {
@@ -475,6 +498,8 @@ pre {
     margin-top: 0.25rem;
 }
 
+
+
 /* =========================================
    TRANSITIONS
    ========================================= */
@@ -535,6 +560,10 @@ pre {
 
 .group:hover .group-hover\:grayscale-0 {
     filter: grayscale(0);
+}
+
+.group:hover.group-hover\:brightness-130 {
+    filter: brightness(1.3);
 }
 
 /* =========================================
@@ -625,6 +654,10 @@ pre {
 
 .font-mono {
     font-family: var(--font-mono);
+}
+
+.font-extrabold {
+    font-weight: 900 !important;
 }
 
 .font-bold {
@@ -940,7 +973,7 @@ pre {
 }
 
 .small-glass {
-    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .glass-surface::before {
@@ -1009,7 +1042,6 @@ pre {
 
 .glass-btn:hover {
     transform: translateY(-2px);
-    filter: brightness(1.5);
     box-shadow:
         0 10px 15px -3px rgba(0, 0, 0, 0.1),
         0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -1376,6 +1408,7 @@ pre {
     grid-template-columns: 1fr;
     gap: 4rem;
     align-items: center;
+    cursor: default;
 }
 
 @media (min-width: 768px) {
@@ -1387,7 +1420,7 @@ pre {
 .project-overlay {
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 106, 44, 0.1);
+    background-image: radial-gradient(circle, rgba(0, 106, 44, 0.1) 80%, rgba(0, 0, 0, 0.2) 100%);
     opacity: 0;
     transition: opacity 300ms;
 }
@@ -1502,23 +1535,25 @@ pre {
 .filter-btn {
     padding-inline: 1.5rem;
     padding-block: 0.5rem;
-    font-family: var(--font-label);
+    font-family: var(--font-body);
     font-size: 0.875rem;
     border-radius: var(--radius-full);
     transition: background-color 0.3s ease, color 0.3s ease;
     text-decoration: none;
     display: inline-block;
-}
-
-.filter-btn--active {
-    background-color: var(--primary);
-    color: var(--on-tertiary);
-}
-
-.filter-btn--inactive {
     background-color: var(--surface-container-high);
     color: var(--on-surface-variant);
 }
+
+.filter-btn--active {
+    transform: translateY(-4px) !important;
+    box-shadow:
+        0 10px 15px 3px rgba(0, 0, 0, 0.15),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    filter: brightness(1) contrast(1.2);
+}
+
+.filter-btn--inactive {}
 
 .filter-btn--inactive:hover {
     background-color: var(--surface-variant);
@@ -1866,18 +1901,19 @@ pre {
     padding-block: 0.125rem;
 }
 
-.tool-card {
+.secondary-btn::before {
     background-color: var(--surface-container-low);
     padding: 1rem;
     display: flex;
     align-items: center;
     gap: 1rem;
-    cursor: pointer;
+    cursor: pointer !important;
     transition: background-color 0.3s ease;
 }
 
-.tool-card:hover {
+.secondary-btn:hover {
     background-color: rgba(0, 254, 116, 0.2);
+    cursor: pointer !important;
 }
 
 .tool-icon-wrap {

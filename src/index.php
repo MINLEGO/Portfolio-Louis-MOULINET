@@ -174,8 +174,9 @@ $recent_projects = array_slice($projects, 0, 2);
                                 <div class="relative">
                                     <img alt="<?= htmlspecialchars($project['image_alt']) ?>"
                                         class="w-full aspect-video object-cover transition-transform duration-700 group-hover\:scale-105"
+
                                         src="<?= htmlspecialchars($project['image']) ?>" />
-                                    <div class="project-overlay"></div>
+                                    <div class="project-overlay" style="cursor:pointer"></div>
                                 </div>
                                 <div>
                                     <div class="font-mono text-primary font-bold mb-4">
@@ -188,9 +189,9 @@ $recent_projects = array_slice($projects, 0, 2);
                                         <?= htmlspecialchars($project['description']) ?>
                                     </p>
                                     <div class="flex gap-6 items-center">
-                                        <span class="project-tag">Détails du projet</span>
+                                        <span class="project-tag secondary-btn">Détails du projet</span>
                                         <span
-                                            class="material-symbols-outlined text-3xl group-hover\:text-primary transition-colors">open_in_new</span>
+                                            class="material-symbols-outlined text-3xl group-hover\:translate-x-2 transition-transform">open_in_new</span>
                                     </div>
                                 </div>
                             </a>
@@ -209,7 +210,7 @@ $recent_projects = array_slice($projects, 0, 2);
                                         <?= htmlspecialchars($project['description']) ?>
                                     </p>
                                     <div class="flex gap-6 items-center">
-                                        <span class="project-tag">Détails du projet</span>
+                                        <span class="project-tag secondary-btn">Détails du projet</span>
                                         <span
                                             class="material-symbols-outlined text-3xl group-hover\:text-primary transition-colors">open_in_new</span>
                                     </div>
@@ -217,8 +218,9 @@ $recent_projects = array_slice($projects, 0, 2);
                                 <div class="relative md:order-2">
                                     <img alt="<?= htmlspecialchars($project['image_alt']) ?>"
                                         class="w-full aspect-video object-cover transition-transform duration-700 group-hover\:scale-105"
+
                                         src="<?= htmlspecialchars($project['image']) ?>" />
-                                    <div class="project-overlay"></div>
+                                    <div class="project-overlay" style="cursor:pointer"></div>
                                 </div>
                             </a>
                         <?php endif; ?>

@@ -21,7 +21,7 @@
         <div class="nav-links">
             <a class="nav-link glass-btn" href="index.php">Accueil</a>
             <a class="nav-link glass-btn" href="projects.php">Projets</a>
-            <a class="nav-link glass-btn active" href="veille.html">Veille</a>
+            <a class="nav-link glass-btn active" href="veille.php">Veille</a>
         </div>
         <button class="btn-contact glass-btn">
             <script>
@@ -33,16 +33,15 @@
         <!-- Hero Header -->
         <header class="mb-20">
             <div class="veille-hero-tag">
-                <span class="font-mono text-primary font-bold tracking-tighter">03 / LAB / VEILLE</span>
+                <span class="hero-tag">/execute as lab run VEILLE</span>
                 <div class="veille-divider"></div>
             </div>
-            <h1 class="font-headline text-5xl font-bold tracking-tighter text-on-background mb-6">
-                Veille <br />
+            <h1 class="font-headline text-8xl font-bold  tracking-tighter text-on-background mb-6">
+                Veille
                 <span class="text-gradient">Technologique</span>
             </h1>
             <p class="max-w-2xl text-lg text-on-surface-variant font-body leading-relaxed">
-                Un flux curaté d'évolutions architecturales, de nouveaux frameworks et de percées en ingénierie. Suivi
-                systématique de la frontière numérique.
+                Une collection de solutions, articles, et expérimentations, axée sur l'avancée de l'IA, les nouvelles technologies FrontEnd / BackEnd ainsi que les processus de développement modernes.
             </p>
         </header>
         <!-- Bento Grid Watch Layout -->
@@ -169,7 +168,7 @@
                         </h2>
                     </div>
                     <div class="grid grid-cols-1 gap-4">
-                        <div class="tool-card">
+                        <div class="secondary-btn">
                             <div class="tool-icon-wrap">
                                 <span class="material-symbols-outlined text-primary">terminal</span>
                             </div>
@@ -179,7 +178,7 @@
                                     assisté par IA</p>
                             </div>
                         </div>
-                        <div class="tool-card">
+                        <div class="secondary-btn">
                             <div class="tool-icon-wrap">
                                 <span class="material-symbols-outlined text-primary">database</span>
                             </div>
@@ -189,7 +188,7 @@
                                     à Firebase</p>
                             </div>
                         </div>
-                        <div class="tool-card">
+                        <div class="secondary-btn">
                             <div class="tool-icon-wrap">
                                 <span class="material-symbols-outlined text-primary">monitoring</span>
                             </div>
@@ -211,7 +210,6 @@
     </main>
     <!-- Footer -->
     <footer class="site-footer">
-        <div class="footer-brand">Louis MOULINET</div>
         <div class="footer-copy">© 2024 Louis MOULINET | Portfolio BTS SIO</div>
         <div class="footer-links">
             <a class="footer-link" href="#">GitHub</a>

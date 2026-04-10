@@ -24,7 +24,7 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Travaux Sélectionnés | Architecte Technique</title>
+    <title>Projets</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
@@ -57,68 +57,64 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
         <!-- Hero Section -->
         <header class="projects-hero">
             <div class="max-w-2xl">
-                <span class="font-mono text-primary text-sm tracking-widest uppercase mb-4 block">Archive
-                    / Portfolio</span>
-                <h1 class="font-headline font-bold text-6xl tracking-tighter leading-none mb-6">Travaux Sélectionnés</h1>
-                <p class="text-on-surface-variant text-lg font-body leading-relaxed">
-                    Une collection de solutions techniques, axée sur l'architecture des systèmes, l'infrastructure cloud et les processus de développement modernes durant le BTS SIO.
+                <span class="hero-tag">C:/archive/portfolio</span>
+                <h1 class="font-headline font-bold text-6xl hero-title tracking-tighter leading-none mb-6">Projets</h1>
+                <p class="text-on-surface-variant text-lg font-body leading-relaxed font-medium">
+                    Une collection de solutions, articles, et expérimentations, axée sur l'avancée de l'IA, les nouvelles technologies FrontEnd / BackEnd ainsi que les processus de développement modernes.
                 </p>
-            </div>
-            <div class="flex gap-4">
-                <div class="build-status">
-                    <span class="text-xs font-label uppercase text-outline mb-2">Statut du Build</span>
-                    <div class="build-status-chip">
-                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        <span class="font-mono text-sm">EN_PROD</span>
-                    </div>
-                </div>
             </div>
         </header>
         <!-- Filters -->
         <section class="filter-bar">
-            <div class="filter-list">
+            <div class="filter-list font-medium">
                 <a href="projects.php"
-                    class="filter-btn <?= $activeFilter === 'all' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
+                    class="filter-btn glass-btn <?= $activeFilter === 'all' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
                     Tous les Projets</a>
                 <a href="projects.php?filter=web"
-                    class="filter-btn <?= $activeFilter === 'web' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
+                    class="filter-btn glass-btn <?= $activeFilter === 'web' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
                     Développement Web</a>
                 <a href="projects.php?filter=software"
-                    class="filter-btn <?= $activeFilter === 'software' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
+                    class="filter-btn glass-btn <?= $activeFilter === 'software' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
                     Ingénierie Logicielle</a>
                 <a href="projects.php?filter=devops"
-                    class="filter-btn <?= $activeFilter === 'devops' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
+                    class="filter-btn glass-btn <?= $activeFilter === 'devops' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
                     DevOps &amp; Cloud</a>
             </div>
         </section>
         <!-- Projects Grid (dynamic) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-y-32 gap-x-16">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-16">
+            <?php $l_i = -1; ?>
             <?php foreach ($projects as $i => $project): ?>
-                <article class="group <?= ($i % 2 === 1) ? 'md:mt-24' : '' ?> glass-surface p-6 rounded-3xl hover:shadow-2xl transition-all duration-500">
-                    <div class="project-card-image-wrap">
-                        <img class="w-full h-full object-cover grayscale group-hover\:grayscale-0 transition-all duration-700"
-                            src="<?= htmlspecialchars($project['image']) ?>"
-                            alt="<?= htmlspecialchars($project['image_alt']) ?>" />
-                        <div class="project-card-badge">
-                            <?= htmlspecialchars($project['index']) ?> / <?= htmlspecialchars($project['category']) ?>
+                <?php $l_i++; ?>
+                <article class="group glass-btn p-3 rounded-3xl transition-all duration-500" style="margin: <?= [0, 3, 1][$l_i % 3]  ?>rem 0 <?= 2 - [0, 2, 0.5][$l_i % 3]  ?>rem; cursor: pointer; display: block">
+                    <a href="project_detail.php?id=<?= $project['id'] ?>">
+                        <div class="project-card-image-wrap">
+                            <img class="w-full h-full object-cover grayscale group-hover\:grayscale-0 transition-all duration-700"
+                                src="<?= htmlspecialchars($project['image']) ?>"
+                                alt="<?= htmlspecialchars($project['image_alt']) ?>" />
+                            <div class="project-card-badge">
+                                <?= htmlspecialchars($project['index']) ?> / <?= htmlspecialchars($project['category']) ?>
+                            </div>
                         </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="flex justify-between items-start mb-4">
-                            <h2 class="font-headline font-bold text-3xl tracking-tight"><?= htmlspecialchars($project['title']) ?></h2>
-                            <a href="project_detail.php?id=<?= $project['id'] ?>" class="glass-btn p-2 rounded-full">
-                                <span
-                                    class="material-symbols-outlined text-primary group-hover\:translate-x-1 transition-transform">arrow_outward</span>
-                            </a>
+                        <div class="project-card">
+                            <div class="flex justify-between items-start mb-4">
+                                <h2 class="font-headline font-bold text-3xl tracking-tight"><?= htmlspecialchars($project['title']) ?></h2>
+                                <div class="glass-btn p-2 rounded-full">
+                                    <span
+                                        class="material-symbols-outlined text-primary group-hover\:translate-x-1 transition-transform">arrow_outward</span>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2 mb-6 flex-wrap">
+                                <?php foreach ($project['tags'] as $tag): ?>
+                                    <span class="project-card-tag glass-surface small-glass"><?= htmlspecialchars($tag) ?></span>
+                                <?php endforeach; ?>
+                            </div>
+                            <p class="text-on-surface-variant leading-relaxed mb-6 font-medium">
+                                <?= htmlspecialchars($project['description']) ?>
+                            </p>
                         </div>
-                        <div class="flex gap-2 mb-6 flex-wrap">
-                            <?php foreach ($project['tags'] as $tag): ?>
-                                <span class="project-card-tag"><?= htmlspecialchars($tag) ?></span>
-                            <?php endforeach; ?>
-                        </div>
-                        <p class="text-on-surface-variant leading-relaxed mb-6 font-medium">
-                            <?= htmlspecialchars($project['description']) ?>
-                        </p>
+                    </a>
 
                 </article>
             <?php endforeach; ?>
@@ -127,7 +123,6 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
     </main>
     <!-- Footer -->
     <footer class="site-footer">
-        <div class="footer-brand">Louis MOULINET</div>
         <div class="footer-copy">
             © 2024 Louis MOULINET | Portfolio BTS SIO
         </div>
