@@ -238,6 +238,10 @@ pre {
     gap: 2.5rem;
 }
 
+.gap-16 {
+    gap: 4rem;
+}
+
 .gap-32 {
     gap: 8rem;
 }
@@ -1341,7 +1345,7 @@ pre {
    ========================================= */
 .projects-section {
     padding-inline: 2rem;
-    padding-block: 8rem;
+    padding-block: 4rem 7rem;
     background-color: var(--surface);
 }
 

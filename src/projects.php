@@ -12,7 +12,7 @@ $filterMap = [
     'devops'   => 'Dev_Ops',
 ];
 if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
-    $projects = array_filter($projects, function($p) use ($filterMap, $activeFilter) {
+    $projects = array_filter($projects, function ($p) use ($filterMap, $activeFilter) {
         return stripos($p['category'], $filterMap[$activeFilter]) !== false;
     });
 }
@@ -43,12 +43,14 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
     <nav class="nav-container fixed glass-surface z-50">
         <div class="nav-logo">Louis MOULINET</div>
         <div class="nav-links">
-            <a class="nav-link glass-btn" href="index.html">Accueil</a>
+            <a class="nav-link glass-btn" href="index.php">Accueil</a>
             <a class="nav-link glass-btn active" href="projects.php">Projets</a>
-            <a class="nav-link glass-btn" href="veille.html">Veille</a>
+            <a class="nav-link glass-btn" href="veille.php">Veille</a>
         </div>
         <button class="btn-contact glass-btn">
-            Contact
+            <script>
+                document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">contact</a>');
+            </script>
         </button>
     </nav>
     <main class="pt-32 pb-24 px-8 max-w-7xl">
@@ -92,59 +94,38 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
         <!-- Projects Grid (dynamic) -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-y-32 gap-x-16">
             <?php foreach ($projects as $i => $project): ?>
-            <article class="group <?= ($i % 2 === 1) ? 'md:mt-24' : '' ?> glass-surface p-6 rounded-3xl hover:shadow-2xl transition-all duration-500">
-                <div class="project-card-image-wrap">
-                    <img class="w-full h-full object-cover grayscale group-hover\:grayscale-0 transition-all duration-700"
-                        src="<?= htmlspecialchars($project['image']) ?>"
-                        alt="<?= htmlspecialchars($project['image_alt']) ?>" />
-                    <div class="project-card-badge">
-                        <?= htmlspecialchars($project['index']) ?> / <?= htmlspecialchars($project['category']) ?>
+                <article class="group <?= ($i % 2 === 1) ? 'md:mt-24' : '' ?> glass-surface p-6 rounded-3xl hover:shadow-2xl transition-all duration-500">
+                    <div class="project-card-image-wrap">
+                        <img class="w-full h-full object-cover grayscale group-hover\:grayscale-0 transition-all duration-700"
+                            src="<?= htmlspecialchars($project['image']) ?>"
+                            alt="<?= htmlspecialchars($project['image_alt']) ?>" />
+                        <div class="project-card-badge">
+                            <?= htmlspecialchars($project['index']) ?> / <?= htmlspecialchars($project['category']) ?>
+                        </div>
                     </div>
-                </div>
-                <div class="project-card">
-                    <div class="flex justify-between items-start mb-4">
-                        <h2 class="font-headline font-bold text-3xl tracking-tight"><?= htmlspecialchars($project['title']) ?></h2>
-                        <a href="project_detail.php?id=<?= $project['id'] ?>" class="glass-btn p-2 rounded-full">
-                            <span
-                                class="material-symbols-outlined text-primary group-hover\:translate-x-1 transition-transform">arrow_outward</span>
-                        </a>
+                    <div class="project-card">
+                        <div class="flex justify-between items-start mb-4">
+                            <h2 class="font-headline font-bold text-3xl tracking-tight"><?= htmlspecialchars($project['title']) ?></h2>
+                            <a href="project_detail.php?id=<?= $project['id'] ?>" class="glass-btn p-2 rounded-full">
+                                <span
+                                    class="material-symbols-outlined text-primary group-hover\:translate-x-1 transition-transform">arrow_outward</span>
+                            </a>
+                        </div>
+                        <div class="flex gap-2 mb-6 flex-wrap">
+                            <?php foreach ($project['tags'] as $tag): ?>
+                                <span class="project-card-tag"><?= htmlspecialchars($tag) ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                        <p class="text-on-surface-variant leading-relaxed mb-6 font-medium">
+                            <?= htmlspecialchars($project['description']) ?>
+                        </p>
+                        <div class="project-card-divider"></div>
+                        <code class="project-card-code"><?= htmlspecialchars($project['code_snippet']) ?></code>
                     </div>
-                    <div class="flex gap-2 mb-6 flex-wrap">
-                        <?php foreach ($project['tags'] as $tag): ?>
-                        <span class="project-card-tag"><?= htmlspecialchars($tag) ?></span>
-                        <?php endforeach; ?>
-                    </div>
-                    <p class="text-on-surface-variant leading-relaxed mb-6 font-medium">
-                        <?= htmlspecialchars($project['description']) ?>
-                    </p>
-                    <div class="project-card-divider"></div>
-                    <code class="project-card-code"><?= htmlspecialchars($project['code_snippet']) ?></code>
-                </div>
-            </article>
+                </article>
             <?php endforeach; ?>
         </div>
-        <!-- Tech Stack Highlight -->
-        <section class="tech-stack-section">
-            <h3 class="font-headline font-bold text-4xl mb-12">Cœur du Système</h3>
-            <div class="tech-stack-grid">
-                <div class="tech-stack-item">
-                    <span class="tech-stack-label">01. Architectures</span>
-                    <p class="font-label font-medium">APIs RESTful, Microservices, Systèmes Monolithiques</p>
-                </div>
-                <div class="tech-stack-item">
-                    <span class="tech-stack-label">02. Bases de données</span>
-                    <p class="font-label font-medium">PostgreSQL, MongoDB, Redis, SQLite</p>
-                </div>
-                <div class="tech-stack-item">
-                    <span class="tech-stack-label">03. Plateformes</span>
-                    <p class="font-label font-medium">AWS, Vercel, DigitalOcean, Heroku</p>
-                </div>
-                <div class="tech-stack-item">
-                    <span class="tech-stack-label">04. Automatisation</span>
-                    <p class="font-label font-medium">GitHub Actions, Jenkins, Ansible</p>
-                </div>
-            </div>
-        </section>
+
     </main>
     <!-- Footer -->
     <footer class="site-footer">

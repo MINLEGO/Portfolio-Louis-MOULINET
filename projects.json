@@ -12,7 +12,6 @@
                 "MariaDB"
             ],
             "description": "Bot de scraping avancé permettant d'être notifié instantanément de bonnes affaires se trouvant sur des sites de vente en ligne tel que Vinted ou Leboncoin",
-            "code_snippet": "",
             "image": "./media/project_ms_render.png",
             "image_alt": "Rendu 3D d'un télephone contenant l'interface de MarketSpider",
             "detail": {
@@ -59,7 +58,6 @@
                 "Spring"
             ],
             "description": "A robust inventory management system built with transactional integrity in mind. Handles concurrent requests for multi-warehouse logistics.",
-            "code_snippet": "repo.save(inventoryInstance);",
             "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCoDbjNn_F2_KgwQEpXorLzw51STrdES462wiObsMW1SnXhcbeirTPN08nr8s8WzoxaDlJ45C7_U5fjXMVR4nhCMlheq0iDqmo_lrgWMLo9zfCAT4HWzgoBMlSFUcH4v4JyiKcXC2EVLQCj5vfdV62nUNgNd4DwJIdyM0whJbQtZTx5dlPul8EWZ3Pfxq_PPs1NpSH7UNF4aDbY2dO6_RsFu3AUHMbTTRv2QTbPKBWjVPevdeuYuV8peJdgtaq4Tbbnp3Mm0rQ4DJ7E",
             "image_alt": "overhead view of high-quality mechanical keyboard and clean desk setup with monitors showing code blocks",
             "detail": {
@@ -105,7 +103,6 @@
                 "D3.js"
             ],
             "description": "Real-time data visualization dashboard designed for network monitoring. Focus on performance and accessible UI components.",
-            "code_snippet": "export default async function Page() {}",
             "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBlv1PwdRR5pjfuwsvSntM32oBA56NhRDPff8_VjjxhVMaGEa0OCAwZvkQB8gUVjHKywN29S6xq5lYPoafllOcE_u2CC4YchJi6-L6N5ecMBDCugqodIvs_dPV9-B-ffru0XuW98eMwYzRzrxMWgYXodXmpCD_zzN04pV6Fcr-p4_v9lVbalMCMlBT_sxoWAV2kV8XlsbRmOoOSbLt8nNNWYgzJSs24eIuuqkc3YFKNLVl-cTRqo8z9acYRxhKksiLcv7UxkQMcMN-H",
             "image_alt": "abstract geometric composition with sharp lines and blue glass textures representing architectural complexity",
             "detail": {
@@ -151,7 +148,6 @@
                 "Bash"
             ],
             "description": "Custom security layer implementation for private network clusters. Automated intrusion detection and IP blacklisting script suite.",
-            "code_snippet": "os.system('iptables -A INPUT...')",
             "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBwNRZcfSL92f0XL3VY1T-MqpM6WIiEFnQifEc7TPTGdGUztwblxuwuSkIz5vwcbhBp63TjMoAW8m9YIwIo4QCh08Rl_w5GiayWDINCCkxZjbTSExmqRF2qo82Bsap36HoocsW-9VLDiZW1D_ukqpISO9FYFKyEvXB4jjK64k2Zlejrm_cAP71YFoXkSqQ7gAnMDnR5RVfQ5dwqbbkhQEGmRfNQx-azMnMgmPCPnzXcDjhttSn9ezz0LU5yZAN8LYELNvGT8a0zbwV5",
             "image_alt": "clean macro shot of computer circuitry and glowing blue led lights in a dark server room environment",
             "detail": {

@@ -45,12 +45,14 @@ $d = $project['detail']; // shorthand for detail fields
     <nav class="nav-container fixed glass-surface z-50">
         <div class="nav-logo">Louis MOULINET</div>
         <div class="nav-links">
-            <a class="nav-link glass-btn" href="index.html">Accueil</a>
+            <a class="nav-link glass-btn" href="index.php">Accueil</a>
             <a class="nav-link glass-btn active" href="projects.php">Projets</a>
             <a class="nav-link glass-btn" href="veille.html">Veille</a>
         </div>
         <button class="btn-contact glass-btn">
-            Contact
+            <script>
+                document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">contact</a>');
+            </script>
         </button>
     </nav>
     <main class="pt-24 pb-20 px-8 max-w-7xl">
@@ -128,7 +130,7 @@ $d = $project['detail']; // shorthand for detail fields
                     </p>
                     <div class="flex flex-wrap gap-2">
                         <?php foreach ($d['tech_tags'] as $tag): ?>
-                        <span class="tech-tag-pill"><?= htmlspecialchars($tag) ?></span>
+                            <span class="tech-tag-pill"><?= htmlspecialchars($tag) ?></span>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -172,11 +174,11 @@ $d = $project['detail']; // shorthand for detail fields
             ?>
             <div>
                 <?php if ($prevProject): ?>
-                <a href="project_detail.php?id=<?= $prevProject['id'] ?>"
-                    class="group flex items-center gap-3 font-headline font-bold uppercase tracking-tight hover\:text-primary transition-colors">
-                    <span class="material-symbols-outlined group-hover\:-translate-x-1 transition-transform">arrow_back</span>
-                    <span class="text-sm"><?= htmlspecialchars($prevProject['title']) ?></span>
-                </a>
+                    <a href="project_detail.php?id=<?= $prevProject['id'] ?>"
+                        class="group flex items-center gap-3 font-headline font-bold uppercase tracking-tight hover\:text-primary transition-colors">
+                        <span class="material-symbols-outlined group-hover\:-translate-x-1 transition-transform">arrow_back</span>
+                        <span class="text-sm"><?= htmlspecialchars($prevProject['title']) ?></span>
+                    </a>
                 <?php endif; ?>
             </div>
             <a href="projects.php" class="font-mono text-xs text-outline uppercase tracking-widest hover\:text-primary transition-colors">
@@ -184,11 +186,11 @@ $d = $project['detail']; // shorthand for detail fields
             </a>
             <div>
                 <?php if ($nextProject): ?>
-                <a href="project_detail.php?id=<?= $nextProject['id'] ?>"
-                    class="group flex items-center gap-3 font-headline font-bold uppercase tracking-tight hover\:text-primary transition-colors">
-                    <span class="text-sm"><?= htmlspecialchars($nextProject['title']) ?></span>
-                    <span class="material-symbols-outlined group-hover\:translate-x-1 transition-transform">arrow_forward</span>
-                </a>
+                    <a href="project_detail.php?id=<?= $nextProject['id'] ?>"
+                        class="group flex items-center gap-3 font-headline font-bold uppercase tracking-tight hover\:text-primary transition-colors">
+                        <span class="text-sm"><?= htmlspecialchars($nextProject['title']) ?></span>
+                        <span class="material-symbols-outlined group-hover\:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
                 <?php endif; ?>
             </div>
         </nav>

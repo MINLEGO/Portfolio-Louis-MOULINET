@@ -9,8 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
 </head>
@@ -20,12 +19,14 @@
     <nav class="nav-container fixed glass-surface z-50">
         <div class="nav-logo">Louis MOULINET</div>
         <div class="nav-links">
-            <a class="nav-link glass-btn" href="index.html">Accueil</a>
+            <a class="nav-link glass-btn" href="index.php">Accueil</a>
             <a class="nav-link glass-btn" href="projects.php">Projets</a>
             <a class="nav-link glass-btn active" href="veille.html">Veille</a>
         </div>
         <button class="btn-contact glass-btn">
-            Contact
+            <script>
+                document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">contact</a>');
+            </script>
         </button>
     </nav>
     <main class="pt-32 pb-20 px-8 md:px-12 max-w-7xl">
@@ -40,7 +41,8 @@
                 <span class="text-gradient">Technologique</span>
             </h1>
             <p class="max-w-2xl text-lg text-on-surface-variant font-body leading-relaxed">
-                Un flux curaté d'évolutions architecturales, de nouveaux frameworks et de percées en ingénierie. Suivi systématique de la frontière numérique.
+                Un flux curaté d'évolutions architecturales, de nouveaux frameworks et de percées en ingénierie. Suivi
+                systématique de la frontière numérique.
             </p>
         </header>
         <!-- Bento Grid Watch Layout -->
@@ -58,7 +60,8 @@
                     <!-- Article Item -->
                     <article class="group glass-surface p-6 rounded-3xl hover\:shadow-xl transition-all duration-500">
                         <div class="flex flex-col md:flex-row gap-8">
-                            <div class="w-full md:w-1\/3 aspect-4\/3 overflow-hidden rounded-2xl shadow-inner bg-surface-container-low">
+                            <div
+                                class="w-full md:w-1\/3 aspect-4\/3 overflow-hidden rounded-2xl shadow-inner bg-surface-container-low">
                                 <img alt="Security hardware"
                                     class="w-full h-full object-cover transition-transform duration-500 group-hover\:scale-105"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuD59pD3jA5jFBnUH8eUPfuzoE1z5Q_Lk1JeVOFugHqXZFBYgfXdlkSY9XPSvXFKdps8rVZZkbHkojiFNtPHN3a2HnOaGTzkp4oyRHM7yYWuEwu2vYs1EW4MjnkmxZU1jSiHDVddgb7t9DkD8tuHH3B1i1LdUajdmStPhnxNkd9DDrrR0_EPJCcADSN7YsgKTczyavkJ2Likoy3B9PV6jJMDZEXv4R-37ikggHuqKZX1e9luujj1wyt4PNztCWMjYnYxNzryMBSkdY3C" />
@@ -73,7 +76,9 @@
                                     class="font-headline text-2xl font-bold mb-4 group-hover\:text-primary transition-colors">
                                     Le passage à l'architecture Zero-Trust dans les environnements d'entreprise</h3>
                                 <p class="text-on-surface-variant font-medium mb-6 leading-relaxed">
-                                    Exploration de la transition fondamentale d'une sécurité périmétrique vers des modèles de vérification centrés sur l'identité. Analyse des défis actuels de mise en œuvre dans les systèmes hérités.
+                                    Exploration de la transition fondamentale d'une sécurité périmétrique vers des
+                                    modèles de vérification centrés sur l'identité. Analyse des défis actuels de mise en
+                                    œuvre dans les systèmes hérités.
                                 </p>
                                 <a class="article-read-link" href="#">
                                     Lire l'analyse <span class="material-symbols-outlined text-sm">arrow_forward</span>
@@ -99,7 +104,8 @@
                                     class="font-headline text-2xl font-semibold mb-4 group-hover\:text-primary transition-colors">
                                     Server Components et le futur de l'hydratation sélective</h3>
                                 <p class="text-on-surface-variant font-body mb-6 leading-relaxed">
-                                    Comment les React Server Components redéfinissent le modèle mental pour construire des applications web performantes en déplaçant les calculs lourds vers l'Edge.
+                                    Comment les React Server Components redéfinissent le modèle mental pour construire
+                                    des applications web performantes en déplaçant les calculs lourds vers l'Edge.
                                 </p>
                                 <a class="article-read-link" href="#">
                                     Lire l'analyse <span class="material-symbols-outlined text-sm">arrow_forward</span>
@@ -169,7 +175,8 @@
                             </div>
                             <div>
                                 <h5 class="font-headline font-bold text-sm">Warp Terminal</h5>
-                                <p class="font-mono text-10px text-on-surface-variant uppercase">Le terminal moderne assisté par IA</p>
+                                <p class="font-mono text-10px text-on-surface-variant uppercase">Le terminal moderne
+                                    assisté par IA</p>
                             </div>
                         </div>
                         <div class="tool-card">
@@ -178,7 +185,8 @@
                             </div>
                             <div>
                                 <h5 class="font-headline font-bold text-sm">Supabase</h5>
-                                <p class="font-mono text-10px text-on-surface-variant uppercase">Alternative Open Source à Firebase</p>
+                                <p class="font-mono text-10px text-on-surface-variant uppercase">Alternative Open Source
+                                    à Firebase</p>
                             </div>
                         </div>
                         <div class="tool-card">

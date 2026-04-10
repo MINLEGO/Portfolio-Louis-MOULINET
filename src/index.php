@@ -4,8 +4,8 @@ $projects_data = json_decode($projects_json, true);
 $projects = $projects_data['projects'];
 
 // Sort projects by ID descending
-usort($projects, function($a, $b) {
-    return $b['id'] - $a['id'];
+usort($projects, function ($a, $b) {
+    return $a['id'] - $b['id'];
 });
 
 // Take the top 2
@@ -32,12 +32,14 @@ $recent_projects = array_slice($projects, 0, 2);
     <nav class="nav-container fixed glass-surface z-50">
         <div class="nav-logo">Louis MOULINET</div>
         <div class="nav-links">
-            <a class="nav-link glass-btn active" href="index.html">Accueil</a>
+            <a class="nav-link glass-btn active" href="index.php">Accueil</a>
             <a class="nav-link glass-btn" href="projects.php">Projets</a>
-            <a class="nav-link glass-btn" href="veille.html">Veille</a>
+            <a class="nav-link glass-btn" href="veille.php">Veille</a>
         </div>
         <button class="btn-contact glass-btn">
-            <script>document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">contact</a>');</script>
+            <script>
+                document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">contact</a>');
+            </script>
         </button>
     </nav>
     <main class="pt-24 min-h-screen">
@@ -163,62 +165,63 @@ $recent_projects = array_slice($projects, 0, 2);
                             class="material-symbols-outlined group-hover\:translate-x-2 transition-transform">arrow_forward</span>
                     </a>
                 </div>
-                <div class="grid grid-cols-1 gap-32">
+                <div class="grid grid-cols-1 gap-16">
                     <?php foreach ($recent_projects as $index => $project): ?>
-                    <?php if ($index % 2 === 0): ?>
-                    <!-- Project <?= $index + 1 ?> (Even index: Image Left) -->
-                    <div class="project-item glass-surface big-glass" style="border-radius: 2rem 0rem 0rem 2rem;">
-                        <div class="relative group cursor-none">
-                            <img alt="<?= htmlspecialchars($project['image_alt']) ?>"
-                                class="w-full aspect-video object-cover transition-transform duration-700 group-hover\:scale-105"
-                                src="<?= htmlspecialchars($project['image']) ?>" />
-                            <div class="project-overlay"></div>
-                        </div>
-                        <div>
-                            <div class="font-mono text-primary font-bold mb-4">
-                                <?= htmlspecialchars($project['detail']['subtitle']) ?>
-                            </div>
-                            <h3 class="font-headline text-4xl font-bold mb-6">
-                                <?= htmlspecialchars($project['title']) ?>
-                            </h3>
-                            <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
-                                <?= htmlspecialchars($project['description']) ?>
-                            </p>
-                            <div class="flex gap-6 items-center">
-                                <span class="project-tag">Détails du projet</span>
-                                <a class="material-symbols-outlined text-3xl hover\:text-primary transition-colors"
-                                    href="project_detail.php?id=<?= $project['id'] ?>">open_in_new</a>
-                            </div>
-                        </div>
-                    </div>
-                    <?php else: ?>
-                    <!-- Project <?= $index + 1 ?> (Odd index: Image Right) -->
-                    <div class="project-item glass-surface big-glass rounded-2xl"
-                        style="border-radius: 0rem 2rem 2rem 0rem;padding-left: 1rem;">
-                        <div class="md:order-1">
-                            <div class="font-mono text-primary font-bold mb-4">
-                                <?= htmlspecialchars($project['detail']['subtitle']) ?>
-                            </div>
-                            <h3 class="font-headline text-4xl font-bold mb-6">
-                                <?= htmlspecialchars($project['title']) ?>
-                            </h3>
-                            <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
-                                <?= htmlspecialchars($project['description']) ?>
-                            </p>
-                            <div class="flex gap-6 items-center">
-                                <span class="project-tag">Détails du projet</span>
-                                <a class="material-symbols-outlined text-3xl hover\:text-primary transition-colors"
-                                    href="project_detail.php?id=<?= $project['id'] ?>">open_in_new</a>
-                            </div>
-                        </div>
-                        <div class="relative group md:order-2 cursor-none">
-                            <img alt="<?= htmlspecialchars($project['image_alt']) ?>"
-                                class="w-full aspect-video object-cover transition-transform duration-700 group-hover\:scale-105"
-                                src="<?= htmlspecialchars($project['image']) ?>" />
-                            <div class="project-overlay"></div>
-                        </div>
-                    </div>
-                    <?php endif; ?>
+                        <?php if ($index % 2 === 0): ?>
+                            <!-- Project <?= $index + 1 ?> (Even index: Image Left) -->
+                            <a class="project-item glass-btn group" href="project_detail.php?id=<?= $project['id'] ?>"
+                                style="border-radius: 2rem 0rem 0rem 2rem;">
+                                <div class="relative">
+                                    <img alt="<?= htmlspecialchars($project['image_alt']) ?>"
+                                        class="w-full aspect-video object-cover transition-transform duration-700 group-hover\:scale-105"
+                                        src="<?= htmlspecialchars($project['image']) ?>" />
+                                    <div class="project-overlay"></div>
+                                </div>
+                                <div>
+                                    <div class="font-mono text-primary font-bold mb-4">
+                                        <?= htmlspecialchars($project['detail']['subtitle']) ?>
+                                    </div>
+                                    <h3 class="font-headline text-4xl font-bold mb-6">
+                                        <?= htmlspecialchars($project['title']) ?>
+                                    </h3>
+                                    <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                                        <?= htmlspecialchars($project['description']) ?>
+                                    </p>
+                                    <div class="flex gap-6 items-center">
+                                        <span class="project-tag">Détails du projet</span>
+                                        <span
+                                            class="material-symbols-outlined text-3xl group-hover\:text-primary transition-colors">open_in_new</span>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php else: ?>
+                            <!-- Project <?= $index + 1 ?> (Odd index: Image Right) -->
+                            <a class="project-item glass-btn group" href="project_detail.php?id=<?= $project['id'] ?>"
+                                style="border-radius: 0rem 2rem 2rem 0rem;padding-left: 1rem;">
+                                <div class="md:order-1">
+                                    <div class="font-mono text-primary font-bold mb-4">
+                                        <?= htmlspecialchars($project['detail']['subtitle']) ?>
+                                    </div>
+                                    <h3 class="font-headline text-4xl font-bold mb-6">
+                                        <?= htmlspecialchars($project['title']) ?>
+                                    </h3>
+                                    <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                                        <?= htmlspecialchars($project['description']) ?>
+                                    </p>
+                                    <div class="flex gap-6 items-center">
+                                        <span class="project-tag">Détails du projet</span>
+                                        <span
+                                            class="material-symbols-outlined text-3xl group-hover\:text-primary transition-colors">open_in_new</span>
+                                    </div>
+                                </div>
+                                <div class="relative md:order-2">
+                                    <img alt="<?= htmlspecialchars($project['image_alt']) ?>"
+                                        class="w-full aspect-video object-cover transition-transform duration-700 group-hover\:scale-105"
+                                        src="<?= htmlspecialchars($project['image']) ?>" />
+                                    <div class="project-overlay"></div>
+                                </div>
+                            </a>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -235,7 +238,9 @@ $recent_projects = array_slice($projects, 0, 2);
                         Télécharger le CV
                     </a>
                     <button class="btn-secondary glass-surface glass-btn border-2 border-primary\/20">
-                        <script>document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">Prendre contact</a>');</script>
+                        <script>
+                            document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">Prendre contact</a>');
+                        </script>
                     </button>
                 </div>
             </div>
