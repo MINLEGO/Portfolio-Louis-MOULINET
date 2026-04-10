@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Technical Architect | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Manrope:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#5a5c5c",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffefed",
+                        "primary": "#006a2c",
+                        "on-secondary-fixed": "#31414f",
+                        "on-background": "#2d2f2f",
+                        "inverse-primary": "#00fe74",
+                        "on-secondary-container": "#445362",
+                        "on-primary-fixed": "#00461b",
+                        "on-tertiary-fixed": "#3a0002",
+                        "tertiary-fixed": "#ff9287",
+                        "secondary-fixed": "#d4e4f6",
+                        "inverse-on-surface": "#9c9d9d",
+                        "outline-variant": "#acadad",
+                        "tertiary": "#bb0012",
+                        "surface-tint": "#006a2c",
+                        "on-error": "#ffefee",
+                        "error-container": "#fb5151",
+                        "tertiary-dim": "#a4000e",
+                        "primary-fixed": "#00fe74",
+                        "on-error-container": "#570008",
+                        "surface-container-high": "#e1e3e3",
+                        "surface-bright": "#f6f6f6",
+                        "error-dim": "#9f0519",
+                        "background": "#f6f6f6",
+                        "error": "#b31b25",
+                        "outline": "#767777",
+                        "on-primary-container": "#005b25",
+                        "secondary-container": "#d4e4f6",
+                        "tertiary-fixed-dim": "#ff7b6f",
+                        "primary-container": "#00fe74",
+                        "on-primary-fixed-variant": "#00662a",
+                        "surface-dim": "#d3d5d5",
+                        "on-secondary-fixed-variant": "#4e5d6c",
+                        "on-tertiary-container": "#690005",
+                        "surface-variant": "#dbdddd",
+                        "secondary-fixed-dim": "#c6d6e8",
+                        "surface-container-low": "#f0f1f1",
+                        "primary-dim": "#005d26",
+                        "secondary": "#4e5d6c",
+                        "surface-container": "#e7e8e8",
+                        "on-secondary": "#eaf4ff",
+                        "surface": "#f6f6f6",
+                        "on-surface": "#2d2f2f",
+                        "surface-container-highest": "#dbdddd",
+                        "tertiary-container": "#ff9287",
+                        "inverse-surface": "#0c0f0f",
+                        "on-primary": "#ceffd0",
+                        "secondary-dim": "#425160",
+                        "on-tertiary-fixed-variant": "#7a0008",
+                        "primary-fixed-dim": "#00ee6d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Manrope"],
+                        "mono": ["JetBrains Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+
+</head>
+
+<body
+    class="bg-surface font-body text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
+    <!-- TopNavBar Shell -->
+    <nav
+        class="fixed top-0 w-full z-50 bg-slate-50/70 backdrop-blur-md flex justify-between items-center px-8 py-4 max-w-full">
+        <div class="text-xl font-bold tracking-tighter text-slate-900 font-headline uppercase">Technical Architect</div>
+        <div class="hidden md:flex items-center gap-10">
+            <a class="text-blue-500 border-b-2 border-blue-400 pb-1 font-headline font-medium uppercase tracking-tight"
+                href="index.html">Home</a>
+            <a class="text-slate-600 hover:text-blue-500 transition-all duration-300 font-headline font-medium uppercase tracking-tight"
+                href="projects.php">Projects</a>
+            <a class="text-slate-600 hover:text-blue-500 transition-all duration-300 font-headline font-medium uppercase tracking-tight"
+                href="veille.html">Research</a>
+        </div>
+        <button
+            class="bg-slate-900 text-slate-50 px-6 py-2 font-headline font-medium uppercase tracking-tight hover:bg-primary transition-all duration-300 scale-95 hover:scale-100">
+            Contact
+        </button>
+    </nav>
+    <main class="pt-24 min-h-screen">
+        <!-- Hero Section -->
+        <section class="px-8 md:px-20 py-20 blueprint-grid min-h-[819px] flex flex-col justify-center">
+            <div class="max-w-5xl">
+                <div class="font-mono text-primary font-medium mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">terminal</span>
+                    <span>root@bts_sio:~/portfolio</span>
+                </div>
+                <h1 class="text-5xl md:text-8xl font-headline font-bold leading-[1.1] tracking-tighter mb-12">
+                    Engineering digital <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-dim">infrastructure</span>
+                    with architectural precision.
+                </h1>
+                <div class="flex flex-wrap gap-4 items-center">
+                    <div class="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-full">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        <span
+                            class="font-label text-sm font-semibold text-on-surface-variant uppercase tracking-widest">Available
+                            for internships</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-full">
+                        <span class="material-symbols-outlined text-sm">location_on</span>
+                        <span
+                            class="font-label text-sm font-semibold text-on-surface-variant uppercase tracking-widest">Paris,
+                            FR</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Technical Arsenal - Bento Grid -->
+        <section class="px-8 md:px-20 py-32 bg-surface-container-low">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 max-w-7xl mx-auto">
+                <div class="md:col-span-12 mb-8">
+                    <h2 class="font-headline text-4xl font-bold tracking-tight mb-2">Technical Arsenal</h2>
+                    <div class="h-1 w-24 bg-primary"></div>
+                </div>
+                <!-- Full Stack Card -->
+                <div
+                    class="md:col-span-8 bg-surface-container-highest p-10 flex flex-col justify-between group transition-all duration-500 hover:shadow-2xl">
+                    <div>
+                        <div class="font-mono text-primary text-sm mb-4">01 / STACK</div>
+                        <h3 class="font-headline text-3xl font-bold mb-6">Full Stack Development</h3>
+                        <p class="text-on-surface-variant max-w-md leading-relaxed mb-8">
+                            Architecting scalable web applications using modern frameworks. Bridging the gap between
+                            robust backends and fluid interfaces.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span
+                            class="px-3 py-1 bg-surface-container-lowest font-mono text-xs uppercase tracking-wider rounded-full">React</span>
+                        <span
+                            class="px-3 py-1 bg-surface-container-lowest font-mono text-xs uppercase tracking-wider rounded-full">Node.js</span>
+                        <span
+                            class="px-3 py-1 bg-surface-container-lowest font-mono text-xs uppercase tracking-wider rounded-full">TypeScript</span>
+                        <span
+                            class="px-3 py-1 bg-surface-container-lowest font-mono text-xs uppercase tracking-wider rounded-full">Tailwind</span>
+                    </div>
+                </div>
+                <!-- Java/Python Card -->
+                <div
+                    class="md:col-span-4 bg-primary text-on-primary p-10 flex flex-col justify-between hover:bg-primary-dim transition-all duration-300">
+                    <span class="material-symbols-outlined text-6xl opacity-20">code_blocks</span>
+                    <div>
+                        <div class="font-mono text-xs mb-2 opacity-70">02 / LOGIC</div>
+                        <h3 class="font-headline text-2xl font-bold mb-4">Core Systems</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center border-b border-on-primary/20 pb-2">
+                                <span class="font-headline font-medium">Java</span>
+                                <span class="material-symbols-outlined">coffee</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-on-primary/20 pb-2">
+                                <span class="font-headline font-medium">Python</span>
+                                <span class="material-symbols-outlined">rebase_edit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- SQL / Data Card -->
+                <div
+                    class="md:col-span-4 bg-surface-container-high p-10 flex flex-col items-center text-center justify-center border-t-4 border-tertiary">
+                    <span class="material-symbols-outlined text-5xl text-tertiary mb-6"
+                        data-weight="fill">database</span>
+                    <h3 class="font-headline text-2xl font-bold mb-2">Data Integrity</h3>
+                    <p class="text-sm font-label text-on-surface-variant mb-6 uppercase tracking-widest font-semibold">
+                        PostgreSQL &amp; MariaDB</p>
+                    <div class="w-full bg-surface-variant h-[2px]"></div>
+                </div>
+                <!-- DevOps Card -->
+                <div
+                    class="md:col-span-8 bg-surface-container-lowest p-10 flex flex-col md:flex-row gap-10 items-center justify-between border-l-8 border-primary">
+                    <div class="flex-1">
+                        <div class="font-mono text-primary text-sm mb-4">03 / INFRA</div>
+                        <h3 class="font-headline text-3xl font-bold mb-4">DevOps Pipeline</h3>
+                        <p class="text-on-surface-variant leading-relaxed">
+                            Containerization and continuous deployment strategies. Ensuring the infrastructure is as
+                            agile as the code it hosts.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 w-full md:w-auto">
+                        <div class="p-6 bg-surface-container-low text-center rounded-lg">
+                            <span class="material-symbols-outlined text-4xl block mb-2">grid_view</span>
+                            <span class="font-mono text-xs">DOCKER</span>
+                        </div>
+                        <div class="p-6 bg-surface-container-low text-center rounded-lg">
+                            <span class="material-symbols-outlined text-4xl block mb-2">settings_input_component</span>
+                            <span class="font-mono text-xs">CI/CD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Projects - Featured Split -->
+        <section class="px-8 md:px-20 py-32 bg-surface">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                    <div class="max-w-xl">
+                        <h2 class="font-headline text-5xl font-bold tracking-tighter mb-6">Recent Builds</h2>
+                        <p class="text-on-surface-variant font-body text-lg leading-relaxed">
+                            A curated selection of projects demonstrating architectural thinking and technical
+                            proficiency.
+                        </p>
+                    </div>
+                    <a class="group flex items-center gap-4 font-headline font-bold text-lg uppercase tracking-tight"
+                        href="projects.php">
+                        See All Projects
+                        <span
+                            class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+                <div class="grid grid-cols-1 gap-32">
+                    <!-- Project 01 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                        <div class="relative group cursor-none">
+                            <img alt="Code editor interface"
+                                class="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-105"
+                                data-alt="Modern dark code editor interface with glowing syntax highlighting and clean minimalist workspace aesthetic"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD943jzWc5rROOTkiN-psfnrSWLpXRXOGMcQilQhvrhfWufZ5FqKmpa_qh1XpuRLbT96S4X7ALb8rJH9pBrxrcLGhxnzXpQMGu1hdBjxJK_UGTwbMIdtr3aUCPwMz8JHiu1X1iGNn7uPlSqy1wm4DM2iCygMBMiZcoYtGPJBaxuzZe87o2SrgLeW4k4IhsaxPoMzhot0WA91AwtAkfDuoK70wzihyB_8J73RjQS2wrMTfg2B3i0Eilkj1tsfbcKMZq-JsqFZefV_zz0" />
+                            <div
+                                class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-mono text-primary font-bold mb-4">01 / JAVA / MVC</div>
+                            <h3 class="font-headline text-4xl font-bold mb-6">GSB-Fraais Management System</h3>
+                            <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                                A comprehensive expense management solution for the GSB pharmaceutical laboratory. Built
+                                with Java Swing and JDBC, implementing strict MVC architecture to handle complex
+                                business rules and data consistency.
+                            </p>
+                            <div class="flex gap-6 items-center">
+                                <span
+                                    class="font-label font-bold text-sm tracking-widest uppercase py-2 px-4 border border-outline-variant/30">Architecture
+                                    Detail</span>
+                                <a class="material-symbols-outlined text-3xl hover:text-primary transition-colors"
+                                    href="project_detail.html">open_in_new</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project 02 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                        <div class="order-2 md:order-1">
+                            <div class="font-mono text-primary font-bold mb-4">02 / PYTHON / DATA</div>
+                            <h3 class="font-headline text-4xl font-bold mb-6">Network Traffic Analyzer</h3>
+                            <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                                Real-time packet inspection tool designed for security auditing. Leverages Scapy and
+                                Matplotlib to visualize network flows and identify potential bottlenecks or security
+                                threats in enterprise environments.
+                            </p>
+                            <div class="flex gap-6 items-center">
+                                <span
+                                    class="font-label font-bold text-sm tracking-widest uppercase py-2 px-4 border border-outline-variant/30">Systems
+                                    Design</span>
+                                <a class="material-symbols-outlined text-3xl hover:text-primary transition-colors"
+                                    href="project_detail.html">open_in_new</a>
+                            </div>
+                        </div>
+                        <div class="relative group order-1 md:order-2 cursor-none">
+                            <img alt="Server room with blue lighting"
+                                class="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-105"
+                                data-alt="Cinematic wide shot of server racks in a dark data center with glowing blue status lights and professional cable management"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBWHjPphtU4PWisav_PnE1oPDtcP50R_EV_EoKCZriMf2-zu4y7M6Dv5xwUceaQpYt-unjYs91OZ4a6j07zDNegXQv8ZH6YyIYj9Eoxb5w_tVUYk5eMoTn1SE0yn_g65xwuyxqHiJmKgSmMK5naeke3aprcLxC87qmpmxqwvQLTEFOEiC96tbsEKDhpHmq79NMATbG31kb3Qr7SvSHo6-SMqqxQmlVyN1xR7XGcFtIyCBxmNkujANpGVXDs547NlqxvierTzCsecLQ" />
+                            <div
+                                class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CTA Section -->
+        <section class="px-8 md:px-20 py-40 bg-surface-container-lowest border-y border-outline-variant/10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter mb-12">Building the next
+                    digital standard.</h2>
+                <div class="flex flex-col md:flex-row gap-6 justify-center">
+                    <button
+                        class="bg-primary text-on-primary px-10 py-5 font-headline font-bold uppercase tracking-tight text-lg hover:bg-primary-dim transition-all">
+                        Download Technical Resume
+                    </button>
+                    <button
+                        class="border-2 border-on-surface text-on-surface px-10 py-5 font-headline font-bold uppercase tracking-tight text-lg hover:bg-on-surface hover:text-surface transition-all">
+                        Initiate Connection
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer Shell -->
+    <footer
+        class="w-full py-12 px-8 border-t border-slate-200 bg-slate-50 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="font-['Space_Grotesk'] font-bold text-slate-900 uppercase">Technical Architect</div>
+        <div class="font-['Inter'] text-sm tracking-wide text-slate-500 uppercase">© 2024 Technical Architect | BTS SIO
+            Portfolio</div>
+        <div class="flex gap-8">
+            <a class="text-slate-500 hover:text-blue-400 transition-colors font-['Inter'] text-sm tracking-wide opacity-80 hover:opacity-100 uppercase"
+                href="#">GitHub</a>
+            <a class="text-slate-500 hover:text-blue-400 transition-colors font-['Inter'] text-sm tracking-wide opacity-80 hover:opacity-100 uppercase"
+                href="#">LinkedIn</a>
+            <a class="text-slate-500 hover:text-blue-400 transition-colors font-['Inter'] text-sm tracking-wide opacity-80 hover:opacity-100 uppercase"
+                href="#">Documentation</a>
+        </div>
+    </footer>
+</body>
+
+</html>

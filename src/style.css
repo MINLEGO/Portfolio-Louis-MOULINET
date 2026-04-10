@@ -1,0 +1,22 @@
+/* Material Symbols standard configuration */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Tonal shift utility for backgrounds and transitions */
+.tonal-shift {
+    background-color: #f0f1f1;
+    transition: background-color 0.3s ease;
+}
+
+/* Blueprint grid background pattern */
+.blueprint-grid {
+    background-image: radial-gradient(#dbdddd 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* Glassmorphism navigation effect */
+.glass-nav {
+    backdrop-filter: saturate(180%) blur(15px);
+    -webkit-backdrop-filter: saturate(180%) blur(15px);
+}

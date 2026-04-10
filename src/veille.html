@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Technological Watch | Technical Architect</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Manrope:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#5a5c5c",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffefed",
+                        "primary": "#006a2c",
+                        "on-secondary-fixed": "#31414f",
+                        "on-background": "#2d2f2f",
+                        "inverse-primary": "#00fe74",
+                        "on-secondary-container": "#445362",
+                        "on-primary-fixed": "#00461b",
+                        "on-tertiary-fixed": "#3a0002",
+                        "tertiary-fixed": "#ff9287",
+                        "secondary-fixed": "#d4e4f6",
+                        "inverse-on-surface": "#9c9d9d",
+                        "outline-variant": "#acadad",
+                        "tertiary": "#bb0012",
+                        "surface-tint": "#006a2c",
+                        "on-error": "#ffefee",
+                        "error-container": "#fb5151",
+                        "tertiary-dim": "#a4000e",
+                        "primary-fixed": "#00fe74",
+                        "on-error-container": "#570008",
+                        "surface-container-high": "#e1e3e3",
+                        "surface-bright": "#f6f6f6",
+                        "error-dim": "#9f0519",
+                        "background": "#f6f6f6",
+                        "error": "#b31b25",
+                        "outline": "#767777",
+                        "on-primary-container": "#005b25",
+                        "secondary-container": "#d4e4f6",
+                        "tertiary-fixed-dim": "#ff7b6f",
+                        "primary-container": "#00fe74",
+                        "on-primary-fixed-variant": "#00662a",
+                        "surface-dim": "#d3d5d5",
+                        "on-secondary-fixed-variant": "#4e5d6c",
+                        "on-tertiary-container": "#690005",
+                        "surface-variant": "#dbdddd",
+                        "secondary-fixed-dim": "#c6d6e8",
+                        "surface-container-low": "#f0f1f1",
+                        "primary-dim": "#005d26",
+                        "secondary": "#4e5d6c",
+                        "surface-container": "#e7e8e8",
+                        "on-secondary": "#eaf4ff",
+                        "surface": "#f6f6f6",
+                        "on-surface": "#2d2f2f",
+                        "surface-container-highest": "#dbdddd",
+                        "tertiary-container": "#ff9287",
+                        "inverse-surface": "#0c0f0f",
+                        "on-primary": "#ceffd0",
+                        "secondary-dim": "#425160",
+                        "on-tertiary-fixed-variant": "#7a0008",
+                        "primary-fixed-dim": "#00ee6d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Manrope"],
+                        "mono": ["JetBrains Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+
+</head>
+
+<body class="bg-surface font-body text-on-surface antialiased">
+    <!-- TopNavBar from JSON -->
+    <nav
+        class="fixed top-0 w-full z-50 bg-slate-50/70 backdrop-blur-md flex justify-between items-center px-8 py-4 max-w-full">
+        <div class="text-xl font-bold tracking-tighter text-slate-900 font-headline">Technical Architect</div>
+        <div class="hidden md:flex items-center gap-8 font-headline font-medium uppercase tracking-tight text-sm">
+            <a class="text-slate-600 hover:text-blue-500 transition-all duration-300" href="index.html">Home</a>
+            <a class="text-slate-600 hover:text-blue-500 transition-all duration-300" href="projects.html">Projects</a>
+            <a class="text-blue-500 border-b-2 border-blue-400 pb-1" href="veille.html">Research</a>
+        </div>
+        <button
+            class="bg-primary text-on-primary px-6 py-2 font-headline font-bold text-sm tracking-widest uppercase hover:opacity-90 transition-all scale-95 duration-200">
+            Contact
+        </button>
+    </nav>
+    <main class="pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
+        <!-- Hero Header -->
+        <header class="mb-20">
+            <div class="flex items-center gap-4 mb-4">
+                <span class="font-mono text-primary font-bold tracking-tighter">03 / LAB / VEILLE</span>
+                <div class="h-px w-24 bg-outline-variant/30"></div>
+            </div>
+            <h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-background mb-6">
+                Technological <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container">Watch
+                    Protocol</span>
+            </h1>
+            <p class="max-w-2xl text-lg text-on-surface-variant font-body leading-relaxed">
+                An curated feed of architectural shifts, emerging frameworks, and engineering breakthroughs. Systematic
+                tracking of the digital frontier.
+            </p>
+        </header>
+        <!-- Bento Grid Watch Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <!-- Articles Section (Main Stream) -->
+            <section class="md:col-span-8 space-y-12">
+                <div class="flex items-end justify-between border-b border-outline-variant/20 pb-4">
+                    <h2 class="font-headline text-2xl font-bold tracking-tight flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">article</span>
+                        Articles &amp; Insights
+                    </h2>
+                    <span class="font-mono text-xs text-outline">COUNT: 128_ENTRIES</span>
+                </div>
+                <div class="space-y-16">
+                    <!-- Article Item -->
+                    <article class="group">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="w-full md:w-1/3 aspect-[4/3] overflow-hidden bg-surface-container-low">
+                                <img alt="Security hardware"
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    data-alt="Close-up of high-tech circuit board with green glowing lights and metallic textures in a professional laboratory setting"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD59pD3jA5jFBnUH8eUPfuzoE1z5Q_Lk1JeVOFugHqXZFBYgfXdlkSY9XPSvXFKdps8rVZZkbHkojiFNtPHN3a2HnOaGTzkp4oyRHM7yYWuEwu2vYs1EW4MjnkmxZU1jSiHDVddgb7t9DkD8tuHH3B1i1LdUajdmStPhnxNkd9DDrrR0_EPJCcADSN7YsgKTczyavkJ2Likoy3B9PV6jJMDZEXv4R-37ikggHuqKZX1e9luujj1wyt4PNztCWMjYnYxNzryMBSkdY3C" />
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex gap-4 mb-3">
+                                    <span
+                                        class="font-mono text-[10px] uppercase tracking-widest text-primary border border-primary/20 px-2 py-0.5 rounded-full">Cybersecurity</span>
+                                    <time class="font-mono text-[10px] uppercase tracking-widest text-outline">Oct 24,
+                                        2024</time>
+                                </div>
+                                <h3
+                                    class="font-headline text-2xl font-semibold mb-4 group-hover:text-primary transition-colors">
+                                    The Shift Toward Zero-Trust Architecture in Enterprise Environments</h3>
+                                <p class="text-on-surface-variant font-body mb-6 leading-relaxed">
+                                    Exploring the fundamental transition from perimeter-based security to
+                                    identity-centric verification models. Analysis of current implementation challenges
+                                    in legacy systems.
+                                </p>
+                                <a class="inline-flex items-center gap-2 font-label font-bold text-xs uppercase tracking-widest text-primary group-hover:gap-4 transition-all"
+                                    href="#">
+                                    Read Analysis <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Article Item -->
+                    <article class="group">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="w-full md:w-1/3 aspect-[4/3] overflow-hidden bg-surface-container-low">
+                                <img alt="React Code"
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    data-alt="Vibrant abstract visualization of computer code structures with neon blue and purple highlights on a dark background"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ5jReKYnhz3L28x5CH6JAQXEBtiDND9UAJD3ruJgDw3tAONO3mp13_rgY4E6yJ14PYuOtbrPtqXwy7ZLrlbQyAStXzEsYiu9MpazEi_FROPIEtxXS4PeS5wip0NKA0F4npOuqs-APP3_O5jq0pAXHdQ9G8jkzvxt2sFtwvKnC8zx2mBudzSvPRNFQ5Wo4TUjgLgUIi3HRhbPxTGXf1VyM7idbL409eXNZxPW3yFI0byFY3q4kQeiuDrGHzbtKkM_acCvGU-VMgYmD" />
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex gap-4 mb-3">
+                                    <span
+                                        class="font-mono text-[10px] uppercase tracking-widest text-primary border border-primary/20 px-2 py-0.5 rounded-full">Frontend</span>
+                                    <time class="font-mono text-[10px] uppercase tracking-widest text-outline">Oct 18,
+                                        2024</time>
+                                </div>
+                                <h3
+                                    class="font-headline text-2xl font-semibold mb-4 group-hover:text-primary transition-colors">
+                                    Server Components and the Future of Selective Hydration</h3>
+                                <p class="text-on-surface-variant font-body mb-6 leading-relaxed">
+                                    How React Server Components are redefining the mental model for building performant
+                                    web applications by moving heavy computations to the edge.
+                                </p>
+                                <a class="inline-flex items-center gap-2 font-label font-bold text-xs uppercase tracking-widest text-primary group-hover:gap-4 transition-all"
+                                    href="#">
+                                    Read Analysis <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <!-- Sidebar (Videos & Tools) -->
+            <aside class="md:col-span-4 space-y-16">
+                <!-- Videos Section -->
+                <section>
+                    <div class="flex items-end justify-between border-b border-outline-variant/20 pb-4 mb-8">
+                        <h2 class="font-headline text-xl font-bold tracking-tight flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">play_circle</span>
+                            Masterclasses
+                        </h2>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="group cursor-pointer">
+                            <div class="relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
+                                <img alt="Developer workspace"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                    data-alt="Minimalist programmer workspace with multiple monitors showing code and soft warm desk lighting"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVhiZh5Bu3EiI4fEvhnzXr-f6qvjaw-UrixNMBRH_DETkj6avZQ2hre2_vzoidpKXHq_RW85aIgRBo0VSLLpVt0CUcBxhjcyjCo3isx3nMlAKrn2y62znMQtYA_3nMnMYGpG1Z0HQIHzepGun8-deZwb7yORgJ00P_0BvE333Ddu48_YVaWzcw8dx26hDUFZcnZvElFEMJNOh2BbCzUE-fd6hbvEpCK3ezxh-gQSTzaYs154UCuGKgyKMgAt-jWafXNZz1RZjlHfih" />
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity">play_arrow</span>
+                                </div>
+                                <span
+                                    class="absolute bottom-2 right-2 font-mono text-[10px] bg-on-background text-surface px-1.5 py-0.5">14:22</span>
+                            </div>
+                            <h4
+                                class="font-headline font-bold text-sm leading-tight group-hover:text-primary transition-colors">
+                                Modern CI/CD Pipelines for Scalable Microservices</h4>
+                            <p class="font-mono text-[10px] text-outline mt-1 uppercase">YouTube • Fireship</p>
+                        </div>
+                        <div class="group cursor-pointer">
+                            <div class="relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
+                                <img alt="Data Center"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                    data-alt="Rows of server racks in a high-tech data center with blue ambient lighting and cables"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDCZNDqkwKUmnNWuOBwazv_6UH748oEsZJkt24coSON2ZW9y5Pe7RZc7oQUTKu8eLuxHdhU4Wl-hoUUg-Bc4HCBCmKBTWQIJMr29azSm_QF0n1P05AiD1hWKh4FZ__SHXzh87yfNmeNe4MYSxIq_XwbSdTLUzZuvAo1OlKak671NMrwSXcgewFCXqFDvfXDink-3DvhIcGS_mzb22hO-fMfgNLJIiIIzKawJcHq0FxhMOEbBoY_SM7JPA4_Rr5qYODr97u59S7eFlb" />
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity">play_arrow</span>
+                                </div>
+                                <span
+                                    class="absolute bottom-2 right-2 font-mono text-[10px] bg-on-background text-surface px-1.5 py-0.5">08:45</span>
+                            </div>
+                            <h4
+                                class="font-headline font-bold text-sm leading-tight group-hover:text-primary transition-colors">
+                                AWS Lambda vs. Google Cloud Functions: 2024 Benchmark</h4>
+                            <p class="font-mono text-[10px] text-outline mt-1 uppercase">Vimeo • TechTalks</p>
+                        </div>
+                    </div>
+                </section>
+                <!-- Tools Stack -->
+                <section>
+                    <div class="flex items-end justify-between border-b border-outline-variant/20 pb-4 mb-8">
+                        <h2 class="font-headline text-xl font-bold tracking-tight flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">construction</span>
+                            Toolbox
+                        </h2>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div
+                            class="bg-surface-container-low p-4 flex items-center gap-4 group hover:bg-primary-container/20 transition-colors cursor-pointer">
+                            <div
+                                class="w-10 h-10 bg-surface flex items-center justify-center border border-outline-variant/20">
+                                <span class="material-symbols-outlined text-primary">terminal</span>
+                            </div>
+                            <div>
+                                <h5 class="font-headline font-bold text-sm">Warp Terminal</h5>
+                                <p class="font-mono text-[10px] text-on-surface-variant uppercase">The modern AI
+                                    terminal</p>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-surface-container-low p-4 flex items-center gap-4 group hover:bg-primary-container/20 transition-colors cursor-pointer">
+                            <div
+                                class="w-10 h-10 bg-surface flex items-center justify-center border border-outline-variant/20">
+                                <span class="material-symbols-outlined text-primary">database</span>
+                            </div>
+                            <div>
+                                <h5 class="font-headline font-bold text-sm">Supabase</h5>
+                                <p class="font-mono text-[10px] text-on-surface-variant uppercase">Open Source Firebase
+                                    Alt</p>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-surface-container-low p-4 flex items-center gap-4 group hover:bg-primary-container/20 transition-colors cursor-pointer">
+                            <div
+                                class="w-10 h-10 bg-surface flex items-center justify-center border border-outline-variant/20">
+                                <span class="material-symbols-outlined text-primary">monitoring</span>
+                            </div>
+                            <div>
+                                <h5 class="font-headline font-bold text-sm">Grafana Phlare</h5>
+                                <p class="font-mono text-[10px] text-on-surface-variant uppercase">Continuous Profiling
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Archive Link -->
+                <div class="pt-8">
+                    <a class="block w-full py-4 text-center border-2 border-primary/20 font-headline font-bold uppercase tracking-widest text-xs hover:bg-primary hover:text-on-primary transition-all duration-300"
+                        href="#">
+                        View Full Archive
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+    <!-- Footer from JSON -->
+    <footer
+        class="w-full py-12 px-8 border-t border-slate-200 bg-slate-50 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="font-['Space_Grotesk'] font-bold text-slate-900">Technical Architect</div>
+        <div class="text-slate-500 font-['Inter'] text-sm tracking-wide">© 2024 Technical Architect | BTS SIO Portfolio
+        </div>
+        <div class="flex gap-6">
+            <a class="text-slate-500 hover:text-blue-400 transition-colors font-['Inter'] text-sm" href="#">GitHub</a>
+            <a class="text-slate-500 hover:text-blue-400 transition-colors font-['Inter'] text-sm" href="#">LinkedIn</a>
+            <a class="text-slate-500 hover:text-blue-400 transition-colors font-['Inter'] text-sm"
+                href="#">Documentation</a>
+        </div>
+    </footer>
+</body>
+
+</html>
