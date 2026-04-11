@@ -78,7 +78,7 @@ $d = $project['detail']; // shorthand for detail fields
             </div>
         </header>
         <!-- High-Res Project Image -->
-        <section class="mb-32">
+        <section>
             <div class="detail-image-banner">
                 <img alt="<?= htmlspecialchars($d['detail_image_alt']) ?>"
                     class="w-full h-full object-cover grayscale transition-all duration-700"
@@ -113,7 +113,7 @@ $d = $project['detail']; // shorthand for detail fields
                     <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature2_title']) ?></h3>
                     <p class="text-sm text-on-surface-variant font-medium"><?= htmlspecialchars($d['feature2_desc']) ?></p>
                 </div>
-                <div class="feature-card feature-card--primary glass-btn shadow-lg">
+                <div class="feature-card feature-card--primary glass-btn shadow-lg" style="display:inline">
                     <span class="material-symbols-outlined mb-4 opacity-70"><?= htmlspecialchars($d['feature3_icon']) ?></span>
                     <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature3_title']) ?></h3>
                     <p class="text-sm font-medium opacity-90"><?= htmlspecialchars($d['feature3_desc']) ?></p>
@@ -175,21 +175,21 @@ $d = $project['detail']; // shorthand for detail fields
             <div>
                 <?php if ($prevProject): ?>
                     <a href="project_detail.php?id=<?= $prevProject['id'] ?>"
-                        class="group flex items-center gap-3 font-headline font-bold uppercase tracking-tight hover\:text-primary transition-colors">
-                        <span class="material-symbols-outlined group-hover\:-translate-x-1 transition-transform">arrow_back</span>
+                        class="group flex items-center gap-3 font-headline font-bold uppercase tracking-tight hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform">arrow_back</span>
                         <span class="text-sm"><?= htmlspecialchars($prevProject['title']) ?></span>
                     </a>
                 <?php endif; ?>
             </div>
-            <a href="projects.php" class="font-mono text-xs text-outline uppercase tracking-widest hover\:text-primary transition-colors">
+            <a href="projects.php" class="font-mono text-xs text-outline uppercase tracking-widest hover:text-primary transition-colors">
                 Tous les Projets
             </a>
             <div>
                 <?php if ($nextProject): ?>
                     <a href="project_detail.php?id=<?= $nextProject['id'] ?>"
-                        class="group flex items-center gap-3 font-headline font-bold uppercase tracking-tight hover\:text-primary transition-colors">
+                        class="group flex items-center gap-3 font-headline font-bold uppercase tracking-tight hover:text-primary transition-colors">
                         <span class="text-sm"><?= htmlspecialchars($nextProject['title']) ?></span>
-                        <span class="material-symbols-outlined group-hover\:translate-x-1 transition-transform">arrow_forward</span>
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                     </a>
                 <?php endif; ?>
             </div>

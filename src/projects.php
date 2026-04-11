@@ -82,14 +82,14 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
             </div>
         </section>
         <!-- Projects Grid (dynamic) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-16">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 px-8">
             <?php $l_i = -1; ?>
             <?php foreach ($projects as $i => $project): ?>
                 <?php $l_i++; ?>
-                <article class="group glass-btn p-3 rounded-3xl transition-all duration-500" style="margin: <?= [0, 3, 1][$l_i % 3]  ?>rem 0 <?= 2 - [0, 2, 0.5][$l_i % 3]  ?>rem; cursor: pointer; display: block">
+                <article class="group glass-btn p-3 rounded-3xl transition-all duration-500" style="margin: <?= [0, 0, 0][$l_i % 3]  ?>rem 0 <?= 2 - [0, 0, 0][$l_i % 3]  ?>rem; cursor: pointer; display: block">
                     <a href="project_detail.php?id=<?= $project['id'] ?>">
                         <div class="project-card-image-wrap">
-                            <img class="w-full h-full object-cover grayscale group-hover\:grayscale-0 transition-all duration-700"
+                            <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                                 src="<?= htmlspecialchars($project['image']) ?>"
                                 alt="<?= htmlspecialchars($project['image_alt']) ?>" />
                             <div class="project-card-badge">
@@ -100,8 +100,7 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
                             <div class="flex justify-between items-start mb-4">
                                 <h2 class="font-headline font-bold text-3xl tracking-tight"><?= htmlspecialchars($project['title']) ?></h2>
                                 <div class="glass-btn p-2 rounded-full">
-                                    <span
-                                        class="material-symbols-outlined text-primary group-hover\:translate-x-1 transition-transform">arrow_outward</span>
+                                    <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_outward</span>
                                 </div>
                             </div>
 

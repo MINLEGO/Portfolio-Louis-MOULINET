@@ -101,11 +101,11 @@ $recent_projects = array_slice($projects, 0, 2);
                         <div class="font-mono text-xs mb-2 opacity-80 font-bold">02 / LOGIC</div>
                         <h3 class="font-headline text-2xl font-bold mb-4">Systèmes Cœurs</h3>
                         <div class="space-y-4">
-                            <div class="flex justify-between items-center border-b border-on-primary\/10 pb-2">
+                            <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
                                 <span class="font-headline font-semibold">Java</span>
                                 <span class="material-symbols-outlined">coffee</span>
                             </div>
-                            <div class="flex justify-between items-center border-b border-on-primary\/10 pb-2">
+                            <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
                                 <span class="font-headline font-semibold">Python</span>
                                 <span class="material-symbols-outlined">rebase_edit</span>
                             </div>
@@ -162,7 +162,7 @@ $recent_projects = array_slice($projects, 0, 2);
                         href="projects.php">
                         Voir Tous Les Projets
                         <span
-                            class="material-symbols-outlined group-hover\:translate-x-2 transition-transform">arrow_forward</span>
+                            class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
                     </a>
                 </div>
                 <div class="grid grid-cols-1 gap-16">
@@ -171,12 +171,12 @@ $recent_projects = array_slice($projects, 0, 2);
                             <!-- Project <?= $index + 1 ?> (Even index: Image Left) -->
                             <a class="project-item glass-btn group" href="project_detail.php?id=<?= $project['id'] ?>"
                                 style="border-radius: 2rem 0rem 0rem 2rem;">
-                                <div class="relative">
+                                <div class="relative group transition-all ">
                                     <img alt="<?= htmlspecialchars($project['image_alt']) ?>"
-                                        class="w-full aspect-video object-cover transition-transform duration-700 group-hover\:scale-105"
+                                        class=" grayscale group-hover:grayscale-0 w-full aspect-video object-cover transition-transform  "
 
                                         src="<?= htmlspecialchars($project['image']) ?>" />
-                                    <div class="project-overlay" style="cursor:pointer"></div>
+                                    <div class="project-overlay   " style="cursor:pointer"></div>
                                 </div>
                                 <div>
                                     <div class="font-mono text-primary font-bold mb-4">
@@ -191,7 +191,7 @@ $recent_projects = array_slice($projects, 0, 2);
                                     <div class="flex gap-6 items-center">
                                         <span class="project-tag secondary-btn">Détails du projet</span>
                                         <span
-                                            class="material-symbols-outlined text-3xl group-hover\:translate-x-2 transition-transform">open_in_new</span>
+                                            class="material-symbols-outlined text-3xl group-hover:translate-x-2 transition-transform">open_in_new</span>
                                     </div>
                                 </div>
                             </a>
@@ -212,12 +212,12 @@ $recent_projects = array_slice($projects, 0, 2);
                                     <div class="flex gap-6 items-center">
                                         <span class="project-tag secondary-btn">Détails du projet</span>
                                         <span
-                                            class="material-symbols-outlined text-3xl group-hover\:text-primary transition-colors">open_in_new</span>
+                                            class="material-symbols-outlined text-3xl group-hover:text-primary transition-colors">open_in_new</span>
                                     </div>
                                 </div>
-                                <div class="relative md:order-2">
+                                <div class="relative md:order-2 group transition-all ">
                                     <img alt="<?= htmlspecialchars($project['image_alt']) ?>"
-                                        class="w-full aspect-video object-cover transition-transform duration-700 group-hover\:scale-105"
+                                        class="grayscale group-hover:grayscale-0 w-full aspect-video object-cover transition-transform"
 
                                         src="<?= htmlspecialchars($project['image']) ?>" />
                                     <div class="project-overlay" style="cursor:pointer"></div>
@@ -239,7 +239,7 @@ $recent_projects = array_slice($projects, 0, 2);
                         class="btn-primary glass-btn shadow-xl">
                         Télécharger le CV
                     </a>
-                    <button class="btn-secondary glass-surface glass-btn border-2 border-primary\/20">
+                    <button class="btn-secondary glass-surface glass-btn border-2 border-primary/20">
                         <script>
                             document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">Prendre contact</a>');
                         </script>

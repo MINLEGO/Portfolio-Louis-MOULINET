@@ -57,12 +57,12 @@
                 </div>
                 <div class="space-y-16">
                     <!-- Article Item -->
-                    <article class="group glass-surface p-6 rounded-3xl hover\:shadow-xl transition-all duration-500">
+                    <article class="group glass-surface p-6 rounded-3xl hover:shadow-xl transition-all duration-500">
                         <div class="flex flex-col md:flex-row gap-8">
                             <div
-                                class="w-full md:w-1\/3 aspect-4\/3 overflow-hidden rounded-2xl shadow-inner bg-surface-container-low">
+                                class="w-full md:w-1/3 aspect-4/3 overflow-hidden rounded-2xl shadow-inner bg-surface-container-low">
                                 <img alt="Security hardware"
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover\:scale-105"
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuD59pD3jA5jFBnUH8eUPfuzoE1z5Q_Lk1JeVOFugHqXZFBYgfXdlkSY9XPSvXFKdps8rVZZkbHkojiFNtPHN3a2HnOaGTzkp4oyRHM7yYWuEwu2vYs1EW4MjnkmxZU1jSiHDVddgb7t9DkD8tuHH3B1i1LdUajdmStPhnxNkd9DDrrR0_EPJCcADSN7YsgKTczyavkJ2Likoy3B9PV6jJMDZEXv4R-37ikggHuqKZX1e9luujj1wyt4PNztCWMjYnYxNzryMBSkdY3C" />
                             </div>
                             <div class="flex-1 flex flex-col justify-center">
@@ -72,7 +72,7 @@
                                         2024</time>
                                 </div>
                                 <h3
-                                    class="font-headline text-2xl font-bold mb-4 group-hover\:text-primary transition-colors">
+                                    class="font-headline text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
                                     Le passage à l'architecture Zero-Trust dans les environnements d'entreprise</h3>
                                 <p class="text-on-surface-variant font-medium mb-6 leading-relaxed">
                                     Exploration de la transition fondamentale d'une sécurité périmétrique vers des
@@ -88,9 +88,9 @@
                     <!-- Article Item -->
                     <article class="group">
                         <div class="flex flex-col md:flex-row gap-8">
-                            <div class="w-full md:w-1\/3 aspect-4\/3 overflow-hidden bg-surface-container-low">
+                            <div class="w-full md:w-1/3 aspect-4/3 overflow-hidden bg-surface-container-low">
                                 <img alt="React Code"
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover\:scale-105"
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ5jReKYnhz3L28x5CH6JAQXEBtiDND9UAJD3ruJgDw3tAONO3mp13_rgY4E6yJ14PYuOtbrPtqXwy7ZLrlbQyAStXzEsYiu9MpazEi_FROPIEtxXS4PeS5wip0NKA0F4npOuqs-APP3_O5jq0pAXHdQ9G8jkzvxt2sFtwvKnC8zx2mBudzSvPRNFQ5Wo4TUjgLgUIi3HRhbPxTGXf1VyM7idbL409eXNZxPW3yFI0byFY3q4kQeiuDrGHzbtKkM_acCvGU-VMgYmD" />
                             </div>
                             <div class="flex-1">
@@ -100,7 +100,7 @@
                                         2024</time>
                                 </div>
                                 <h3
-                                    class="font-headline text-2xl font-semibold mb-4 group-hover\:text-primary transition-colors">
+                                    class="font-headline text-2xl font-semibold mb-4 group-hover:text-primary transition-colors">
                                     Server Components et le futur de l'hydratation sélective</h3>
                                 <p class="text-on-surface-variant font-body mb-6 leading-relaxed">
                                     Comment les React Server Components redéfinissent le modèle mental pour construire
@@ -128,32 +128,32 @@
                         <div class="group cursor-pointer">
                             <div class="relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
                                 <img alt="Developer workspace"
-                                    class="w-full h-full object-cover opacity-80 group-hover\:opacity-100 transition-opacity"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVhiZh5Bu3EiI4fEvhnzXr-f6qvjaw-UrixNMBRH_DETkj6avZQ2hre2_vzoidpKXHq_RW85aIgRBo0VSLLpVt0CUcBxhjcyjCo3isx3nMlAKrn2y62znMQtYA_3nMnMYGpG1Z0HQIHzepGun8-deZwb7yORgJ00P_0BvE333Ddu48_YVaWzcw8dx26hDUFZcnZvElFEMJNOh2BbCzUE-fd6hbvEpCK3ezxh-gQSTzaYs154UCuGKgyKMgAt-jWafXNZz1RZjlHfih" />
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <span
-                                        class="material-symbols-outlined text-4xl text-white opacity-0 group-hover\:opacity-100 transition-opacity">play_arrow</span>
+                                        class="material-symbols-outlined text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity">play_arrow</span>
                                 </div>
                                 <span class="video-timestamp">14:22</span>
                             </div>
                             <h4
-                                class="font-headline font-bold text-sm leading-tight group-hover\:text-primary transition-colors">
+                                class="font-headline font-bold text-sm leading-tight group-hover:text-primary transition-colors">
                                 Modern CI/CD Pipelines for Scalable Microservices</h4>
                             <p class="font-mono text-10px text-outline mt-1 uppercase">YouTube • Fireship</p>
                         </div>
                         <div class="group cursor-pointer">
                             <div class="relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
                                 <img alt="Data Center"
-                                    class="w-full h-full object-cover opacity-80 group-hover\:opacity-100 transition-opacity"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDCZNDqkwKUmnNWuOBwazv_6UH748oEsZJkt24coSON2ZW9y5Pe7RZc7oQUTKu8eLuxHdhU4Wl-hoUUg-Bc4HCBCmKBTWQIJMr29azSm_QF0n1P05AiD1hWKh4FZ__SHXzh87yfNmeNe4MYSxIq_XwbSdTLUzZuvAo1OlKak671NMrwSXcgewFCXqFDvfXDink-3DvhIcGS_mzb22hO-fMfgNLJIiIIzKawJcHq0FxhMOEbBoY_SM7JPA4_Rr5qYODr97u59S7eFlb" />
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <span
-                                        class="material-symbols-outlined text-4xl text-white opacity-0 group-hover\:opacity-100 transition-opacity">play_arrow</span>
+                                        class="material-symbols-outlined text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity">play_arrow</span>
                                 </div>
                                 <span class="video-timestamp">08:45</span>
                             </div>
                             <h4
-                                class="font-headline font-bold text-sm leading-tight group-hover\:text-primary transition-colors">
+                                class="font-headline font-bold text-sm leading-tight group-hover:text-primary transition-colors">
                                 AWS Lambda vs. Google Cloud Functions: Benchmark 2024</h4>
                             <p class="font-mono text-10px text-outline mt-1 uppercase">Vimeo • TechTalks</p>
                         </div>
