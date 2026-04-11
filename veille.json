@@ -18,7 +18,7 @@
     "articles": [
         {
             "theme_id": 1,
-            "link": null,
+            "link": "https://www.anthropic.com/research/emotion-concepts-function",
             "title": "Le passage à l'architecture Zero-Trust dans les environnements d'entreprise",
             "description": "Exploration de la transition fondamentale d'une sécurité périmétrique vers des modèles de vérification centrés sur l'identité. Analyse des défis actuels de mise en œuvre dans les systèmes hérités.",
             "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuD59pD3jA5jFBnUH8eUPfuzoE1z5Q_Lk1JeVOFugHqXZFBYgfXdlkSY9XPSvXFKdps8rVZZkbHkojiFNtPHN3a2HnOaGTzkp4oyRHM7yYWuEwu2vYs1EW4MjnkmxZU1jSiHDVddgb7t9DkD8tuHH3B1i1LdUajdmStPhnxNkd9DDrrR0_EPJCcADSN7YsgKTczyavkJ2Likoy3B9PV6jJMDZEXv4R-37ikggHuqKZX1e9luujj1wyt4PNztCWMjYnYxNzryMBSkdY3C",
@@ -36,7 +36,7 @@
         },
         {
             "theme_id": 1,
-            "link": "https://www.youtube.com/watch?v=d3Qq-rkp_to",
+            "link": "https://www.youtube.com/watch?v=iv-5mZ_9CPY",
             "title": null,
             "description": null,
             "image": null,
@@ -45,7 +45,7 @@
         },
         {
             "theme_id": 1,
-            "link": "https: //www.youtube.com/watch?v=-01ZCTt-CJw",
+            "link": "https://www.youtube.com/watch?v=2mrGMMmrVNE",
             "title": null,
             "description": null,
             "image": null,

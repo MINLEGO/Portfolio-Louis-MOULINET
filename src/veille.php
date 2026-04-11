@@ -1,3 +1,15 @@
+<?php
+$veilleJson = file_get_contents('../veille.json');
+$veilleData = json_decode($veilleJson, true);
+$themesMap = [];
+if (!empty($veilleData['Themes'])) {
+    foreach ($veilleData['Themes'] as $theme) {
+        $themesMap[$theme['id']] = $theme['tag'];
+    }
+}
+$technologies = $veilleData['Technologies'] ?? [];
+$articlesData = $veilleData['articles'] ?? [];
+?>
 <!DOCTYPE html>
 
 <html class="light" lang="fr">
@@ -54,61 +66,8 @@
                         Domaines
                     </h2>
                 </div>
-                <div class="space-y-16">
-                    <!-- Theme 1 -->
-                    <article class="group glass-btn p-3 rounded-2xl hover:shadow-xl transition-all duration-500">
-                        <div class="flex flex-col md:flex-row gap-8">
-                            <div
-                                class="glass-surface w-full md:w-1/3 aspect-4/3 overflow-hidden rounded-2xl shadow-inner bg-surface-container-low">
-                                <img alt="Security hardware"
-                                    class=" w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD59pD3jA5jFBnUH8eUPfuzoE1z5Q_Lk1JeVOFugHqXZFBYgfXdlkSY9XPSvXFKdps8rVZZkbHkojiFNtPHN3a2HnOaGTzkp4oyRHM7yYWuEwu2vYs1EW4MjnkmxZU1jSiHDVddgb7t9DkD8tuHH3B1i1LdUajdmStPhnxNkd9DDrrR0_EPJCcADSN7YsgKTczyavkJ2Likoy3B9PV6jJMDZEXv4R-37ikggHuqKZX1e9luujj1wyt4PNztCWMjYnYxNzryMBSkdY3C" />
-                            </div>
-                            <div class="flex-1 flex flex-col justify-center">
-                                <div class="flex gap-4 mb-3">
-                                    <span class="article-category-badge">Cybersécurité</span>
-                                    <time class="font-mono text-10px uppercase tracking-widest text-outline">24 Oct, 2024</time>
-                                </div>
-                                <h3
-                                    class="font-headline text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
-                                    Le passage à l'architecture Zero-Trust dans les environnements d'entreprise</h3>
-                                <p class="text-on-surface-variant font-medium mb-6 leading-relaxed">
-                                    Exploration de la transition fondamentale d'une sécurité périmétrique vers des
-                                    modèles de vérification centrés sur l'identité. Analyse des défis actuels de mise en
-                                    œuvre dans les systèmes hérités.
-                                </p>
-                                <a class="article-read-link rounded-1xl glass-btn p-1" href="#">
-                                    Lire l'analyse <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                    <!-- Theme 2-->
-                    <article class="group glass-btn p-3 rounded-2xl hover:shadow-xl transition-all duration-500">
-                        <div class="flex flex-col md:flex-row gap-8">
-                            <div class="glass-surface w-full md:w-1/3 aspect-4/3 overflow-hidden rounded-2xl shadow-inner bg-surface-container-low">
-                                <img alt="React Code"
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ5jReKYnhz3L28x5CH6JAQXEBtiDND9UAJD3ruJgDw3tAONO3mp13_rgY4E6yJ14PYuOtbrPtqXwy7ZLrlbQyAStXzEsYiu9MpazEi_FROPIEtxXS4PeS5wip0NKA0F4npOuqs-APP3_O5jq0pAXHdQ9G8jkzvxt2sFtwvKnC8zx2mBudzSvPRNFQ5Wo4TUjgLgUIi3HRhbPxTGXf1VyM7idbL409eXNZxPW3yFI0byFY3q4kQeiuDrGHzbtKkM_acCvGU-VMgYmD" />
-                            </div>
-                            <div class="flex-1 flex flex-col justify-center">
-                                <div class="flex gap-4 mb-3">
-
-                                    <time class="font-mono text-10px uppercase tracking-widest text-outline">18 Oct,
-                                        2024</time>
-                                </div>
-                                <h3
-                                    class="font-headline text-2xl font-semibold mb-4 group-hover:text-primary transition-colors">
-                                    Server Components et le futur de l'hydratation sélective</h3>
-                                <p class="text-on-surface-variant font-medium mb-6 leading-relaxed">
-                                    Comment les React Server Components redéfinissent le modèle mental pour construire des applications web performantes en déplaçant les calculs lourds vers l'Edge.
-                                </p>
-                                <a class="article-read-link rounded-1xl glass-btn p-1" href="#">
-                                    Lire l'analyse <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+                <div class="space-y-16" id="domaines-container">
+                    <!-- Populated by JS -->
                 </div>
             </section>
             <!-- Sidebar (Articles & Tools) -->
@@ -120,43 +79,10 @@
                             <span class="material-symbols-outlined text-primary">play_circle</span>
                             Articles
                         </h2>
-                        <span class="font-mono text-xs text-outline">COMPTE : 50_ENTRÉES</span>
+                        <span class="font-mono text-xs text-outline" id="articles-count">COMPTE : 0_ENTRÉES</span>
                     </div>
-                    <div class="space-y-6 rounded-1xl">
-                        <div class="group cursor-pointer">
-                            <span class="article-category-badge">Cybersécurité</span>
-                            <div class="rounded-1xl glass-surface relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
-                                <img alt="Developer workspace"
-                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVhiZh5Bu3EiI4fEvhnzXr-f6qvjaw-UrixNMBRH_DETkj6avZQ2hre2_vzoidpKXHq_RW85aIgRBo0VSLLpVt0CUcBxhjcyjCo3isx3nMlAKrn2y62znMQtYA_3nMnMYGpG1Z0HQIHzepGun8-deZwb7yORgJ00P_0BvE333Ddu48_YVaWzcw8dx26hDUFZcnZvElFEMJNOh2BbCzUE-fd6hbvEpCK3ezxh-gQSTzaYs154UCuGKgyKMgAt-jWafXNZz1RZjlHfih" />
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span
-                                        class="material-symbols-outlined text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity">play_arrow</span>
-                                </div>
-                                <span class="video-timestamp">14:22</span>
-                            </div>
-                            <h4
-                                class="font-headline font-bold text-sm leading-tight group-hover:text-primary transition-colors">
-                                Modern CI/CD Pipelines for Scalable Microservices</h4>
-                            <p class="font-mono text-10px text-outline mt-1 uppercase">YouTube • Fireship</p>
-                        </div>
-                        <div class="group cursor-pointer">
-                            <span class="article-category-badge article-category-badge--outline">Frontend</span>
-                            <div class="rounded-1xl glass-surface relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
-                                <img alt="Data Center"
-                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDCZNDqkwKUmnNWuOBwazv_6UH748oEsZJkt24coSON2ZW9y5Pe7RZc7oQUTKu8eLuxHdhU4Wl-hoUUg-Bc4HCBCmKBTWQIJMr29azSm_QF0n1P05AiD1hWKh4FZ__SHXzh87yfNmeNe4MYSxIq_XwbSdTLUzZuvAo1OlKak671NMrwSXcgewFCXqFDvfXDink-3DvhIcGS_mzb22hO-fMfgNLJIiIIzKawJcHq0FxhMOEbBoY_SM7JPA4_Rr5qYODr97u59S7eFlb" />
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span
-                                        class="material-symbols-outlined text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity">play_arrow</span>
-                                </div>
-                                <span class="video-timestamp">08:45</span>
-                            </div>
-                            <h4
-                                class="font-headline font-bold text-sm leading-tight group-hover:text-primary transition-colors">
-                                AWS Lambda vs. Google Cloud Functions: Benchmark 2024</h4>
-                            <p class="font-mono text-10px text-outline mt-1 uppercase">Vimeo • TechTalks</p>
-                        </div>
+                    <div class="space-y-6 rounded-1xl" id="articles-container">
+                        <!-- Populated by JS -->
                     </div>
                 </section>
                 <!-- Tools Stack -->
@@ -168,35 +94,17 @@
                         </h2>
                     </div>
                     <div class="grid grid-cols-1 gap-4 ">
-                        <div class="secondary-btn">
-                            <div class="tool-icon-wrap">
-                                <span class="material-symbols-outlined text-primary">terminal</span>
+                        <?php foreach ($technologies as $tech): ?>
+                            <div class="secondary-btn">
+                                <div class="tool-icon-wrap">
+                                    <span class="material-symbols-outlined text-primary"><?php echo htmlspecialchars($tech['icon'] ?? ''); ?></span>
+                                </div>
+                                <div>
+                                    <h5 class="font-headline font-bold text-sm"><?php echo htmlspecialchars($tech['title'] ?? ''); ?></h5>
+                                    <p class="font-mono text-10px text-on-surface-variant uppercase"><?php echo htmlspecialchars($tech['description'] ?? ''); ?></p>
+                                </div>
                             </div>
-                            <div>
-                                <h5 class="font-headline font-bold text-sm">Warp Terminal</h5>
-                                <p class="font-mono text-10px text-on-surface-variant uppercase">Le terminal moderne
-                                    assisté par IA</p>
-                            </div>
-                        </div>
-                        <div class="secondary-btn">
-                            <div class="tool-icon-wrap">
-                                <span class="material-symbols-outlined text-primary">database</span>
-                            </div>
-                            <div>
-                                <h5 class="font-headline font-bold text-sm">Supabase</h5>
-                                <p class="font-mono text-10px text-on-surface-variant uppercase">Alternative Open Source
-                                    à Firebase</p>
-                            </div>
-                        </div>
-                        <div class="secondary-btn">
-                            <div class="tool-icon-wrap">
-                                <span class="material-symbols-outlined text-primary">monitoring</span>
-                            </div>
-                            <div>
-                                <h5 class="font-headline font-bold text-sm">Grafana Phlare</h5>
-                                <p class="font-mono text-10px text-on-surface-variant uppercase">Profilage continu</p>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </section>
                 <!-- Archive Link -->
@@ -235,6 +143,153 @@
             <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G" />
         </filter>
     </svg>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const veilleData = <?php echo json_encode($articlesData); ?>;
+            const themesMap = <?php echo json_encode($themesMap); ?>;
+
+            const domainesContainer = document.getElementById('domaines-container');
+            const articlesContainer = document.getElementById('articles-container');
+            const articlesCount = document.getElementById('articles-count');
+
+            async function fetchMicrolink(url) {
+                const cacheKey = url;
+                const cached = localStorage.getItem(cacheKey);
+                if (cached) {
+                    try {
+                        return JSON.parse(cached);
+                    } catch (e) {}
+                }
+                if (url.includes('youtube.com')) {
+                    try {
+                        const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`);
+
+                        //test for 400 bad request
+                        if (response.status === 200) {
+                            const json = await response.json();
+                            console.log(json);
+
+                            localStorage.setItem(cacheKey, JSON.stringify(json));
+                            return json;
+                        }
+                    } catch (e) {
+                        console.warn('Youtube oembed fetch failed for', url, e);
+                    }
+                } else {
+                    try {
+                        const response = await fetch('https://api.microlink.io?url=' + encodeURIComponent(url));
+                        const json = await response.json();
+                        console.log(json);
+                        if (json.status === 'success' && json.data) {
+                            localStorage.setItem(cacheKey, JSON.stringify(json.data));
+                            return json.data;
+                        }
+                    } catch (e) {
+                        console.warn('Microlink fetch failed for', url, e);
+                    }
+                    return null;
+                }
+            }
+
+            function getThemeName(themeId) {
+                // themesMap keys are strings after JSON serialization
+                return themesMap[String(themeId)] || 'Autre';
+            }
+
+            function buildDomaineArticle(article, meta) {
+                const title = (meta && meta.title) || article.title || 'Sans titre';
+                const description = (meta && meta.description) || article.description || '';
+                const image = (meta && meta.image && meta.image.url) ||
+                    (meta && meta.logo && meta.logo.url) ||
+                    article.image || 'https://placehold.co/400x300/1a1a2e/ffffff?text=Article';
+                const date = article.date || (meta && meta.date) || '';
+                const themeName = getThemeName(article.theme_id);
+                const href = article.link || '#';
+
+                return `<article class="group glass-btn p-3 rounded-2xl hover:shadow-xl transition-all duration-500">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="glass-surface w-full md:w-1/3 aspect-4/3 overflow-hidden rounded-2xl shadow-inner bg-surface-container-low relative">
+                            <span class="article-category-badge" style="position: absolute; top: 0.5rem; left: 0.5rem; z-index: 10; background-color: rgba(255,255,255,0.9); backdrop-filter: blur(4px);">${themeName}</span>
+                            <img alt="${title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="${image}" />
+                        </div>
+                        <div class="flex-1 flex flex-col justify-center">
+                            <div class="flex gap-4 mb-3">
+                                ${date ? `<time class="font-mono text-10px uppercase tracking-widest text-outline">${date}</time>` : ''}
+                            </div>
+                            <h3 class="font-headline text-2xl font-bold mb-4 group-hover:text-primary transition-colors">${title}</h3>
+                            <p class="text-on-surface-variant font-medium mb-6 leading-relaxed">${description}</p>
+                            <a class="article-read-link rounded-1xl glass-btn p-1" href="${href}" target="${href !== '#' ? '_blank' : '_self'}">
+                                Lire l'analyse <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>`;
+            }
+
+            function buildSidebarArticle(article, link, meta) {
+                const title = (meta && meta.title) || article.title || 'Sans titre';
+                const description = (meta && meta.description) || article.description || '';
+                const image =
+                    meta?.image?.url || meta?.thumbnail_url ||
+                    meta?.logo?.url ||
+                    article.image ||
+                    'https://placehold.co/400x225/1a1a2e/ffffff?text=Article';
+                const publisher = (meta && (meta.author || meta.author_name)) || article.author || '';
+                const themeName = getThemeName(article.theme_id);
+                const isVideo = link.includes('youtube.com') || link.includes('youtu.be') || link.includes('vimeo.com');
+                const icon = isVideo ? 'play_arrow' : 'open_in_new';
+                let host = link;
+                try {
+                    host = new URL(link).hostname.replace('www.', '');
+                } catch (e) {}
+
+                return `<div class="group cursor-pointer" onclick="window.open('${link}', '_blank')" title="${title}">
+                    <div class="rounded-1xl glass-surface relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
+                        <span class="article-category-badge" 
+                        style="position: absolute; top: 0.2rem; left: 0.2rem; z-index: 10; background-color: rgba(255,255,255,0.9); backdrop-filter: blur(4px);">${themeName}</span>
+                        <img alt="${title}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" src="${image}" />
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity">${icon}</span>
+                        </div>
+                        ${(isVideo&&(meta?.duration ||false)) ? `<span class="video-timestamp">${meta.duration}</span>` : ''}
+                    </div>
+                    <h4 class="font-headline font-bold text-sm leading-tight group-hover:text-primary transition-colors">${title}</h4>
+                    <p class="font-mono text-10px text-outline mt-1 uppercase">${publisher ? publisher + ' - ' : ''}${host}</p>
+                </div>`;
+            }
+
+            // Render all articles immediately using JSON data, then enrich with Microlink
+            let sidebarCount = 0;
+            const microlinkPromises = [];
+
+            veilleData.forEach((article, index) => {
+                const link = article.link ? article.link.replace(/\s+/g, '') : null;
+
+                if (!link) {
+                    // Domaine article: render immediately with JSON data
+                    domainesContainer.insertAdjacentHTML('beforeend', buildDomaineArticle(article, null));
+                } else {
+                    // Sidebar article: render placeholder immediately, then enrich
+                    sidebarCount++;
+                    const placeholder = buildSidebarArticle(article, link, null);
+                    articlesContainer.insertAdjacentHTML('beforeend', placeholder);
+                    const cardEl = articlesContainer.lastElementChild;
+
+                    // Enrich with Microlink asynchronously
+                    const promise = fetchMicrolink(link).then(meta => {
+                        if (meta) {
+                            cardEl.outerHTML = buildSidebarArticle(article, link, meta);
+                        }
+                    });
+                    microlinkPromises.push(promise);
+                }
+            });
+
+            if (articlesCount) {
+                articlesCount.textContent = 'COMPTE : ' + sidebarCount + '_ENTRÉES';
+            }
+        });
+    </script>
 </body>
 
 </html>
