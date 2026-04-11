@@ -71,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             'image'     => '',
             'image_alt' => '',
             'detail'    => [
-                'subtitle' => str_pad($newId, 2, '0', STR_PAD_LEFT) . ' / BTS-SIO / Catégorie',
                 'status'   => '',
                 'stack' => '',
                 'year' => '',

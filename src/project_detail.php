@@ -47,7 +47,7 @@ $d = $project['detail']; // shorthand for detail fields
         <div class="nav-links">
             <a class="nav-link glass-btn" href="index.php">Accueil</a>
             <a class="nav-link glass-btn active" href="projects.php">Projets</a>
-            <a class="nav-link glass-btn" href="veille.html">Veille</a>
+            <a class="nav-link glass-btn" href="veille.php">Veille</a>
         </div>
         <button class="btn-contact glass-btn">
             <script>
@@ -60,7 +60,7 @@ $d = $project['detail']; // shorthand for detail fields
         <header class="detail-hero mb-20">
             <div class="md:col-span-8">
                 <span class="font-label text-primary font-semibold tracking-widest uppercase text-xs mb-4 block">
-                    <?= htmlspecialchars($d['subtitle']) ?>
+                    <?= str_pad(htmlspecialchars($project['id']), 2, '0', STR_PAD_LEFT) ?> / BTS-SIO / <?= htmlspecialchars($project['category']) ?>
                 </span>
                 <h1 class="font-headline text-6xl font-bold tracking-tighter leading-none mb-6">
                     <?= htmlspecialchars($project['title']) ?>

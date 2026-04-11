@@ -1,0 +1,73 @@
+{
+    "Themes": [
+        {
+            "id": 1,
+            "tag": "Cybersécurité",
+            "title": null,
+            "image": null,
+            "description": null
+        },
+        {
+            "id": 2,
+            "tag": "Frontend",
+            "title": null,
+            "image": null,
+            "description": null
+        }
+    ],
+    "articles": [
+        {
+            "theme_id": 1,
+            "link": null,
+            "title": "Le passage à l'architecture Zero-Trust dans les environnements d'entreprise",
+            "description": "Exploration de la transition fondamentale d'une sécurité périmétrique vers des modèles de vérification centrés sur l'identité. Analyse des défis actuels de mise en œuvre dans les systèmes hérités.",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuD59pD3jA5jFBnUH8eUPfuzoE1z5Q_Lk1JeVOFugHqXZFBYgfXdlkSY9XPSvXFKdps8rVZZkbHkojiFNtPHN3a2HnOaGTzkp4oyRHM7yYWuEwu2vYs1EW4MjnkmxZU1jSiHDVddgb7t9DkD8tuHH3B1i1LdUajdmStPhnxNkd9DDrrR0_EPJCcADSN7YsgKTczyavkJ2Likoy3B9PV6jJMDZEXv4R-37ikggHuqKZX1e9luujj1wyt4PNztCWMjYnYxNzryMBSkdY3C",
+            "date": "24 Oct, 2024",
+            "author": null
+        },
+        {
+            "theme_id": 2,
+            "link": null,
+            "title": "Server Components et le futur de l'hydratation sélective",
+            "description": "Comment les React Server Components redéfinissent le modèle mental pour construire des applications web performantes en déplaçant les calculs lourds vers l'Edge.",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAJ5jReKYnhz3L28x5CH6JAQXEBtiDND9UAJD3ruJgDw3tAONO3mp13_rgY4E6yJ14PYuOtbrPtqXwy7ZLrlbQyAStXzEsYiu9MpazEi_FROPIEtxXS4PeS5wip0NKA0F4npOuqs-APP3_O5jq0pAXHdQ9G8jkzvxt2sFtwvKnC8zx2mBudzSvPRNFQ5Wo4TUjgLgUIi3HRhbPxTGXf1VyM7idbL409eXNZxPW3yFI0byFY3q4kQeiuDrGHzbtKkM_acCvGU-VMgYmD",
+            "date": "18 Oct, 2024",
+            "author": null
+        },
+        {
+            "theme_id": 1,
+            "link": "https://www.youtube.com/watch?v=d3Qq-rkp_to",
+            "title": null,
+            "description": null,
+            "image": null,
+            "date": null,
+            "author": null
+        },
+        {
+            "theme_id": 1,
+            "link": "https: //www.youtube.com/watch?v=-01ZCTt-CJw",
+            "title": null,
+            "description": null,
+            "image": null,
+            "date": null,
+            "author": null
+        }
+    ],
+    "Technologies": [
+        {
+            "title": "Warp Terminal",
+            "description": "Le terminal assisté par IA",
+            "icon": "terminal"
+        },
+        {
+            "title": "Supabase",
+            "description": "Alternative open source à Firebase",
+            "icon": "database"
+        },
+        {
+            "title": "Grafana Phlare",
+            "description": "Profilage continu",
+            "icon": "monitoring"
+        }
+    ]
+}

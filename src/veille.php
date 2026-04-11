@@ -45,31 +45,29 @@
             </p>
         </header>
         <!-- Bento Grid Watch Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-            <!-- Articles Section (Main Stream) -->
-            <section class="md:col-span-8 space-y-12">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 ">
+            <!-- Theme Section  -->
+            <section class="md:col-span-8 space-y-12 rounded-1xl glass-surface p-2 pt-4 small-glass">
                 <div class="section-heading-bar pb-4">
-                    <h2 class="font-headline text-2xl font-bold tracking-tight flex items-center gap-2">
+                    <h2 class="font-headline text-2xl font-bold tracking-tight flex items-center px-4">
                         <span class="material-symbols-outlined text-primary">article</span>
-                        Articles &amp; Analyses
+                        Domaines
                     </h2>
-                    <span class="font-mono text-xs text-outline">COMPTE : 128_ENTRÉES</span>
                 </div>
                 <div class="space-y-16">
-                    <!-- Article Item -->
-                    <article class="group glass-surface p-6 rounded-3xl hover:shadow-xl transition-all duration-500">
+                    <!-- Theme 1 -->
+                    <article class="group glass-btn p-3 rounded-2xl hover:shadow-xl transition-all duration-500">
                         <div class="flex flex-col md:flex-row gap-8">
                             <div
-                                class="w-full md:w-1/3 aspect-4/3 overflow-hidden rounded-2xl shadow-inner bg-surface-container-low">
+                                class="glass-surface w-full md:w-1/3 aspect-4/3 overflow-hidden rounded-2xl shadow-inner bg-surface-container-low">
                                 <img alt="Security hardware"
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    class=" w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuD59pD3jA5jFBnUH8eUPfuzoE1z5Q_Lk1JeVOFugHqXZFBYgfXdlkSY9XPSvXFKdps8rVZZkbHkojiFNtPHN3a2HnOaGTzkp4oyRHM7yYWuEwu2vYs1EW4MjnkmxZU1jSiHDVddgb7t9DkD8tuHH3B1i1LdUajdmStPhnxNkd9DDrrR0_EPJCcADSN7YsgKTczyavkJ2Likoy3B9PV6jJMDZEXv4R-37ikggHuqKZX1e9luujj1wyt4PNztCWMjYnYxNzryMBSkdY3C" />
                             </div>
                             <div class="flex-1 flex flex-col justify-center">
                                 <div class="flex gap-4 mb-3">
                                     <span class="article-category-badge">Cybersécurité</span>
-                                    <time class="font-mono text-10px uppercase tracking-widest text-outline">24 Oct,
-                                        2024</time>
+                                    <time class="font-mono text-10px uppercase tracking-widest text-outline">24 Oct, 2024</time>
                                 </div>
                                 <h3
                                     class="font-headline text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
@@ -79,34 +77,33 @@
                                     modèles de vérification centrés sur l'identité. Analyse des défis actuels de mise en
                                     œuvre dans les systèmes hérités.
                                 </p>
-                                <a class="article-read-link" href="#">
+                                <a class="article-read-link rounded-1xl glass-btn p-1" href="#">
                                     Lire l'analyse <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                 </a>
                             </div>
                         </div>
                     </article>
-                    <!-- Article Item -->
-                    <article class="group">
+                    <!-- Theme 2-->
+                    <article class="group glass-btn p-3 rounded-2xl hover:shadow-xl transition-all duration-500">
                         <div class="flex flex-col md:flex-row gap-8">
-                            <div class="w-full md:w-1/3 aspect-4/3 overflow-hidden bg-surface-container-low">
+                            <div class="glass-surface w-full md:w-1/3 aspect-4/3 overflow-hidden rounded-2xl shadow-inner bg-surface-container-low">
                                 <img alt="React Code"
                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ5jReKYnhz3L28x5CH6JAQXEBtiDND9UAJD3ruJgDw3tAONO3mp13_rgY4E6yJ14PYuOtbrPtqXwy7ZLrlbQyAStXzEsYiu9MpazEi_FROPIEtxXS4PeS5wip0NKA0F4npOuqs-APP3_O5jq0pAXHdQ9G8jkzvxt2sFtwvKnC8zx2mBudzSvPRNFQ5Wo4TUjgLgUIi3HRhbPxTGXf1VyM7idbL409eXNZxPW3yFI0byFY3q4kQeiuDrGHzbtKkM_acCvGU-VMgYmD" />
                             </div>
-                            <div class="flex-1">
+                            <div class="flex-1 flex flex-col justify-center">
                                 <div class="flex gap-4 mb-3">
-                                    <span class="article-category-badge article-category-badge--outline">Frontend</span>
+
                                     <time class="font-mono text-10px uppercase tracking-widest text-outline">18 Oct,
                                         2024</time>
                                 </div>
                                 <h3
                                     class="font-headline text-2xl font-semibold mb-4 group-hover:text-primary transition-colors">
                                     Server Components et le futur de l'hydratation sélective</h3>
-                                <p class="text-on-surface-variant font-body mb-6 leading-relaxed">
-                                    Comment les React Server Components redéfinissent le modèle mental pour construire
-                                    des applications web performantes en déplaçant les calculs lourds vers l'Edge.
+                                <p class="text-on-surface-variant font-medium mb-6 leading-relaxed">
+                                    Comment les React Server Components redéfinissent le modèle mental pour construire des applications web performantes en déplaçant les calculs lourds vers l'Edge.
                                 </p>
-                                <a class="article-read-link" href="#">
+                                <a class="article-read-link rounded-1xl glass-btn p-1" href="#">
                                     Lire l'analyse <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                 </a>
                             </div>
@@ -114,19 +111,21 @@
                     </article>
                 </div>
             </section>
-            <!-- Sidebar (Videos & Tools) -->
-            <aside class="md:col-span-4 space-y-16">
-                <!-- Videos Section -->
-                <section>
+            <!-- Sidebar (Articles & Tools) -->
+            <aside class="md:col-span-4 space-y-16 ">
+                <!-- Articles -->
+                <section class="rounded-1xl glass-surface p-3 pt-4 small-glass">
                     <div class="section-heading-bar pb-4 mb-8">
-                        <h2 class="font-headline text-xl font-bold tracking-tight flex items-center gap-2">
+                        <h2 class="font-headline text-xl font-bold tracking-tight flex items-center gap-2 px-4">
                             <span class="material-symbols-outlined text-primary">play_circle</span>
-                            Masterclasses
+                            Articles
                         </h2>
+                        <span class="font-mono text-xs text-outline">COMPTE : 50_ENTRÉES</span>
                     </div>
-                    <div class="space-y-6">
+                    <div class="space-y-6 rounded-1xl">
                         <div class="group cursor-pointer">
-                            <div class="relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
+                            <span class="article-category-badge">Cybersécurité</span>
+                            <div class="rounded-1xl glass-surface relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
                                 <img alt="Developer workspace"
                                     class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVhiZh5Bu3EiI4fEvhnzXr-f6qvjaw-UrixNMBRH_DETkj6avZQ2hre2_vzoidpKXHq_RW85aIgRBo0VSLLpVt0CUcBxhjcyjCo3isx3nMlAKrn2y62znMQtYA_3nMnMYGpG1Z0HQIHzepGun8-deZwb7yORgJ00P_0BvE333Ddu48_YVaWzcw8dx26hDUFZcnZvElFEMJNOh2BbCzUE-fd6hbvEpCK3ezxh-gQSTzaYs154UCuGKgyKMgAt-jWafXNZz1RZjlHfih" />
@@ -142,7 +141,8 @@
                             <p class="font-mono text-10px text-outline mt-1 uppercase">YouTube • Fireship</p>
                         </div>
                         <div class="group cursor-pointer">
-                            <div class="relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
+                            <span class="article-category-badge article-category-badge--outline">Frontend</span>
+                            <div class="rounded-1xl glass-surface relative aspect-video bg-surface-container-high mb-3 overflow-hidden">
                                 <img alt="Data Center"
                                     class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDCZNDqkwKUmnNWuOBwazv_6UH748oEsZJkt24coSON2ZW9y5Pe7RZc7oQUTKu8eLuxHdhU4Wl-hoUUg-Bc4HCBCmKBTWQIJMr29azSm_QF0n1P05AiD1hWKh4FZ__SHXzh87yfNmeNe4MYSxIq_XwbSdTLUzZuvAo1OlKak671NMrwSXcgewFCXqFDvfXDink-3DvhIcGS_mzb22hO-fMfgNLJIiIIzKawJcHq0FxhMOEbBoY_SM7JPA4_Rr5qYODr97u59S7eFlb" />
@@ -160,14 +160,14 @@
                     </div>
                 </section>
                 <!-- Tools Stack -->
-                <section>
+                <section class="rounded-1xl glass-surface p-3 small-glass">
                     <div class="section-heading-bar pb-4 mb-8">
                         <h2 class="font-headline text-xl font-bold tracking-tight flex items-center gap-2">
                             <span class="material-symbols-outlined text-primary">construction</span>
-                            Boîte à outils
+                            Nouvelles technologies
                         </h2>
                     </div>
-                    <div class="grid grid-cols-1 gap-4">
+                    <div class="grid grid-cols-1 gap-4 ">
                         <div class="secondary-btn">
                             <div class="tool-icon-wrap">
                                 <span class="material-symbols-outlined text-primary">terminal</span>
