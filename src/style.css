@@ -442,6 +442,10 @@ pre {
     padding-inline: 2rem;
 }
 
+.px-24 {
+    padding-inline: 6rem;
+}
+
 .py-4 {
     padding-block: 1rem;
 }
@@ -1698,7 +1702,7 @@ pre {
    PROJECT DETAIL PAGE
    ========================================= */
 .detail-hero {
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -1726,12 +1730,12 @@ pre {
 }
 
 .detail-image-banner {
-    width: 100%;
+    width: 80%;
     aspect-ratio: 21 / 9;
     background-color: var(--surface-container-high);
     position: relative;
     overflow: hidden;
-    border-radius: 3rem;
+    border-radius: 1rem;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
     margin-bottom: 5rem;
 }
@@ -1772,7 +1776,7 @@ pre {
 }
 
 .feature-card--primary {
-    background-color: var(--primary);
+    background-color: color-mix(in srgb, var(--primary), transparent 10%);
     color: var(--on-primary);
 }
 
@@ -1863,7 +1867,8 @@ pre {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     border-top: 1px solid rgba(172, 173, 173, 0.2);
 }
 

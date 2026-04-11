@@ -455,9 +455,9 @@ function eta($name, $value, $rows = 3, $class = '')
             <nav class="nav-container fixed glass-surface z-50">
                 <div class="nav-logo">Louis MOULINET</div>
                 <div class="nav-links">
-                    <a class="nav-link glass-btn" href="index.php">Accueil</a>
-                    <a class="nav-link glass-btn active" href="projects.php">Projets</a>
-                    <a class="nav-link glass-btn" href="veille.html">Veille</a>
+                    <a class="nav-link glass-btn" href="#">Accueil</a>
+                    <a class="nav-link glass-btn active" href="#">Projets</a>
+                    <a class="nav-link glass-btn" href="#">Veille</a>
                 </div>
                 <button class="btn-contact glass-btn" type="button">contact</button>
             </nav>
@@ -490,7 +490,7 @@ function eta($name, $value, $rows = 3, $class = '')
                     <div class="detail-image-banner">
                         <?php $imgSrc = htmlspecialchars($d['detail_image']); ?>
                         <img alt="<?= htmlspecialchars($d['detail_image_alt']) ?>"
-                            class="w-full h-full object-cover grayscale transition-all duration-700"
+                            class="w-full h-full object-cover transition-all duration-700"
                             style="transition: filter 0.7s ease;"
                             onmouseover="this.style.filter='grayscale(0)'"
                             onmouseout="this.style.filter='grayscale(100%)'"

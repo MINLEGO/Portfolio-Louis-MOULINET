@@ -28,7 +28,7 @@
         {
             "theme_id": 2,
             "link": null,
-            "title": "Server Components et le futur de l'hydratation sélective",
+            "title": "[PLACEHOLDER] Server Components et le futur de l'hydratation sélective",
             "description": "Comment les React Server Components redéfinissent le modèle mental pour construire des applications web performantes en déplaçant les calculs lourds vers l'Edge.",
             "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAJ5jReKYnhz3L28x5CH6JAQXEBtiDND9UAJD3ruJgDw3tAONO3mp13_rgY4E6yJ14PYuOtbrPtqXwy7ZLrlbQyAStXzEsYiu9MpazEi_FROPIEtxXS4PeS5wip0NKA0F4npOuqs-APP3_O5jq0pAXHdQ9G8jkzvxt2sFtwvKnC8zx2mBudzSvPRNFQ5Wo4TUjgLgUIi3HRhbPxTGXf1VyM7idbL409eXNZxPW3yFI0byFY3q4kQeiuDrGHzbtKkM_acCvGU-VMgYmD",
             "date": "18 Oct, 2024",
@@ -44,7 +44,7 @@
             "author": null
         },
         {
-            "theme_id": 1,
+            "theme_id": 2,
             "link": "https://www.youtube.com/watch?v=2mrGMMmrVNE",
             "title": null,
             "description": null,

@@ -30,7 +30,7 @@
                 "feature3_icon": "shield_lock",
                 "feature3_title": "IAM Security",
                 "feature3_desc": "Fine-grained role-based access control across all cloud resources.",
-                "detail_image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAeC_HyovVsIi-SxLK_mdpNvFu67EFYf9tEGZXbG_2dxXCiVyDiDX6qoj4VQbeYFJ2zeF3pO0zXKRrejCvC5tG_yjnXDvXUxdZGFZtIiXQl4Fxo8rfCQG7vKacRBGbZ1XZzXVmIpItSQmfjrmDL8P55xkZITrqS7JKHxa2kdeqZUl9EmweEnmzAg6jaQIn7NVp8wh8WNSeKhWY1G6zD6kmhKo9LxUAhJIT0cs5lRYLnDY3ptbWB9SG-NqiGd6pDc131AvKwj6raQuqx",
+                "detail_image": "./media/project_ms_interface.png",
                 "detail_image_alt": "High-end minimalist workstation with multiple monitors displaying architectural diagrams",
                 "tech_tags": [
                     "Python",
@@ -41,7 +41,7 @@
                 ],
                 "code_file": "main_sc.py",
                 "code_version": "v1.1.2-beta",
-                "code_block": "for filtre in Filtres: \n    #scrap the page\n    scraper.scrap(filtre['url'])\n    #parse the page\n    scraper.Parse(filtre['plateforme'])\n    #append the listings to the queue for parallel processing\n    scraper.Append_to_Queue(condition=filtre['condition'], platform=filtre['plateforme'])",
+                "code_block": "for filtre in Filtres: \r\n    #scrap the page\r\n    scraper.scrap(filtre['url'])\r\n    #parse the page\r\n    scraper.Parse(filtre['plateforme'])\r\n    #append the listings to the queue for parallel processing\r\n    scraper.Append_to_Queue(condition=filtre['condition'], platform=filtre['plateforme'])",
                 "detail_image2": "https://lh3.googleusercontent.com/aida-public/AB6AXuDjzF30Dre_fEuvWmTo5LnVarjPHAQAW0pp9YOan2CerD9wyQLfaC-iE19CqIW4LqITbk1Hn0jzd-oKR2amIUFakrTY8Zm2uXGSw8fbkzbEgQRdl2QnHJr6k36K5XQeWICEpFAbj8DchlhLYkYz6sa6Ufk0w27Urt4OeSstbCg0GDMplzR5URCQMJFmhQrk9dB0Vf_QznwczQkP4fBel0NOH4c3mDQEgaqkzZGOJk5mUc7NR0vGaHShv2gYmHBDKz9ciDh1kKTbzm88",
                 "detail_image2_alt": "Extreme close-up of a high-resolution retina display showing crisp typography in a dark mode UI.",
                 "detail_note": "Focus on operational simplicity was paramount: every component is fully declarative, reproducible, and auditable by the entire team through version-controlled infrastructure code."
@@ -51,13 +51,13 @@
             "id": 2,
             "index": "02",
             "category": "Software",
-            "title": "Inventory Engine v2",
+            "title": "Invesezlkrjobvretifuntory Engine v2",
             "tags": [
                 "Java",
                 "PostgreSQL",
                 "Spring"
             ],
-            "description": "A robust inventory management system built with transactional integrity in mind. Handles concurrent requests for multi-warehouse logistics.",
+            "description": "A robust inventory management system beeeeeeuilt with transactional integrity in mind. Handles concurrent requests for multi-warehouse logistics.",
             "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCoDbjNn_F2_KgwQEpXorLzw51STrdES462wiObsMW1SnXhcbeirTPN08nr8s8WzoxaDlJ45C7_U5fjXMVR4nhCMlheq0iDqmo_lrgWMLo9zfCAT4HWzgoBMlSFUcH4v4JyiKcXC2EVLQCj5vfdV62nUNgNd4DwJIdyM0whJbQtZTx5dlPul8EWZ3Pfxq_PPs1NpSH7UNF4aDbY2dO6_RsFu3AUHMbTTRv2QTbPKBWjVPevdeuYuV8peJdgtaq4Tbbnp3Mm0rQ4DJ7E",
             "image_alt": "overhead view of high-quality mechanical keyboard and clean desk setup with monitors showing code blocks",
             "detail": {
@@ -86,7 +86,7 @@
                 ],
                 "code_file": "InventoryService.java",
                 "code_version": "v2.0.1-stable",
-                "code_block": "@Transactional\npublic InventoryItem updateStock(Long id, int delta) {\n  InventoryItem item = repo.findById(id)\n    .orElseThrow(NotFoundException::new);\n\n  if (item.getQuantity() + delta < 0) {\n    throw new StockUnderflowException(id);\n  }\n\n  item.setQuantity(item.getQuantity() + delta);\n  return repo.save(item);\n}",
+                "code_block": "@Transactional\r\npublic InventoryItem updateStock(Long id, int delta) {\r\n  InventoryItem item = repo.findById(id)\r\n    .orElseThrow(NotFoundException::new);\r\n\r\n  if (item.getQuantity() + delta < 0) {\r\n    throw new StockUnderflowException(id);\r\n  }\r\n\r\n  item.setQuantity(item.getQuantity() + delta);\r\n  return repo.save(item);\r\n}",
                 "detail_image2": "https://lh3.googleusercontent.com/aida-public/AB6AXuDjzF30Dre_fEuvWmTo5LnVarjPHAQAW0pp9YOan2CerD9wyQLfaC-iE19CqIW4LqITbk1Hn0jzd-oKR2amIUFakrTY8Zm2uXGSw8fbkzbEgQRdl2QnHJr6k36K5XQeWICEpFAbj8DchlhLYkYz6sa6Ufk0w27Urt4OeSstbCg0GDMplzR5URCQMJFmhQrk9dB0Vf_QznwczQkP4fBel0NOH4c3mDQEgaqkzZGOJk5mUc7NR0vGaHShv2gYmHBDKz9ciDh1kKTbzm88",
                 "detail_image2_alt": "Close-up of a modern display showing clean typography in a dark mode UI dashboard.",
                 "detail_note": "The system was designed with extensibility first: adding a new warehouse requires only a configuration entry, with zero code changes required to the core logic layer."

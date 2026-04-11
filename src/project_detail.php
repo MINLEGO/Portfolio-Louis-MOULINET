@@ -55,7 +55,7 @@ $d = $project['detail']; // shorthand for detail fields
             </script>
         </button>
     </nav>
-    <main class="pt-24 pb-20 px-8 max-w-7xl">
+    <main class="pt-24 px-8 max-w-7xl">
         <!-- Hero Section -->
         <header class="detail-hero mb-20">
             <div class="md:col-span-8">
@@ -79,9 +79,9 @@ $d = $project['detail']; // shorthand for detail fields
         </header>
         <!-- High-Res Project Image -->
         <section>
-            <div class="detail-image-banner">
+            <div class="detail-image-banner glass-surface big-glass">
                 <img alt="<?= htmlspecialchars($d['detail_image_alt']) ?>"
-                    class="w-full h-full object-cover grayscale transition-all duration-700"
+                    class="w-full h-full object-cover transition-all duration-700"
                     style="transition: filter 0.7s ease;"
                     onmouseover="this.style.filter='grayscale(0)'"
                     onmouseout="this.style.filter='grayscale(100%)'"
@@ -103,12 +103,12 @@ $d = $project['detail']; // shorthand for detail fields
             </div>
             <!-- Right Column: Key Features (Bento Style) -->
             <div class="md:col-span-7 feature-grid">
-                <div class="glass-surface feature-card feature-card--span-2">
+                <div class="glass-surface small-glass feature-card feature-card--span-2">
                     <span class="material-symbols-outlined text-primary mb-4"><?= htmlspecialchars($d['feature1_icon']) ?></span>
                     <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature1_title']) ?></h3>
                     <p class="text-sm text-on-surface-variant font-medium"><?= htmlspecialchars($d['feature1_desc']) ?></p>
                 </div>
-                <div class="glass-surface feature-card">
+                <div class="glass-surface small-glass feature-card">
                     <span class="material-symbols-outlined text-primary mb-4"><?= htmlspecialchars($d['feature2_icon']) ?></span>
                     <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature2_title']) ?></h3>
                     <p class="text-sm text-on-surface-variant font-medium"><?= htmlspecialchars($d['feature2_desc']) ?></p>
@@ -135,7 +135,7 @@ $d = $project['detail']; // shorthand for detail fields
                     </div>
                 </div>
                 <div class="tech-spec-code">
-                    <div class="glass-surface code-block-wrap">
+                    <div class="glass-surface shadow-lg code-block-wrap">
                         <div class="code-block-header">
                             <span><?= htmlspecialchars($d['code_file']) ?></span>
                             <span><?= htmlspecialchars($d['code_version']) ?></span>
@@ -154,7 +154,7 @@ $d = $project['detail']; // shorthand for detail fields
             </div>
             <div class="detail-number-card">
                 <span class="font-headline text-5xl font-bold mb-4"><?= str_pad($project['id'], 2, '0', STR_PAD_LEFT) ?></span>
-                <p class="font-body text-xl text-on-surface-variant">
+                <p class="font-body text-xl text-on-surface-variant" style="font-weight:500;">
                     <?= htmlspecialchars($d['detail_note']) ?>
                 </p>
             </div>
