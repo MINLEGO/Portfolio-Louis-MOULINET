@@ -13,17 +13,63 @@
             "title": null,
             "image": null,
             "description": null
+        },
+        {
+            "id": 3,
+            "tag": "Expérimentation IA",
+            "title": null,
+            "image": null,
+            "description": null
+        },
+        {
+            "id": 4,
+            "tag": "Demonstration IA",
+            "title": null,
+            "image": null,
+            "description": null
+        },
+        {
+            "id": 5,
+            "tag": "Innovation IA",
+            "title": null,
+            "image": null,
+            "description": null
+        },
+        {
+            "id": 6,
+            "tag": "Explication IA",
+            "title": null,
+            "image": null,
+            "description": null
+        },
+        {
+            "id": 7,
+            "tag": "News",
+            "title": null,
+            "image": null,
+            "description": null
         }
     ],
     "articles": [
         {
-            "theme_id": 1,
+            "theme_id": 7,
+            "link": "https://www.youtube.com/watch?v=f_xT45Pi0UQ",
+            "priority": 4
+        },
+        {
+            "theme_id": 6,
+            "link": "https://www.youtube.com/watch?v=d3Qq-rkp_to",
+            "priority": 5
+        },
+        {
+            "theme_id": 3,
             "link": "https://www.anthropic.com/research/emotion-concepts-function",
             "title": "Le passage à l'architecture Zero-Trust dans les environnements d'entreprise",
             "description": "Exploration de la transition fondamentale d'une sécurité périmétrique vers des modèles de vérification centrés sur l'identité. Analyse des défis actuels de mise en œuvre dans les systèmes hérités.",
             "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuD59pD3jA5jFBnUH8eUPfuzoE1z5Q_Lk1JeVOFugHqXZFBYgfXdlkSY9XPSvXFKdps8rVZZkbHkojiFNtPHN3a2HnOaGTzkp4oyRHM7yYWuEwu2vYs1EW4MjnkmxZU1jSiHDVddgb7t9DkD8tuHH3B1i1LdUajdmStPhnxNkd9DDrrR0_EPJCcADSN7YsgKTczyavkJ2Likoy3B9PV6jJMDZEXv4R-37ikggHuqKZX1e9luujj1wyt4PNztCWMjYnYxNzryMBSkdY3C",
             "date": "24 Oct, 2024",
-            "author": null
+            "author": null,
+            "priority": 5
         },
         {
             "theme_id": 2,
@@ -35,22 +81,119 @@
             "author": null
         },
         {
-            "theme_id": 1,
+            "theme_id": 6,
             "link": "https://www.youtube.com/watch?v=iv-5mZ_9CPY",
-            "title": null,
-            "description": null,
-            "image": null,
-            "date": null,
-            "author": null
+            "priority": 5
         },
         {
-            "theme_id": 2,
+            "theme_id": 6,
             "link": "https://www.youtube.com/watch?v=2mrGMMmrVNE",
             "title": null,
             "description": null,
             "image": null,
             "date": null,
-            "author": null
+            "author": null,
+            "priority": 5
+        },
+        {
+            "theme_id": 6,
+            "link": "https://youtube.com/watch?v=NLWiIj47IdI",
+            "priority": 3
+        },
+        {
+            "theme_id": 5,
+            "link": "https://youtube.com/watch?v=-01ZCTt-CJw",
+            "priority": 4
+        },
+        {
+            "theme_id": 4,
+            "link": "https://youtube.com/watch?v=2-P6YZPrHg0",
+            "priority": 2
+        },
+        {
+            "theme_id": 7,
+            "link": "https://youtube.com/watch?v=I1BvAHOsjBU",
+            "priority": 3
+        },
+        {
+            "theme_id": 7,
+            "link": "https://youtube.com/watch?v=JSuS-zXMVwE",
+            "priority": 2
+        },
+        {
+            "theme_id": 3,
+            "link": "https://youtube.com/watch?v=D4XTefP3Lsc",
+            "priority": 3
+        },
+        {
+            "theme_id": 7,
+            "link": "https://youtube.com/watch?v=mBHRPeg8zPU",
+            "priority": 5
+        },
+        {
+            "theme_id": 0,
+            "link": "https://youtube.com/watch?v=Q2Ak8wX0AaQ",
+            "priority": 3
+        },
+        {
+            "theme_id": 7,
+            "link": "https://youtube.com/watch?v=LbUu60Oj2uA",
+            "priority": 3
+        },
+        {
+            "theme_id": 5,
+            "link": "https://youtube.com/watch?v=wfeiCZK0mNs",
+            "priority": 2
+        },
+        {
+            "theme_id": 5,
+            "link": "https://youtube.com/watch?v=9d5bzxVsocw",
+            "priority": 4
+        },
+        {
+            "theme_id": 0,
+            "link": "https://youtube.com/watch?v=nxwkn9Dt9-I",
+            "priority": 3
+        },
+        {
+            "theme_id": 3,
+            "link": "https://youtube.com/watch?v=h3AtWdeu_G0",
+            "priority": 2
+        },
+        {
+            "theme_id": 5,
+            "link": "https://youtube.com/watch?v=qaB5HF4ax9M",
+            "priority": 4
+        },
+        {
+            "theme_id": 6,
+            "link": "https://youtube.com/watch?v=Qzmu2f40WqU",
+            "priority": 5
+        },
+        {
+            "theme_id": 3,
+            "link": "https://youtube.com/watch?v=gtnt84CDP-s",
+            "priority": 2
+        },
+        {
+            "theme_id": 4,
+            "link": "https://youtube.com/watch?v=MPsS5MpBeXA",
+            "priority": 2
+        },
+        {
+            "theme_id": 3,
+            "link": "https://youtube.com/watch?v=qVjDSOa7BZ0",
+            "priority": 2
+        },
+        {
+            "theme_id": 5,
+            "link": "https://youtube.com/watch?v=Ii99RU3mOJM",
+            "priority": 5
+        },
+        {
+            "theme_id": 6,
+            "link": "https://youtube.com/watch?v=Xn-gtHDsaPY",
+            "priority": 3
         }
     ],
     "Technologies": [

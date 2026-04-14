@@ -85,6 +85,7 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
         <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 px-8">
             <?php $l_i = -1; ?>
             <?php foreach ($projects as $i => $project): ?>
+                <?php if ($project['id'] == null) continue; ?>
                 <?php $l_i++; ?>
                 <article class="group glass-btn p-3 rounded-3xl transition-all duration-500" style="margin: <?= [0, 0, 0][$l_i % 3]  ?>rem 0 <?= 2 - [0, 0, 0][$l_i % 3]  ?>rem; cursor: pointer; display: block">
                     <a href="project_detail.php?id=<?= $project['id'] ?>">
@@ -120,15 +121,12 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
         </div>
 
     </main>
-    <!-- Footer -->
+    <!-- Footer Shell -->
     <footer class="site-footer">
-        <div class="footer-copy">
-            © 2024 Louis MOULINET | Portfolio BTS SIO
-        </div>
+        <div class="footer-copy">© 2026 Louis MOULINET | Portfolio BTS SIO</div>
         <div class="footer-links">
-            <a class="footer-link" href="#">GitHub</a>
-            <a class="footer-link" href="#">LinkedIn</a>
-            <a class="footer-link" href="#">Documentation</a>
+            <a class="footer-link" href="https://github.com/MINLEGO">GitHub</a>
+            <a class="footer-link" href="https://www.linkedin.com/in/louis-moulinet-406965384/">LinkedIn</a>
         </div>
     </footer>
     <!-- Liquid Glass SVG Distortion Filter -->

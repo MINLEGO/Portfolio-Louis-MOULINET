@@ -76,29 +76,58 @@ $recent_projects = array_slice($projects, 0, 2);
                             class="text-gradient">...</span></h2>
                     <div class="h-1 max-w-xl bg-primary-gradient"></div>
                 </div>
-                <!-- Full Stack Card -->
+                <!-- Formtion card -->
                 <div
                     class="md:col-span-12 glass-surface big-glass p-10 justify-between group transition-all duration-500 hover:shadow-2xl rounded-3xl">
                     <div>
-                        <div class="font-mono text-primary text-sm mb-4 font-bold">01 / STACK</div>
-                        <h3 class="font-headline text-3xl font-bold mb-6">Développement Full Stack</h3>
-                        <p class="text-on-surface-variant max-w-xl leading-relaxed mb-8 font-medium">
-                            Conception d'applications web avec des frameworks modernes. Faite le pont entre
-                            des backends robustes et des interfaces fluides.
+                        <div class="font-mono text-primary text-sm mb-4 font-bold">01 / Formation</div>
+                        <h3 class="font-headline text-3xl font-bold mb-6">BTS SIO SLAM</h3>
+                        <p class="text-on-surface-variant max-w-4xl leading-relaxed mb-8 font-medium">
+                            Le BTS SIO (Service Informatique aux organisations) forme à la mise en place de solutions
+                            informatiques au sein des entreprises et propose 2 options : SISR « Solutions
+                            d’Infrastructures, Systèmes et Réseaux » et SLAM « Solutions Logicielles et Applications
+                            Métiers ».
+                            <br><br>
+                            Ce site a donc été créé dans le cadre de mon BTS, en vue de regrouper l’ensemble des activités
+                            effectuées et des compétences acquises durant mes deux années de formation ainsi que mes deux
+                            stages.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-3">
                         <span class="skill-tag">Html5</span>
-                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">PHP</span>
                         <span class="skill-tag">CSS</span>
                     </div>
                 </div>
+                <!-- Full Stack Card -->
+                <div class="md:col-span-4 bg-primary p-10 justify-between transition-all duration-300 rounded-3xl glass-surface small-glass shadow-lg max-w-xl"
+                    style="transform-origin: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    <span class="material-symbols-outlined text-8xl opacity-30">computer</span>
+                    <div>
+                        <div class="font-mono text-xs mb-2 opacity-80 font-bold">02 / WEB</div>
+                        <h3 class="font-headline text-2xl font-bold mb-4">Développement Full Stack</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
+                                <span class="font-headline font-semibold">HTML5</span>
+                                <span class="material-symbols-outlined">coffee</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
+                                <span class="font-headline font-semibold">CSS</span>
+                                <span class="material-symbols-outlined">rebase_edit</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
+                                <span class="font-headline font-semibold">PHP</span>
+                                <span class="material-symbols-outlined">code</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Java/Python Card -->
-                <div class="md:col-span-6 bg-primary p-10 justify-between transition-all duration-300 rounded-3xl glass-surface small-glass shadow-lg max-w-xl"
+                <div class="md:col-span-4 bg-primary p-10 justify-between transition-all duration-300 rounded-3xl glass-surface small-glass shadow-lg max-w-xl"
                     style="transform-origin: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
                     <span class="material-symbols-outlined text-8xl opacity-30">code_blocks</span>
                     <div>
-                        <div class="font-mono text-xs mb-2 opacity-80 font-bold">02 / LOGIC</div>
+                        <div class="font-mono text-xs mb-2 opacity-80 font-bold">03 / LOGIC</div>
                         <h3 class="font-headline text-2xl font-bold mb-4">Systèmes Cœurs</h3>
                         <div class="space-y-4">
                             <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
@@ -114,7 +143,7 @@ $recent_projects = array_slice($projects, 0, 2);
                 </div>
                 <!-- SQL / Data Card -->
                 <div
-                    class="md:col-span-6 glass-surface small-glass p-10 flex flex-col items-center text-center justify-center border-t-4 border-tertiary">
+                    class="md:col-span-4 glass-surface small-glass p-10 flex flex-col items-center text-center justify-center border-t-4 border-tertiary">
                     <span class="material-symbols-outlined text-5xl text-tertiary mb-6"
                         data-weight="fill">database</span>
                     <h3 class="font-headline text-2xl font-bold mb-2">Intégrité des Données</h3>
@@ -260,17 +289,11 @@ $recent_projects = array_slice($projects, 0, 2);
     <svg style="display: none">
         <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
             <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" seed="5" result="turbulence" />
-            <feComponentTransfer in="turbulence" result="mapped">
-                <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
-                <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-                <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
-            </feComponentTransfer>
             <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
             <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100"
                 lighting-color="white" result="specLight">
                 <fePointLight x="-200" y="-200" z="300" />
             </feSpecularLighting>
-            <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage" />
             <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G" />
         </filter>
     </svg>

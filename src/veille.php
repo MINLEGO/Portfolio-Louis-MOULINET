@@ -71,7 +71,7 @@ $articlesData = $veilleData['articles'] ?? [];
                 </div>
             </section>
             <!-- Sidebar (Articles & Tools) -->
-            <aside class="md:col-span-4 space-y-16 ">
+            <aside class="md:col-span-4 space-y-12 ">
                 <!-- Articles -->
                 <section class="rounded-1xl glass-surface p-3 pt-4 small-glass">
                     <div class="section-heading-bar pb-4 mb-8">
@@ -84,7 +84,15 @@ $articlesData = $veilleData['articles'] ?? [];
                     <div class="space-y-6 rounded-1xl" id="articles-container">
                         <!-- Populated by JS -->
                     </div>
+                    <div style="margin-top:2rem">
+                        <a class="archive-link" href="articles.php">
+                            Voir les archives complètes
+                        </a>
+                    </div>
+
                 </section>
+                <!-- Archive Link -->
+
                 <!-- Tools Stack -->
                 <section class="rounded-1xl glass-surface p-3 small-glass">
                     <div class="section-heading-bar pb-4 mb-8">
@@ -107,22 +115,15 @@ $articlesData = $veilleData['articles'] ?? [];
                         <?php endforeach; ?>
                     </div>
                 </section>
-                <!-- Archive Link -->
-                <div class="pt-8">
-                    <a class="archive-link" href="#">
-                        Voir les archives complètes
-                    </a>
-                </div>
             </aside>
         </div>
     </main>
-    <!-- Footer -->
+    <!-- Footer Shell -->
     <footer class="site-footer">
-        <div class="footer-copy">© 2024 Louis MOULINET | Portfolio BTS SIO</div>
+        <div class="footer-copy">© 2026 Louis MOULINET | Portfolio BTS SIO</div>
         <div class="footer-links">
-            <a class="footer-link" href="#">GitHub</a>
-            <a class="footer-link" href="#">LinkedIn</a>
-            <a class="footer-link" href="#">Documentation</a>
+            <a class="footer-link" href="https://github.com/MINLEGO">GitHub</a>
+            <a class="footer-link" href="https://www.linkedin.com/in/louis-moulinet-406965384/">LinkedIn</a>
         </div>
     </footer>
     <!-- Liquid Glass SVG Distortion Filter -->
@@ -269,8 +270,10 @@ $articlesData = $veilleData['articles'] ?? [];
                     // Domaine article: render immediately with JSON data
                     domainesContainer.insertAdjacentHTML('beforeend', buildDomaineArticle(article, null));
                 } else {
-                    // Sidebar article: render placeholder immediately, then enrich
                     sidebarCount++;
+                    if (sidebarCount >= 4) return;
+                    // Sidebar article: render placeholder immediately, then enrich
+
                     const placeholder = buildSidebarArticle(article, link, null);
                     articlesContainer.insertAdjacentHTML('beforeend', placeholder);
                     const cardEl = articlesContainer.lastElementChild;

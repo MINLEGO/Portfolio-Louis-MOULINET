@@ -46,7 +46,7 @@ $d = $project['detail']; // shorthand for detail fields
         <div class="nav-logo">Louis MOULINET</div>
         <div class="nav-links">
             <a class="nav-link glass-btn" href="index.php">Accueil</a>
-            <a class="nav-link glass-btn active" href="projects.php">Projets</a>
+            <a class="nav-link glass-btn" href="projects.php">Projets</a>
             <a class="nav-link glass-btn" href="veille.php">Veille</a>
         </div>
         <button class="btn-contact glass-btn">
@@ -92,59 +92,70 @@ $d = $project['detail']; // shorthand for detail fields
         <!-- Project Narrative Grid -->
         <div class="detail-narrative">
             <!-- Left Column: The Challenge -->
-            <div class="md:col-span-5">
+            <?php $IncludeFeature = $d['feature1_desc'] || $d['feature2_desc'] || $d['feature3_desc']; ?>
+            <div class="<?= $IncludeFeature ? 'md:col-span-5' : 'md:col-span-10' ?>">
                 <h2 class="font-headline text-3xl font-bold mb-8 flex items-center gap-3">
                     <span class="w-8 h-px bg-primary"></span> Le Défi
                 </h2>
                 <div class="space-y-6 text-on-surface-variant leading-loose font-light">
-                    <p><?= htmlspecialchars($d['challenge']) ?></p>
-                    <p><?= htmlspecialchars($d['challenge2']) ?></p>
+                    <p><?= nl2br(htmlspecialchars($d['challenge'])) ?></p>
+                    <p><?= nl2br(htmlspecialchars($d['challenge2'])) ?></p>
                 </div>
             </div>
             <!-- Right Column: Key Features (Bento Style) -->
-            <div class="md:col-span-7 feature-grid">
-                <div class="glass-surface small-glass feature-card feature-card--span-2">
-                    <span class="material-symbols-outlined text-primary mb-4"><?= htmlspecialchars($d['feature1_icon']) ?></span>
-                    <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature1_title']) ?></h3>
-                    <p class="text-sm text-on-surface-variant font-medium"><?= htmlspecialchars($d['feature1_desc']) ?></p>
+            <?php if ($IncludeFeature): ?>
+                <div class="md:col-span-7 feature-grid">
+                    <?php if ($d['feature1_desc']): ?>
+                        <div class="glass-surface small-glass feature-card feature-card--span-2">
+                            <span class="material-symbols-outlined text-primary mb-4"><?= htmlspecialchars($d['feature1_icon']) ?></span>
+                            <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature1_title']) ?></h3>
+                            <p class="text-sm text-on-surface-variant font-medium"><?= htmlspecialchars($d['feature1_desc']) ?></p>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($d['feature2_desc']): ?>
+                        <div class="glass-surface small-glass feature-card">
+                            <span class="material-symbols-outlined text-primary mb-4"><?= htmlspecialchars($d['feature2_icon']) ?></span>
+                            <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature2_title']) ?></h3>
+                            <p class="text-sm text-on-surface-variant font-medium"><?= htmlspecialchars($d['feature2_desc']) ?></p>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($d['feature3_desc']): ?>
+                        <div class="feature-card feature-card--primary glass-btn shadow-lg" style="display:inline">
+                            <span class="material-symbols-outlined mb-4 opacity-70"><?= htmlspecialchars($d['feature3_icon']) ?></span>
+                            <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature3_title']) ?></h3>
+                            <p class="text-sm font-medium opacity-90"><?= htmlspecialchars($d['feature3_desc']) ?></p>
+                        </div>
+                    <?php endif; ?>
                 </div>
-                <div class="glass-surface small-glass feature-card">
-                    <span class="material-symbols-outlined text-primary mb-4"><?= htmlspecialchars($d['feature2_icon']) ?></span>
-                    <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature2_title']) ?></h3>
-                    <p class="text-sm text-on-surface-variant font-medium"><?= htmlspecialchars($d['feature2_desc']) ?></p>
-                </div>
-                <div class="feature-card feature-card--primary glass-btn shadow-lg" style="display:inline">
-                    <span class="material-symbols-outlined mb-4 opacity-70"><?= htmlspecialchars($d['feature3_icon']) ?></span>
-                    <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature3_title']) ?></h3>
-                    <p class="text-sm font-medium opacity-90"><?= htmlspecialchars($d['feature3_desc']) ?></p>
-                </div>
-            </div>
+            <?php endif; ?>
         </div>
         <!-- Technical Specification / Code Block -->
-        <section class="mb-32">
-            <div class="tech-spec-section">
-                <div class="tech-spec-sidebar">
-                    <h2 class="font-headline text-3xl font-bold mb-6">Architecture Technique</h2>
-                    <p class="text-on-surface-variant mb-8 font-body">
-                        Extrait de code principal illustrant le modèle d'implémentation clé de ce projet.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <?php foreach ($d['tech_tags'] as $tag): ?>
-                            <span class="tech-tag-pill"><?= htmlspecialchars($tag) ?></span>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <div class="tech-spec-code">
-                    <div class="glass-surface shadow-lg code-block-wrap">
-                        <div class="code-block-header">
-                            <span><?= htmlspecialchars($d['code_file']) ?></span>
-                            <span><?= htmlspecialchars($d['code_version']) ?></span>
+        <?php if ($d['code_block']): ?>
+            <section class="mb-32">
+                <div class="tech-spec-section">
+                    <div class="tech-spec-sidebar">
+                        <h2 class="font-headline text-3xl font-bold mb-6">Architecture Technique</h2>
+                        <p class="text-on-surface-variant mb-8 font-body">
+                            Extrait de code principal illustrant le modèle d'implémentation clé de ce projet.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <?php foreach ($d['tech_tags'] as $tag): ?>
+                                <span class="tech-tag-pill"><?= htmlspecialchars($tag) ?></span>
+                            <?php endforeach; ?>
                         </div>
-                        <pre class="leading-relaxed text-on-surface-variant font-bold"><?= htmlspecialchars($d['code_block']) ?></pre>
+                    </div>
+                    <div class="tech-spec-code">
+                        <div class="glass-surface shadow-lg code-block-wrap">
+                            <div class="code-block-header">
+                                <span><?= htmlspecialchars($d['code_file']) ?></span>
+                                <span><?= htmlspecialchars($d['code_version']) ?></span>
+                            </div>
+                            <pre class="leading-relaxed text-on-surface-variant font-bold"><?= htmlspecialchars($d['code_block']) ?></pre>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        <?php endif; ?>
         <!-- Secondary Imagery / Detail View -->
         <section class="detail-secondary-images">
             <div class="bg-surface-container-low aspect-square overflow-hidden">
@@ -195,13 +206,12 @@ $d = $project['detail']; // shorthand for detail fields
             </div>
         </nav>
     </main>
-    <!-- Footer -->
+    <!-- Footer Shell -->
     <footer class="site-footer">
-        <p class="footer-copy">© 2024 Louis MOULINET | Portfolio BTS SIO</p>
+        <div class="footer-copy">© 2026 Louis MOULINET | Portfolio BTS SIO</div>
         <div class="footer-links">
-            <a class="footer-link" href="#">GitHub</a>
-            <a class="footer-link" href="#">LinkedIn</a>
-            <a class="footer-link" href="#">Documentation</a>
+            <a class="footer-link" href="https://github.com/MINLEGO">GitHub</a>
+            <a class="footer-link" href="https://www.linkedin.com/in/louis-moulinet-406965384/">LinkedIn</a>
         </div>
     </footer>
     <!-- Liquid Glass SVG Distortion Filter -->
