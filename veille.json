@@ -48,13 +48,35 @@
             "title": null,
             "image": null,
             "description": null
+        },
+        {
+            "id": 8,
+            "tag": "IA Générative",
+            "title": null,
+            "image": null,
+            "description": null
         }
     ],
     "articles": [
         {
+            "theme_id": 5,
+            "link": "https://openai.com/index/clip",
+            "priority": 5
+        },
+        {
             "theme_id": 7,
             "link": "https://www.youtube.com/watch?v=f_xT45Pi0UQ",
             "priority": 4
+        },
+        {
+            "theme_id": 7,
+            "link": "https://youtube.com/watch?v=j3aXJNu9804",
+            "priority": 3
+        },
+        {
+            "theme_id": 7,
+            "link": "https://youtu.be/j3aXJNu9804?si=UQ9JB6C3tQsQA4V0",
+            "priority": 3
         },
         {
             "theme_id": 6,
@@ -72,11 +94,11 @@
             "priority": 5
         },
         {
-            "theme_id": 2,
+            "theme_id": 8,
             "link": null,
-            "title": "[PLACEHOLDER] Server Components et le futur de l'hydratation sélective",
-            "description": "Comment les React Server Components redéfinissent le modèle mental pour construire des applications web performantes en déplaçant les calculs lourds vers l'Edge.",
-            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAJ5jReKYnhz3L28x5CH6JAQXEBtiDND9UAJD3ruJgDw3tAONO3mp13_rgY4E6yJ14PYuOtbrPtqXwy7ZLrlbQyAStXzEsYiu9MpazEi_FROPIEtxXS4PeS5wip0NKA0F4npOuqs-APP3_O5jq0pAXHdQ9G8jkzvxt2sFtwvKnC8zx2mBudzSvPRNFQ5Wo4TUjgLgUIi3HRhbPxTGXf1VyM7idbL409eXNZxPW3yFI0byFY3q4kQeiuDrGHzbtKkM_acCvGU-VMgYmD",
+            "title": "L'utilisation de l'IA générative dans l'amélioration de la productivité.",
+            "description": "Cette veille est faite dans le but de rester à la page dans ce domaine en perpetuel changement, me permettant de toujours utiliser les outils les plus efficaces et de perpétuellement améliorer ma productivité.",
+            "image": "./media/veille_1.webp",
             "date": "18 Oct, 2024",
             "author": null
         },

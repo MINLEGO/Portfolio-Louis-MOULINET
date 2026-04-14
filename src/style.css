@@ -1761,6 +1761,7 @@ pre {
 @media (min-width: 768px) {
     .detail-narrative {
         grid-template-columns: repeat(12, minmax(0, 1fr));
+        align-items: start;
     }
 }
 

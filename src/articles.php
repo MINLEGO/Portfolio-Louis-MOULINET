@@ -33,7 +33,7 @@ $articlesData = $veilleData['articles'] ?? [];
         <div class="nav-links">
             <a class="nav-link glass-btn" href="index.php">Accueil</a>
             <a class="nav-link glass-btn" href="projects.php">Projets</a>
-            <a class="nav-link glass-btn" href="veille.php">Veille</a>
+            <a class="nav-link glass-btn active" href="veille.php">Veille</a>
         </div>
         <button class="btn-contact glass-btn">
             <script>
@@ -62,7 +62,7 @@ $articlesData = $veilleData['articles'] ?? [];
                 </h2>
                 <span class="font-mono text-xs text-outline" id="articles-count">COMPTE : 0_ENTRÉES</span>
             </div>
-            <div class="space-y-6 rounded-1xl grid grid-cols-1 md:grid-cols-3 gap-4" id="articles-container">
+            <div class="space-y-4 rounded-1xl grid grid-cols-1 md:grid-cols-3 gap-4" id="articles-container">
                 <!-- Populated by JS -->
             </div>
         </section>

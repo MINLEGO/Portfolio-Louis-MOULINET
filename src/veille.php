@@ -219,9 +219,9 @@ $articlesData = $veilleData['articles'] ?? [];
                             </div>
                             <h3 class="font-headline text-2xl font-bold mb-4 group-hover:text-primary transition-colors">${title}</h3>
                             <p class="text-on-surface-variant font-medium mb-6 leading-relaxed">${description}</p>
-                            <a class="article-read-link rounded-1xl glass-btn p-1" href="${href}" target="${href !== '#' ? '_blank' : '_self'}">
-                                Lire l'analyse <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                            </a>
+                            <!--<a class="article-read-link rounded-1xl glass-btn p-1" href="${href}" target="${href !== '#' ? '_blank' : '_self'}">
+                              Lire l'analyse <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a> -->
                         </div>
                     </div>
                 </article>`;

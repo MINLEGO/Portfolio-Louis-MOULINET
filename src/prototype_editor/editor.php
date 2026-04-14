@@ -381,7 +381,7 @@ function eta($name, $value, $rows = 3, $class = '')
             top: 50%;
             transform: translateY(-50%);
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 0, 0, 0.3);
             pointer-events: none;
         }
     </style>
@@ -499,7 +499,7 @@ function eta($name, $value, $rows = 3, $class = '')
                     </div>
                     <!-- Image URL fields (shown below the banner) -->
                     <div style="margin-top:.75rem; display:flex; flex-direction:column; gap:.4rem; padding: 0 .5rem;">
-                        <label style="font-size:.7rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;">Image principale (URL)</label>
+                        <label style="font-size:.7rem;color:rgba(255, 0, 0, 0.35);text-transform:uppercase;letter-spacing:.08em;">Image principale (URL)</label>
                         <input type="text" name="detail_image" value="<?= $imgSrc ?>" class="ed-input"
                             oninput="document.getElementById('preview-detail-image').src=this.value">
                         <input type="text" name="detail_image_alt" value="<?= htmlspecialchars($d['detail_image_alt']) ?>" class="ed-input" placeholder="Texte alternatif">
@@ -513,9 +513,8 @@ function eta($name, $value, $rows = 3, $class = '')
                         <h2 class="font-headline text-3xl font-bold mb-8 flex items-center gap-3">
                             <span class="w-8 h-px bg-primary"></span> Le Défi
                         </h2>
-                        <div class="space-y-6 text-on-surface-variant leading-loose font-light">
+                        <div class="space-y-12 text-on-surface-variant leading-loose font-light">
                             <p><?= eta('challenge', $d['challenge'], 4) ?></p>
-                            <p><?= eta('challenge2', $d['challenge2'], 4) ?></p>
                         </div>
                     </div>
                     <!-- Right Column: Key Features (Bento Style) -->
@@ -562,15 +561,15 @@ function eta($name, $value, $rows = 3, $class = '')
                                 Extrait de code principal illustrant le modèle d'implémentation clé de ce projet.
                             </p>
                             <div style="margin-bottom:.5rem">
-                                <label style="font-size:.7rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Tags (séparés par des virgules)</label>
+                                <label style="font-size:.7rem;color:rgba(255, 0, 0, 0.35);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Tags (séparés par des virgules)</label>
                                 <?= ei('tags', implode(', ', $project['tags'] ?? [])) ?>
                             </div>
                             <div style="margin-top:1rem">
-                                <label style="font-size:.7rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Tech tags (séparés par des virgules)</label>
+                                <label style="font-size:.7rem;color:rgba(255, 0, 0, 0.35);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Tech tags (séparés par des virgules)</label>
                                 <?= ei('tech_tags', implode(', ', $d['tech_tags'] ?? [])) ?>
                             </div>
                             <div style="margin-top:1rem">
-                                <label style="font-size:.7rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Catégorie</label>
+                                <label style="font-size:.7rem;color:rgba(255, 0, 0, 0.35);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Catégorie</label>
                                 <?= ei('category', $project['category']) ?>
                             </div>
                         </div>
@@ -610,7 +609,7 @@ function eta($name, $value, $rows = 3, $class = '')
 
                 <!-- Card image (thumbnail shown on projects list) -->
                 <section style="margin-top:3rem; padding:0 .5rem;">
-                    <label style="font-size:.7rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:.5rem">Image miniature (projets.php)</label>
+                    <label style="font-size:.7rem;color:rgba(255, 0, 0, 0.35);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:.5rem">Image miniature (projets.php)</label>
                     <div style="display:flex;gap:.75rem;align-items:flex-start">
                         <img id="preview-thumb" src="<?= htmlspecialchars($project['image']) ?>" alt="" style="height:80px;width:120px;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,.1)">
                         <div style="flex:1;display:flex;flex-direction:column;gap:4px">

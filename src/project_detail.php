@@ -93,15 +93,17 @@ $d = $project['detail']; // shorthand for detail fields
         <div class="detail-narrative">
             <!-- Left Column: The Challenge -->
             <?php $IncludeFeature = $d['feature1_desc'] || $d['feature2_desc'] || $d['feature3_desc']; ?>
-            <div class="<?= $IncludeFeature ? 'md:col-span-5' : 'md:col-span-10' ?>">
-                <h2 class="font-headline text-3xl font-bold mb-8 flex items-center gap-3">
-                    <span class="w-8 h-px bg-primary"></span> Le Défi
-                </h2>
-                <div class="space-y-6 text-on-surface-variant leading-loose font-light">
-                    <p><?= nl2br(htmlspecialchars($d['challenge'])) ?></p>
-                    <p><?= nl2br(htmlspecialchars($d['challenge2'])) ?></p>
+            <?php if ($d['challenge'] || $d['challenge2']) : ?>
+                <div class="<?= $IncludeFeature ? 'md:col-span-5' : 'md:col-span-10' ?>">
+                    <h2 class="font-headline text-3xl font-bold mb-8 flex items-center gap-3">
+                        <span class="w-8 h-px bg-primary"></span> Le Défi
+                    </h2>
+                    <div class="space-y-6 text-on-surface-variant leading-loose font-light">
+                        <p><?= nl2br(htmlspecialchars($d['challenge'])) ?></p>
+                        <p><?= nl2br(htmlspecialchars($d['challenge2'])) ?></p>
+                    </div>
                 </div>
-            </div>
+            <?php endif; ?>
             <!-- Right Column: Key Features (Bento Style) -->
             <?php if ($IncludeFeature): ?>
                 <div class="md:col-span-7 feature-grid">
@@ -109,21 +111,21 @@ $d = $project['detail']; // shorthand for detail fields
                         <div class="glass-surface small-glass feature-card feature-card--span-2">
                             <span class="material-symbols-outlined text-primary mb-4"><?= htmlspecialchars($d['feature1_icon']) ?></span>
                             <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature1_title']) ?></h3>
-                            <p class="text-sm text-on-surface-variant font-medium"><?= htmlspecialchars($d['feature1_desc']) ?></p>
+                            <p class="text-sm text-on-surface-variant font-medium"><?= nl2br(htmlspecialchars($d['feature1_desc'])) ?></p>
                         </div>
                     <?php endif; ?>
                     <?php if ($d['feature2_desc']): ?>
                         <div class="glass-surface small-glass feature-card">
                             <span class="material-symbols-outlined text-primary mb-4"><?= htmlspecialchars($d['feature2_icon']) ?></span>
                             <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature2_title']) ?></h3>
-                            <p class="text-sm text-on-surface-variant font-medium"><?= htmlspecialchars($d['feature2_desc']) ?></p>
+                            <p class="text-sm text-on-surface-variant font-medium"><?= nl2br(htmlspecialchars($d['feature2_desc'])) ?></p>
                         </div>
                     <?php endif; ?>
                     <?php if ($d['feature3_desc']): ?>
                         <div class="feature-card feature-card--primary glass-btn shadow-lg" style="display:inline">
                             <span class="material-symbols-outlined mb-4 opacity-70"><?= htmlspecialchars($d['feature3_icon']) ?></span>
                             <h3 class="font-headline font-bold text-lg mb-2"><?= htmlspecialchars($d['feature3_title']) ?></h3>
-                            <p class="text-sm font-medium opacity-90"><?= htmlspecialchars($d['feature3_desc']) ?></p>
+                            <p class="text-sm font-medium opacity-90"><?= nl2br(htmlspecialchars($d['feature3_desc'])) ?></p>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -157,19 +159,21 @@ $d = $project['detail']; // shorthand for detail fields
             </section>
         <?php endif; ?>
         <!-- Secondary Imagery / Detail View -->
-        <section class="detail-secondary-images">
-            <div class="bg-surface-container-low aspect-square overflow-hidden">
-                <img alt="<?= htmlspecialchars($d['detail_image2_alt']) ?>"
-                    class="w-full h-full object-cover mix-blend-multiply opacity-80"
-                    src="<?= htmlspecialchars($d['detail_image2']) ?>" />
-            </div>
-            <div class="detail-number-card">
-                <span class="font-headline text-5xl font-bold mb-4"><?= str_pad($project['id'], 2, '0', STR_PAD_LEFT) ?></span>
-                <p class="font-body text-xl text-on-surface-variant" style="font-weight:500;">
-                    <?= htmlspecialchars($d['detail_note']) ?>
-                </p>
-            </div>
-        </section>
+        <?php if ($d['detail_note']) : ?>
+            <section class="detail-secondary-images">
+                <div class="bg-surface-container-low aspect-square overflow-hidden">
+                    <img alt="<?= htmlspecialchars($d['detail_image2_alt']) ?>"
+                        class="w-full h-full object-cover mix-blend-multiply opacity-80"
+                        src="<?= htmlspecialchars($d['detail_image2']) ?>" />
+                </div>
+                <div class="detail-number-card">
+                    <span class="font-headline text-5xl font-bold mb-4"><?= str_pad($project['id'], 2, '0', STR_PAD_LEFT) ?></span>
+                    <p class="font-body text-xl text-on-surface-variant" style="font-weight:500;">
+                        <?= nl2br(htmlspecialchars($d['detail_note'])) ?>
+                    </p>
+                </div>
+            </section>
+        <?php endif; ?>
         <!-- Navigation between projects -->
         <nav class="project-nav">
             <?php
