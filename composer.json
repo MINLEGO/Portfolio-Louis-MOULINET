@@ -1,1 +1,8 @@
-{}
+{
+    "name": "louis-moulinet/portfolio",
+    "description": "Portfolio BTS SIO",
+    "require": {
+        "php": ">=8.1"
+    }
+}
+

@@ -1,6 +1,6 @@
 <?php
 // Load projects from JSON file (one level up from src/)
-$jsonPath = __DIR__ . '/projects.json';
+$jsonPath = __DIR__ . '/../projects.json';
 $data = json_decode(file_get_contents($jsonPath), true);
 $projects = $data['projects'];
 
