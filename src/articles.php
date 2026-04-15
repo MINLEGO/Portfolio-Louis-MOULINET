@@ -52,7 +52,7 @@ $articlesData = $veilleData['articles'] ?? [];
                 <span class="text-gradient">Archives</span>
             </h1>
             <p class="max-w-2xl text-lg text-on-surface-variant font-body leading-relaxed">
-                Liste des articles que j'ai consulté durant ma veille technologique.
+                Liste des articles que j'ai consultés durant ma veille technologique.
             </p>
         </header>
         <!-- Bento Grid Watch Layout -->

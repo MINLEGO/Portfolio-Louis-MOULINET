@@ -74,11 +74,6 @@
             "priority": 3
         },
         {
-            "theme_id": 7,
-            "link": "https://youtu.be/j3aXJNu9804?si=UQ9JB6C3tQsQA4V0",
-            "priority": 3
-        },
-        {
             "theme_id": 6,
             "link": "https://www.youtube.com/watch?v=d3Qq-rkp_to",
             "priority": 5
@@ -97,9 +92,9 @@
             "theme_id": 8,
             "link": null,
             "title": "L'utilisation de l'IA générative dans l'amélioration de la productivité.",
-            "description": "Cette veille est faite dans le but de rester à la page dans ce domaine en perpetuel changement, me permettant de toujours utiliser les outils les plus efficaces et de perpétuellement améliorer ma productivité.",
+            "description": "Cette veille est faite dans le but de rester à la page dans ce domaine en perpétuel changement, me permettant de toujours utiliser les outils les plus efficaces et de perpétuellement améliorer ma productivité.",
             "image": "./media/veille_1.webp",
-            "date": "18 Oct, 2024",
+            "date": null,
             "author": null
         },
         {
@@ -220,19 +215,19 @@
     ],
     "Technologies": [
         {
-            "title": "Warp Terminal",
-            "description": "Le terminal assisté par IA",
-            "icon": "terminal"
+            "title": "Gemma 4",
+            "description": "La nouvelle génération de modèle open source de Google",
+            "icon": "upgrade"
         },
         {
-            "title": "Supabase",
-            "description": "Alternative open source à Firebase",
-            "icon": "database"
+            "title": "Claw Code",
+            "description": "La meilleure alternative Open Source à Claude Code",
+            "icon": "smart_toy"
         },
         {
-            "title": "Grafana Phlare",
-            "description": "Profilage continu",
-            "icon": "monitoring"
+            "title": "Routines (Claude code)",
+            "description": "Une nouvelle fonctionnalité de Claude Code permetant de facilement automatiser des tâches",
+            "icon": "automation"
         }
     ]
 }

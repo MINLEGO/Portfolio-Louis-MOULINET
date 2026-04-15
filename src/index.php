@@ -51,7 +51,7 @@ $recent_projects = array_slice($projects, 0, 2);
                     <span>root@bts_sio:~/portfolio</span>
                 </div>
                 <h1 class="hero-title">
-                    Developpement <br><span class="text-gradient shine">Full Stack</span>
+                    Développement <br><span class="text-gradient shine">Full Stack</span>
                     et gestion de projet.
                 </h1>
                 <div class="hero-badges">
@@ -68,7 +68,7 @@ $recent_projects = array_slice($projects, 0, 2);
                 </div>
             </div>
         </section>
-        <!-- Comptétences - Bento Grid -->
+        <!-- Compétences - Bento Grid -->
         <section class="arsenal-section">
             <div class="arsenal-grid">
                 <div class="arsenal-header md:col-span-12">
@@ -76,14 +76,14 @@ $recent_projects = array_slice($projects, 0, 2);
                             class="text-gradient">...</span></h2>
                     <div class="h-1 max-w-xl bg-primary-gradient"></div>
                 </div>
-                <!-- Formtion card -->
+                <!-- Formation card -->
                 <div
                     class="md:col-span-12 glass-surface big-glass p-10 justify-between group transition-all duration-500 hover:shadow-2xl rounded-3xl">
                     <div>
                         <div class="font-mono text-primary text-sm mb-4 font-bold">01 / Formation</div>
                         <h3 class="font-headline text-3xl font-bold mb-6">BTS SIO SLAM</h3>
                         <p class="text-on-surface-variant max-w-4xl leading-relaxed mb-8 font-medium">
-                            Le BTS SIO (Service Informatique aux organisations) forme à la mise en place de solutions
+                            Le BTS SIO (Services Informatiques aux Organisations) forme à la mise en place de solutions
                             informatiques au sein des entreprises et propose 2 options : SISR « Solutions
                             d’Infrastructures, Systèmes et Réseaux » et SLAM « Solutions Logicielles et Applications
                             Métiers ».
@@ -183,8 +183,8 @@ $recent_projects = array_slice($projects, 0, 2);
                     <div class="max-w-xl">
                         <h2 class="font-headline text-5xl font-bold tracking-tighter mb-6">Projets récents</h2>
                         <p class="text-on-surface-variant font-body text-lg leading-relaxed">
-                            Une sélection de projets que j'ai été amené a réaliser pour mon intéret personel ou pour ma
-                            formation
+                            Une sélection de projets que j'ai été amené à réaliser pour mon intérêt personnel ou pour ma
+                            formation.
                         </p>
                     </div>
                     <a class="group flex items-center gap-4 font-headline font-bold text-lg uppercase tracking-tight"

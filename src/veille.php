@@ -50,10 +50,10 @@ $articlesData = $veilleData['articles'] ?? [];
             </div>
             <h1 class="font-headline text-8xl font-bold  tracking-tighter text-on-background mb-6">
                 Veille
-                <span class="text-gradient">Technologique</span>
+                <span class="text-gradient shine">Technologique</span>
             </h1>
             <p class="max-w-2xl text-lg text-on-surface-variant font-body leading-relaxed">
-                Une collection de solutions, articles, et expérimentations, axée sur l'avancée de l'IA, les nouvelles technologies FrontEnd / BackEnd ainsi que les processus de développement modernes.
+                Une collection de solutions, articles, et expérimentations, axée sur l'avancée de l'IA.<!--, les nouvelles technologies FrontEnd / BackEnd ainsi que les processus de développement modernes.-->
             </p>
         </header>
         <!-- Bento Grid Watch Layout -->
@@ -95,7 +95,7 @@ $articlesData = $veilleData['articles'] ?? [];
 
                 <!-- Tools Stack -->
                 <section class="rounded-1xl glass-surface p-3 small-glass">
-                    <div class="section-heading-bar pb-4 mb-8">
+                    <div class="section-heading-bar pb-4">
                         <h2 class="font-headline text-xl font-bold tracking-tight flex items-center gap-2">
                             <span class="material-symbols-outlined text-primary">construction</span>
                             Nouvelles technologies
