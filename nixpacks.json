@@ -1,0 +1,14 @@
+{
+  "phases": {
+    "setup": {
+      "nixPkgs": [
+        "php",
+        "php83Packages.composer",
+        "nginx"
+      ]
+    }
+  },
+  "variables": {
+    "NIXPACKS_PHP_ROOT": "src"
+  }
+}
