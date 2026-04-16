@@ -110,15 +110,15 @@ $recent_projects = array_slice($projects, 0, 2);
                         <div class="space-y-4">
                             <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
                                 <span class="font-headline font-semibold">HTML5</span>
-                                <span class="material-symbols-outlined">coffee</span>
+                                <span class="material-symbols-outlined">code_xml</span>
                             </div>
                             <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
                                 <span class="font-headline font-semibold">CSS</span>
-                                <span class="material-symbols-outlined">rebase_edit</span>
+                                <span class="material-symbols-outlined">brush</span>
                             </div>
                             <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
                                 <span class="font-headline font-semibold">PHP</span>
-                                <span class="material-symbols-outlined">code</span>
+                                <span class="material-symbols-outlined">manufacturing</span>
                             </div>
                         </div>
                     </div>
