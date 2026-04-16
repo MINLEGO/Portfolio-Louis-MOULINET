@@ -1,5 +1,6 @@
 <?php
-$veilleJson = file_get_contents(__DIR__ . '/../veille.json');
+$jsonPath = file_exists(__DIR__ . '/../veille.json') ? __DIR__ . '/../veille.json' : __DIR__ . '/veille.json';
+$veilleJson = file_get_contents($jsonPath);
 $veilleData = json_decode($veilleJson, true);
 $themesMap = [];
 if (!empty($veilleData['Themes'])) {

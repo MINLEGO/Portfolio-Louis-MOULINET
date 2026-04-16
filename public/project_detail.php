@@ -1,6 +1,6 @@
 <?php
 // Load projects from JSON file
-$jsonPath = __DIR__ . '/../projects.json';
+$jsonPath = file_exists(__DIR__ . '/../projects.json') ? __DIR__ . '/../projects.json' : __DIR__ . '/projects.json';
 $data = json_decode(file_get_contents($jsonPath), true);
 $projects = $data['projects'];
 

@@ -1,5 +1,6 @@
 <?php
-$projects_json = file_get_contents(__DIR__ . '/../projects.json');
+$jsonPath = file_exists(__DIR__ . '/../projects.json') ? __DIR__ . '/../projects.json' : __DIR__ . '/projects.json';
+$projects_json = file_get_contents($jsonPath);
 $projects_data = json_decode($projects_json, true);
 $projects = $projects_data['projects'];
 
