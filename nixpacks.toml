@@ -5,4 +5,4 @@ nixPkgs = ["php83", "php83Extensions.mbstring", "php83Extensions.curl"]
 cmds = []
 
 [start]
-cmd = "php -S 0.0.0.0:80 -t public"
+cmd = "php -S 0.0.0.0:80 -t /public"
