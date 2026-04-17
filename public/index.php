@@ -89,7 +89,7 @@ $recent_projects = array_slice($projects, 0, 2);
                             d’Infrastructures, Systèmes et Réseaux » et SLAM « Solutions Logicielles et Applications
                             Métiers ».
                             <br><br>
-                            Ce site a donc été créé dans le cadre de mon BTS, en vue de regrouper l’ensemble des activités
+                            Ce site a donc été créé dans le cadre de mon BTS à La Joliverie, en vue de regrouper l’ensemble des activités
                             effectuées et des compétences acquises durant mes deux années de formation ainsi que mes deux
                             stages.
                         </p>
@@ -265,7 +265,7 @@ $recent_projects = array_slice($projects, 0, 2);
                 <h2 class="font-headline text-5xl font-bold tracking-tighter mb-12">Construire le prochain
                     standard numérique.</h2>
                 <div class="cta-buttons">
-                    <a href="media/Recherche de stage BTS SIO SLAM MOULINET--PRIMA Louis-8.pdf" download
+                    <a href="media/Recherche de stage BTS SIO SLAM MOULINET--PRIMA Louis.pdf" download
                         class="btn-primary glass-btn shadow-xl">
                         Télécharger le CV
                     </a>
