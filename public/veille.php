@@ -33,7 +33,7 @@ $articlesData = $veilleData['articles'] ?? [];
         <div class="nav-logo">Louis MOULINET</div>
         <div class="nav-links">
             <a class="nav-link glass-btn" href="index.php">Accueil</a>
-            <a class="nav-link glass-btn" href="projects.php">Projets</a>
+            <a class="nav-link glass-btn" style="font-size:1.3rem" href="projects.php">Projets</a>
             <a class="nav-link glass-btn active" href="veille.php">Veille</a>
         </div>
         <button class="btn-contact glass-btn">

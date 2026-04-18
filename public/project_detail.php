@@ -46,7 +46,7 @@ $d = $project['detail']; // shorthand for detail fields
         <div class="nav-logo">Louis MOULINET</div>
         <div class="nav-links">
             <a class="nav-link glass-btn" href="index.php">Accueil</a>
-            <a class="nav-link active glass-btn" href="projects.php">Projets</a>
+            <a class="nav-link glass-btn active" style="font-size:1.3rem" href="projects.php">Projets</a>
             <a class="nav-link glass-btn" href="veille.php">Veille</a>
         </div>
         <button class="btn-contact glass-btn">
