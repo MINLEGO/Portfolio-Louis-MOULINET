@@ -59,6 +59,16 @@
     ],
     "articles": [
         {
+            "theme_id": 7,
+            "link": "https://www.anthropic.com/news/claude-design-anthropic-labs",
+            "priority": 5
+        },
+        {
+            "theme_id": 5,
+            "link": "https://www.anthropic.com/news/claude-opus-4-7",
+            "priority": 5
+        },
+        {
             "theme_id": 5,
             "link": "https://openai.com/index/clip",
             "priority": 5
@@ -118,11 +128,6 @@
             "priority": 3
         },
         {
-            "theme_id": 5,
-            "link": "https://youtube.com/watch?v=-01ZCTt-CJw",
-            "priority": 4
-        },
-        {
             "theme_id": 4,
             "link": "https://youtube.com/watch?v=2-P6YZPrHg0",
             "priority": 2
@@ -131,11 +136,6 @@
             "theme_id": 7,
             "link": "https://youtube.com/watch?v=I1BvAHOsjBU",
             "priority": 3
-        },
-        {
-            "theme_id": 7,
-            "link": "https://youtube.com/watch?v=JSuS-zXMVwE",
-            "priority": 2
         },
         {
             "theme_id": 3,
@@ -201,11 +201,6 @@
             "theme_id": 5,
             "link": "https://youtube.com/watch?v=Ii99RU3mOJM",
             "priority": 5
-        },
-        {
-            "theme_id": 6,
-            "link": "https://youtube.com/watch?v=Xn-gtHDsaPY",
-            "priority": 3
         }
     ],
     "Technologies": [
