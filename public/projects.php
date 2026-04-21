@@ -25,6 +25,16 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Projets</title>
+    <meta name="description" content="Explorez la galerie des projets de Louis MOULINET : applications web, logiciels cœurs et expérimentations DevOps. Solutions innovantes développées en BTS SIO." />
+    <link rel="canonical" href="https://louismoulinet.com/projects.php" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://louismoulinet.com/projects.php" />
+    <meta property="og:title" content="Mes Projets | Louis MOULINET" />
+    <meta property="og:description" content="Découvrez mes réalisations techniques et projets académiques." />
+    <meta property="og:image" content="https://louismoulinet.com/media/og-image-projects.png" />
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />

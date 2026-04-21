@@ -18,7 +18,17 @@ $articlesData = $veilleData['articles'] ?? [];
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Veille Technologique | Louis MOULINET</title>
+    <title>Veille Technologique</title>
+    <meta name="description" content="Explorez ma veille technologique sur l'IA, le développement web et les nouvelles technologies. Analyse d'articles et découvertes techniques par Louis MOULINET." />
+    <link rel="canonical" href="https://louismoulinet.com/veille.php" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://louismoulinet.com/veille.php" />
+    <meta property="og:title" content="Veille Technologique | Louis MOULINET" />
+    <meta property="og:description" content="Suivez mes découvertes et analyses sur les dernières tendances tech." />
+    <meta property="og:image" content="https://louismoulinet.com/media/og-image-veille.png" />
+
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet" />

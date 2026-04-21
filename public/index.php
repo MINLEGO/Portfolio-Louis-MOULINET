@@ -19,7 +19,41 @@ $recent_projects = array_slice($projects, 0, 2);
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Louis MOULINET | Portfolio</title>
+    <title>Louis MOULINET - Etudiant en développement Full Stack & Logiciel | Portfolio</title>
+    <meta name="description" content="Découvrez le portfolio de Louis MOULINET, étudiant en développement Full Stack passionné par l'IA et l'ingénierie logicielle. Projets, veille technologique et compétences en PHP, Java, Python." />
+    <meta name="keywords" content="Louis MOULINET, Portfolio, Développeur Full Stack, Etudiant, BTS SIO SLAM, Nantes, Développement Web, Java, Python, PHP" />
+    <link rel="canonical" href="https://louismoulinet.com/index.php" />
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Louis MOULINET",
+            "url": "https://louismoulinet.com",
+            "jobTitle": "Etudiant en développement Full Stack",
+            "alumniOf": "La Joliverie",
+            "knowsAbout": ["PHP", "Java", "Python", "Docker", "IA", "Développement Web"],
+            "sameAs": [
+                "https://github.com/MINLEGO",
+                "https://www.linkedin.com/in/louis-moulinet-406965384/"
+            ]
+        }
+    </script>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://louismoulinet.com/index.php" />
+    <meta property="og:title" content="Louis MOULINET - Etudiant en développement Full Stack & Logiciel" />
+    <meta property="og:description" content="Explorez mes projets de développement web et logiciel. Étudiant en BTS SIO SLAM à Nantes." />
+    <meta property="og:image" content="https://louismoulinet.com/media/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://louismoulinet.com/index.php" />
+    <meta property="twitter:title" content="Louis MOULINET - Etudiant en développement Full Stack & Logiciel" />
+    <meta property="twitter:description" content="Explorez mes projets de développement web et logiciel. Étudiant en BTS SIO SLAM à Nantes." />
+    <meta property="twitter:image" content="https://louismoulinet.com/media/og-image.png" />
+
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet" />

@@ -30,7 +30,17 @@ $d = $project['detail']; // shorthand for detail fields
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title><?= htmlspecialchars($project['title']) ?> | Louis MOULINET</title>
+    <title><?= htmlspecialchars($project['title']) ?> | Projets - Louis MOULINET</title>
+    <meta name="description" content="<?= htmlspecialchars(substr($project['description'], 0, 160)) ?>" />
+    <link rel="canonical" href="https://louismoulinet.com/project_detail.php?id=<?= $project['id'] ?>" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://louismoulinet.com/project_detail.php?id=<?= $project['id'] ?>" />
+    <meta property="og:title" content="<?= htmlspecialchars($project['title']) ?> | Louis MOULINET" />
+    <meta property="og:description" content="<?= htmlspecialchars($project['description']) ?>" />
+    <meta property="og:image" content="https://louismoulinet.com/<?= htmlspecialchars($project['image']) ?>" />
+
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600&family=JetBrains+Mono&display=swap"
         rel="stylesheet" />
