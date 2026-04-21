@@ -20,8 +20,8 @@ $recent_projects = array_slice($projects, 0, 2);
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Louis MOULINET - Etudiant en développement Full Stack & Logiciel | Portfolio</title>
-    <meta name="description" content="Découvrez le portfolio de Louis MOULINET, étudiant en développement Full Stack passionné par l'IA et l'ingénierie logicielle. Projets, veille technologique et compétences en PHP, Java, Python." />
-    <meta name="keywords" content="Louis MOULINET, Portfolio, Développeur Full Stack, Etudiant, BTS SIO SLAM, Nantes, Développement Web, Java, Python, PHP" />
+    <meta name="description" content="Portfolio de Louis MOULINET, étudiant en BTS SIO SLAM à la Joliverie passionné par l'IA et l'ingénierie logicielle. Projets, veille technologique et compétences en PHP, Java, Python." />
+    <meta name="keywords" content="Joliverie,Louis MOULINET, Portfolio, Développeur Full Stack, Etudiant, BTS SIO SLAM, Nantes, Développement Web, Java, Python, PHP" />
     <link rel="canonical" href="https://louismoulinet.com/index.php" />
 
     <script type="application/ld+json">
