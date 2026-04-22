@@ -66,10 +66,14 @@ $recent_projects = array_slice($projects, 0, 2);
     <!-- TopNavBar Shell -->
     <nav class="nav-container fixed glass-surface z-50">
         <div class="nav-logo">Louis MOULINET</div>
+        <button class="mobile-menu-toggle" aria-label="Menu" onclick="let menu=document.querySelector('.nav-links'); menu.classList.toggle('active-mobile'); let icon=this.querySelector('.material-symbols-outlined'); icon.textContent = menu.classList.contains('active-mobile') ? 'close' : 'menu';">
+            <span class="material-symbols-outlined text-3xl">menu</span>
+        </button>
         <div class="nav-links">
             <a class="nav-link glass-btn active" href="index.php">Accueil</a>
-            <a class="nav-link glass-btn" style="font-size:1.3rem" href="projects.php">Projets</a>
+            <a class="nav-link nav-link-big glass-btn" href="projects.php">Projets</a>
             <a class="nav-link glass-btn" href="veille.php">Veille</a>
+            <a class="nav-link glass-btn nav-link-contact" href="mailto:moulinet.l03@gmail.com">Contact</a>
         </div>
         <button class="btn-contact glass-btn">
             <script>

@@ -53,7 +53,8 @@
             "category": "Software",
             "title": "Projet python",
             "tags": [
-                "Python MariaDB"
+                "Python",
+                "MariaDB"
             ],
             "description": "Le projet python est le premier projet réalisé dans le cursus du BTS SIO. Durant ce projet de 2 jours, j'ai pu essayer de configurer 2 machines virtuelles pour qu'elles aient accès à internet.",
             "image": "./media/project_py_thumb.jpg",

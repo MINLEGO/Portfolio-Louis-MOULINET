@@ -52,10 +52,14 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
     <!-- TopNavBar Shell -->
     <nav class="nav-container fixed glass-surface z-50">
         <div class="nav-logo">Louis MOULINET</div>
+        <button class="mobile-menu-toggle" aria-label="Menu" onclick="let menu=document.querySelector('.nav-links'); menu.classList.toggle('active-mobile'); let icon=this.querySelector('.material-symbols-outlined'); icon.textContent = menu.classList.contains('active-mobile') ? 'close' : 'menu';">
+            <span class="material-symbols-outlined text-3xl">menu</span>
+        </button>
         <div class="nav-links">
             <a class="nav-link glass-btn" href="index.php">Accueil</a>
             <a class="nav-link glass-btn active" style="font-size:1.3rem" href="projects.php">Projets</a>
             <a class="nav-link glass-btn" href="veille.php">Veille</a>
+            <a class="nav-link glass-btn nav-link-contact" href="mailto:moulinet.l03@gmail.com">Contact</a>
         </div>
         <button class="btn-contact glass-btn">
             <script>
@@ -92,7 +96,7 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
             </div>
         </section>
         <!-- Projects Grid (dynamic) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 px-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-x-8 px-8">
             <?php $l_i = -1; ?>
             <?php foreach ($projects as $i => $project): ?>
                 <?php if ($project['id'] == null) continue; ?>
@@ -109,13 +113,13 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
                         </div>
                         <div class="project-card">
                             <div class="flex justify-between items-start mb-4">
-                                <h2 class="font-headline font-bold text-3xl tracking-tight"><?= htmlspecialchars($project['title']) ?></h2>
+                                <h2 class="project-card-title font-headline font-bold text-3xl tracking-tight"><?= htmlspecialchars($project['title']) ?></h2>
                                 <div class="glass-btn p-2 rounded-full">
                                     <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_outward</span>
                                 </div>
                             </div>
 
-                            <div class="flex gap-2 mb-6 flex-wrap">
+                            <div class="flex gap-2 project-tags mb-6 flex-wrap">
                                 <?php foreach ($project['tags'] as $tag): ?>
                                     <span class="project-card-tag glass-surface small-glass"><?= htmlspecialchars($tag) ?></span>
                                 <?php endforeach; ?>

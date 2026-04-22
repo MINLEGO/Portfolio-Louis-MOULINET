@@ -277,6 +277,10 @@ pre {
     grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
+.grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .relative {
     position: relative;
 }
@@ -1104,6 +1108,19 @@ pre {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow: visible !important;
+    /* Allow sidebar to be seen */
+}
+
+@media (max-width: 767px) {
+    .nav-container {
+        left: 0;
+        transform: none;
+        width: 100%;
+        top: 0;
+        border-radius: 0;
+        padding-inline: 1.5rem;
+    }
 }
 
 .nav-logo {
@@ -1116,14 +1133,97 @@ pre {
 }
 
 .nav-links {
-    display: none;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 150px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    z-index: 100;
 }
+
+.nav-link-contact {
+    display: none;
+    /* Hide by default, show in mobile sidebar */
+}
+
+@media (max-width: 767px) {
+    .nav-links {
+        padding-top: 3rem; /* space above first .nav-link on mobile */
+        padding: 3rem;
+        border-top-left-radius: var(--radius-2xl);
+        border-bottom-left-radius: var(--radius-2xl);
+    }
+
+    .nav-link-contact {
+        display: flex;
+        margin-top: auto;
+        margin-bottom: 3rem;
+        justify-content: start;
+        background-color: var(--primary) !important;
+        color: var(--on-primary) !important;
+        padding-inline: 2.5rem !important;
+        padding-block: 0.5rem !important;
+    }
+
+    .nav-link {
+        font-size: 1.4rem;
+    }
+
+    .nav-link-big {
+        font-size: 1.6rem;
+    }
+}
+.nav-links.active-mobile {
+    right: 0;
+}
+
+.mobile-menu-toggle {
+    display: flex;
+    background: transparent;
+    border: none;
+    color: var(--on-surface);
+    cursor: pointer;
+    z-index: 101;
+    /* above the nav-links */
+}
+
+/* @media (max-width: 767px) {
+    .btn-contact {
+        display: none;
+    }
+} */
 
 @media (min-width: 768px) {
     .nav-links {
-        display: flex;
-        align-items: center;
+        position: static;
+        width: auto;
+        height: auto;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        flex-direction: row;
+        box-shadow: none;
+        border-left: none;
         gap: 3.5rem;
+        justify-content: center;
+        padding-top: 0;
+    }
+
+    .mobile-menu-toggle {
+        display: none;
+    }
+
+    .nav-link-big {
+        font-size: 1.3rem;
     }
 }
 
@@ -1163,6 +1263,13 @@ pre {
     letter-spacing: -0.025em;
     font-size: 0.875rem;
     overflow: hidden;
+}
+
+@media (max-width: 767px) {
+    .btn-contact {
+        display: none;
+        /* Hide main contact button on mobile */
+    }
 }
 
 /* =========================================
@@ -1684,12 +1791,6 @@ pre {
     gap: 3rem;
 }
 
-@media (min-width: 768px) {
-    .tech-stack-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-}
-
 .tech-stack-item {
     display: flex;
     flex-direction: column;
@@ -1702,6 +1803,40 @@ pre {
     font-size: 0.75rem;
 }
 
+@media (min-width: 768px) {
+    .tech-stack-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .project-card-badge {
+        font-size: 8px;
+        padding-block: 0.15rem;
+        top: 0.1rem;
+        left: 0.5rem;
+    }
+    .text-3xl {
+        font-size: 1.5rem;
+    }
+    .project-card-tag {
+        font-size: 8px;
+        padding-block: 0.15rem;
+        padding-inline: 0.5rem;
+    }
+
+    .project-card-image-wrap {
+        margin-bottom: 0;
+    }
+
+    .project-card-title {
+        margin-top:1rem;
+    }
+
+    .mb-6 {
+        margin-bottom: 0.75rem;
+    }
+}
 /* =========================================
    PROJECT DETAIL PAGE
    ========================================= */
@@ -1990,4 +2125,11 @@ pre {
     justify-content: space-between;
     border-bottom: 1px solid rgba(172, 173, 173, 0.2);
     padding-bottom: 1rem;
+}
+
+/* Smartphone / vertical layout */
+@media (max-width: 768px) {
+    html {
+        font-size: 10px;
+    }
 }
