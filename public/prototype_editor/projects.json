@@ -310,6 +310,41 @@
                 "detail_note": "Ce site - qui est le premier que je publie - m'a permis d'appliquer beaucoup des connaissances théoriques que j'ai emmagasiner durant ma formation. Cela me permettra de créer des projets plus complexes à l'avenir.",
                 "subtitle": ""
             }
+        },
+        {
+            "id": 9,
+            "index": "09",
+            "category": "Nouveau",
+            "title": "Nouveau Projet",
+            "tags": [],
+            "description": "",
+            "image": "",
+            "image_alt": "",
+            "detail": {
+                "status": "",
+                "stack": "",
+                "year": "",
+                "challenge": "",
+                "challenge2": "",
+                "feature1_icon": "",
+                "feature1_title": "",
+                "feature1_desc": "",
+                "feature2_icon": "",
+                "feature2_title": "",
+                "feature2_desc": "",
+                "feature3_icon": "",
+                "feature3_title": "",
+                "feature3_desc": "",
+                "detail_image": "",
+                "detail_image_alt": "",
+                "tech_tags": [],
+                "code_file": "",
+                "code_version": "",
+                "code_block": "",
+                "detail_image2": "",
+                "detail_image2_alt": "",
+                "detail_note": ""
+            }
         }
     ]
 }
