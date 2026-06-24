@@ -10,7 +10,14 @@ usort($projects, function ($a, $b) {
 });
 
 // Take the top 2
-$recent_projects = array_slice($projects, 0, 2);
+// $recent_projects = array_slice($projects, 0, 2);
+
+$higlighted_project_id = [10,9];
+
+$recent_projects = array_filter($projects, function ($project) use ($higlighted_project_id) {
+    return in_array($project['id'], $higlighted_project_id);
+});
+
 ?>
 <!DOCTYPE html>
 

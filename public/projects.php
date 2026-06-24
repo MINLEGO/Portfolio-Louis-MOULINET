@@ -85,15 +85,15 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
                 <a href="projects.php"
                     class="filter-btn glass-btn <?= $activeFilter === 'all' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
                     Tous les Projets</a>
+                <a href="projects.php?filter=stage2026"
+                    class="filter-btn glass-btn <?= $activeFilter === 'stage2026' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
+                    Stage 2026</a>
                 <a href="projects.php?filter=web"
                     class="filter-btn glass-btn <?= $activeFilter === 'web' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
                     Développement Web</a>
                 <a href="projects.php?filter=software"
                     class="filter-btn glass-btn <?= $activeFilter === 'software' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
                     Ingénierie Logicielle</a>
-                <a href="projects.php?filter=stage2026"
-                    class="filter-btn glass-btn <?= $activeFilter === 'stage2026' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
-                    Stage 2026</a>
                 <a href="projects.php?filter=other"
                     class="filter-btn glass-btn <?= $activeFilter === 'other' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
                     Autres</a>
