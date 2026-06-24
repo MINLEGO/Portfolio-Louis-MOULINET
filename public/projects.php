@@ -9,7 +9,8 @@ $activeFilter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
 $filterMap = [
     'web'      => 'Web',
     'software' => 'Software',
-    'devops'   => 'Dev_Ops',
+    'stage2026'   => 'Stage_2026',
+    'other' => 'Other'
 ];
 if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
     $projects = array_filter($projects, function ($p) use ($filterMap, $activeFilter) {
@@ -25,7 +26,7 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Projets</title>
-    <meta name="description" content="Explorez la galerie des projets de Louis MOULINET : applications web, logiciels cœurs et expérimentations DevOps. Solutions innovantes développées en BTS SIO." />
+    <meta name="description" content="Explorez la galerie des projets de Louis MOULINET : applications web et logiciels. Solutions innovantes développées en BTS SIO." />
     <link rel="canonical" href="https://louismoulinet.com/projects.php" />
 
     <!-- Open Graph / Facebook -->
@@ -90,9 +91,12 @@ if ($activeFilter !== 'all' && isset($filterMap[$activeFilter])) {
                 <a href="projects.php?filter=software"
                     class="filter-btn glass-btn <?= $activeFilter === 'software' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
                     Ingénierie Logicielle</a>
-                <a href="projects.php?filter=devops"
-                    class="filter-btn glass-btn <?= $activeFilter === 'devops' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
-                    DevOps &amp; Cloud</a>
+                <a href="projects.php?filter=stage2026"
+                    class="filter-btn glass-btn <?= $activeFilter === 'stage2026' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
+                    Stage 2026</a>
+                <a href="projects.php?filter=other"
+                    class="filter-btn glass-btn <?= $activeFilter === 'other' ? 'filter-btn--active' : 'filter-btn--inactive' ?>">
+                    Autres</a>
             </div>
         </section>
         <!-- Projects Grid (dynamic) -->

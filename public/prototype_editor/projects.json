@@ -314,7 +314,7 @@
         {
             "id": 8,
             "index": "08",
-            "category": "web",
+            "category": "stage2026",
             "title": "Stage : Landing page WonderBento",
             "tags": [
                 "CSS",
@@ -358,7 +358,7 @@
         {
             "id": 9,
             "index": "09",
-            "category": "web",
+            "category": "stage2026",
             "title": "Stage : Bento grids",
             "tags": [
                 "CSS",
@@ -405,7 +405,7 @@
         {
             "id": 10,
             "index": "10",
-            "category": "software",
+            "category": "stage2026",
             "title": "Stage : Projet Buffallo",
             "tags": [
                 "Python",
@@ -452,7 +452,7 @@
         {
             "id": 11,
             "index": "11",
-            "category": "other",
+            "category": "stage2026",
             "title": "Stage : Veille technologique",
             "tags": [
                 "ComfyUI",
@@ -496,7 +496,7 @@
         {
             "id": 12,
             "index": "12",
-            "category": "software",
+            "category": "stage2026",
             "title": "Stage : Scrapping",
             "tags": [
                 "Python",

@@ -15,7 +15,7 @@
             "image": "./media/project_ms_render.png",
             "image_alt": "Rendu 3D d'un télephone contenant l'interface de MarketSpider",
             "detail": {
-                "subtitle": "01 / PERsonal / DevOps",
+                "subtitle": "01 / PERsonal / Software",
                 "status": "Private beta",
                 "stack": "python/sqlite/docker",
                 "year": "2024-2026",
@@ -220,7 +220,7 @@
                 "detail_image2": "./media/sirh_3.png",
                 "detail_image2_alt": "Diagramme de classes UML représentant une structure de gestion des salariés avec trois entités : Salarié, Catégorie et Service, chacune avec ses attributs spécifiques comme code, nom, date de naissance, fonction pour Salarié, et code, libellé, prime pour Catégorie. Les relations indiquent qu'un salarié appartient à une catégorie et un service, avec des cardinalités précisant les liens entre ces entités.",
                 "detail_note": "Ce projet m'a appris à faire face aux difficultés inattendues dans un environnement stressant.",
-                "subtitle": "05 / BTS-SIO / DevOps"
+                "subtitle": "05 / BTS-SIO / Software"
             }
         },
         {
@@ -314,7 +314,7 @@
         {
             "id": 8,
             "index": "08",
-            "category": "web",
+            "category": "Stage_2026",
             "title": "Stage : Landing page WonderBento",
             "tags": [
                 "CSS",
@@ -358,7 +358,7 @@
         {
             "id": 9,
             "index": "09",
-            "category": "web",
+            "category": "Stage_2026",
             "title": "Stage : Bento grids",
             "tags": [
                 "CSS",
@@ -405,7 +405,7 @@
         {
             "id": 10,
             "index": "10",
-            "category": "software",
+            "category": "Stage_2026",
             "title": "Stage : Projet Buffallo",
             "tags": [
                 "Python",
@@ -452,7 +452,7 @@
         {
             "id": 11,
             "index": "11",
-            "category": "other",
+            "category": "Stage_2026",
             "title": "Stage : Veille technologique",
             "tags": [
                 "ComfyUI",
@@ -496,7 +496,7 @@
         {
             "id": 12,
             "index": "12",
-            "category": "software",
+            "category": "Stage_2026",
             "title": "Stage : Scrapping",
             "tags": [
                 "Python",

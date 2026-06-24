@@ -190,29 +190,6 @@ $recent_projects = array_slice($projects, 0, 2);
                         MariaDB &amp; SQLite</p>
                     <div class="w-full bg-surface-variant h-px"></div>
                 </div>
-                <!--                    
-                 DevOps Card --
-                <div
-                    class="md:col-span-8 glass-surface rounded-1xl bg-surface-container-lowest p-10 flex flex-col md:flex-row gap-10 items-center justify-between border-l-8 border-primary">
-                    <div class="flex-1">
-                        <div class="font-mono text-primary text-sm mb-4">03 / INFRA</div>
-                        <h3 class="font-headline text-3xl font-bold mb-4">Pipeline DevOps</h3>
-                        <p class="text-on-surface-variant leading-relaxed">
-                            Stratégies de conteneurisation et de déploiement continu. S'assurer que l'infrastructure est
-                            aussi agile que le code qu'elle héberge.
-                        </p>
-                    </div>
-                    <div class="devops-mini-grid">
-                        <div class="devops-mini-card">
-                            <span class="material-symbols-outlined text-4xl block mb-2">grid_view</span>
-                            <span class="font-mono text-xs">DOCKER</span>
-                        </div>
-                        <div class="devops-mini-card">
-                            <span class="material-symbols-outlined text-4xl block mb-2">settings_input_component</span>
-                            <span class="font-mono text-xs">CI/CD</span>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </section>
         <!-- Projects - Featured Split -->
