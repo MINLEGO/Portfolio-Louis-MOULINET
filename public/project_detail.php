@@ -92,15 +92,38 @@ $d = $project['detail']; // shorthand for detail fields
             </div>
         </header>
         <!-- High-Res Project Image -->
+        <?php
+        $detail_images = $d['detail_image'];
+        // Normalize to array
+        if (is_string($detail_images) && $detail_images !== '') {
+            $detail_images = [$detail_images];
+        } elseif (!is_array($detail_images)) {
+            $detail_images = [];
+        }
+        $is_carousel = count($detail_images) > 1;
+        ?>
         <section>
-            <div class="detail-image-banner glass-surface big-glass">
-                <img alt="<?= htmlspecialchars($d['detail_image_alt']) ?>"
-                    class="w-full h-full object-cover transition-all duration-700"
-                    style="transition: filter 0.7s ease;"
-                    onmouseover="this.style.filter='grayscale(0)'"
-                    onmouseout="this.style.filter='grayscale(100%)'"
-                    src="<?= htmlspecialchars($d['detail_image']) ?>" />
-                <div class="detail-image-overlay"></div>
+            <div class="detail-image-banner glass-surface big-glass" <?= $is_carousel ? 'id="detail-carousel"' : '' ?>>
+                <?php if ($is_carousel): ?>
+                    <div class="carousel-track">
+                        <?php foreach ($detail_images as $idx => $img): ?>
+                            <img alt="<?= htmlspecialchars($d['detail_image_alt']) ?>"
+                                class="carousel-slide <?= $idx === 0 ? 'active' : '' ?>"
+                                src="<?= htmlspecialchars($img) ?>" />
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="detail-image-overlay"></div>
+                    <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image">&#8249;</button>
+                    <button class="carousel-arrow carousel-arrow-right" aria-label="Next image">&#8250;</button>
+                <?php elseif (count($detail_images) === 1): ?>
+                    <img alt="<?= htmlspecialchars($d['detail_image_alt']) ?>"
+                        class="w-full h-full object-cover transition-all duration-700"
+                        style="transition: filter 0.7s ease;"
+                        onmouseover="this.style.filter='grayscale(0)'"
+                        onmouseout="this.style.filter='grayscale(100%)'"
+                        src="<?= htmlspecialchars($detail_images[0]) ?>" />
+                    <div class="detail-image-overlay"></div>
+                <?php endif; ?>
             </div>
         </section>
         <!-- Project Narrative Grid -->
@@ -250,6 +273,54 @@ $d = $project['detail']; // shorthand for detail fields
             <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G" />
         </filter>
     </svg>
+<script>
+(function() {
+    'use strict';
+    const carousel = document.getElementById('detail-carousel');
+    if (!carousel) return;
+
+    const slides = carousel.querySelectorAll('.carousel-slide');
+    if (slides.length === 0) return;
+
+    var currentIndex = 0;
+    var intervalId = setInterval(autoAdvance, 10000);
+
+    function goToSlide(index) {
+        for (var i = 0; i < slides.length; i++) {
+            slides[i].classList.toggle('active', i === index);
+        }
+        currentIndex = index;
+    }
+
+    function autoAdvance() {
+        var next = (currentIndex + 1) % slides.length;
+        goToSlide(next);
+    }
+
+    function prevSlide() {
+        var prev = (currentIndex - 1 + slides.length) % slides.length;
+        goToSlide(prev);
+        resetTimer();
+    }
+
+    function nextSlide() {
+        var next = (currentIndex + 1) % slides.length;
+        goToSlide(next);
+        resetTimer();
+    }
+
+    function resetTimer() {
+        clearInterval(intervalId);
+        intervalId = setInterval(autoAdvance, 10000);
+    }
+
+    var leftArrow = carousel.querySelector('.carousel-arrow-left');
+    var rightArrow = carousel.querySelector('.carousel-arrow-right');
+
+    if (leftArrow) leftArrow.addEventListener('click', prevSlide);
+    if (rightArrow) rightArrow.addEventListener('click', nextSlide);
+})();
+</script>
 </body>
 
 </html>

@@ -39,7 +39,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $p['detail']['feature3_icon']     = $_POST['feature3_icon']     ?? '';
                 $p['detail']['feature3_title']    = $_POST['feature3_title']    ?? '';
                 $p['detail']['feature3_desc']     = $_POST['feature3_desc']     ?? '';
-                $p['detail']['detail_image']      = $_POST['detail_image']      ?? '';
+                // Parse detail_image: can be a single URL (string) or multiple (array)
+                $raw_detail_images = trim($_POST['detail_image'] ?? '');
+                if ($raw_detail_images !== '') {
+                    $image_urls = array_filter(array_map('trim', explode("\n", $raw_detail_images)), 'strlen');
+                    if (count($image_urls) === 1) {
+                        $p['detail']['detail_image'] = $image_urls[0]; // Save as string (backward-compatible)
+                    } else {
+                        $p['detail']['detail_image'] = array_values($image_urls); // Save as array
+                    }
+                } else {
+                    $p['detail']['detail_image'] = '';
+                }
                 $p['detail']['detail_image_alt']  = $_POST['detail_image_alt']  ?? '';
                 $p['detail']['tech_tags']         = $tech_tags;
                 $p['detail']['code_file']         = $_POST['code_file']         ?? '';
@@ -488,7 +499,17 @@ function eta($name, $value, $rows = 3, $class = '')
                 <!-- High-Res Project Image -->
                 <section class="mb-32">
                     <div class="detail-image-banner">
-                        <?php $imgSrc = htmlspecialchars($d['detail_image']); ?>
+                        <?php
+                        // Normalize detail_image for display: can be string or array
+                        $detailImageRaw = $d['detail_image'] ?? '';
+                        if (is_array($detailImageRaw)) {
+                            $imgSrc = htmlspecialchars($detailImageRaw[0] ?? '');
+                            $detailImageDisplay = implode("\n", $detailImageRaw);
+                        } else {
+                            $imgSrc = htmlspecialchars($detailImageRaw);
+                            $detailImageDisplay = $detailImageRaw;
+                        }
+                        ?>
                         <img alt="<?= htmlspecialchars($d['detail_image_alt']) ?>"
                             class="w-full h-full object-cover transition-all duration-700"
                             style="transition: filter 0.7s ease;"
@@ -499,9 +520,10 @@ function eta($name, $value, $rows = 3, $class = '')
                     </div>
                     <!-- Image URL fields (shown below the banner) -->
                     <div style="margin-top:.75rem; display:flex; flex-direction:column; gap:.4rem; padding: 0 .5rem;">
-                        <label style="font-size:.7rem;color:rgba(255, 0, 0, 0.35);text-transform:uppercase;letter-spacing:.08em;">Image principale (URL)</label>
-                        <input type="text" name="detail_image" value="<?= $imgSrc ?>" class="ed-input"
-                            oninput="document.getElementById('preview-detail-image').src=this.value">
+                        <label style="font-size:.7rem;color:rgba(255, 0, 0, 0.35);text-transform:uppercase;letter-spacing:.08em;">Image principale (URLs)</label>
+                        <textarea name="detail_image" rows="4" class="ed-textarea"
+                            oninput="document.getElementById('preview-detail-image').src=this.value.split('\n').find(l=>l.trim()!=='')||''"><?= htmlspecialchars($detailImageDisplay) ?></textarea>
+                        <small class="text-on-surface-variant opacity-60">One URL per line. Multiple URLs will display as a carousel.</small>
                         <input type="text" name="detail_image_alt" value="<?= htmlspecialchars($d['detail_image_alt']) ?>" class="ed-input" placeholder="Texte alternatif">
                     </div>
                 </section>

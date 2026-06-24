@@ -30,7 +30,7 @@
                 "feature3_icon": "devices",
                 "feature3_title": "Notifications",
                 "feature3_desc": "L'utilisation d'un bot Discord a été choisie car cette application peut notifier l'utilisateur où qu'il soit. ",
-                "detail_image": "./media/project_ms_interface.png",
+                "detail_image": ["./media/project_ms_interface.png"],
                 "detail_image_alt": "interface",
                 "tech_tags": [
                     "Python",
