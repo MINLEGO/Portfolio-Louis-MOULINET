@@ -102,8 +102,8 @@ $d = $project['detail']; // shorthand for detail fields
                     <button class="carousel-arrow carousel-arrow-right" aria-label="Next image">&#8250;</button>
                 <?php elseif (count($detail_images) === 1): ?>
                     <img alt="<?= htmlspecialchars($d['detail_image_alt']) ?>"
-                        class="w-full h-full object-cover grayscale transition-all duration-700"
-                        style="transition: filter 0.7s ease;"
+                        class="w-full h-full object-cover grayscale transition-all duration-700 carousel-slide"
+                        style="transition: filter 0.7s ease; position: relative; object-fit: scale-down;"
                         onmouseover="this.style.filter='grayscale(0)'"
                         onmouseout="this.style.filter='grayscale(100%)'"
                         src="<?= htmlspecialchars($detail_images[0]) ?>" />

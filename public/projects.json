@@ -11,26 +11,26 @@
                 "Curl",
                 "MariaDB"
             ],
-            "description": "Bot de scraping avancé permettant d'être notifié instantanément de bonnes affaires se trouvant sur des sites de vente en ligne tels que Vinted ou Leboncoin",
+            "description": "Bot de scraping avancé permettant d'être notifié instantanément de bonnes affaires se trouvant sur des sites de vente en ligne tel que Vinted ou Leboncoin",
             "image": "./media/project_ms_render.png",
-            "image_alt": "Rendu 3D d'un téléphone contenant l'interface de MarketSpider",
+            "image_alt": "Rendu 3D d'un télephone contenant l'interface de MarketSpider",
             "detail": {
-                "subtitle": "01 / BTS-SIO / DevOps",
+                "subtitle": "01 / PERsonal / DevOps",
                 "status": "Private beta",
                 "stack": "python/sqlite/docker",
                 "year": "2024-2026",
-                "challenge": "Construire un outil permettant de trouver des annonces de Lego en ligne ayant un prix avantageux avec un pourcentage de succès de plus de 70%.",
-                "challenge2": "La grande majorité des outils existants pour les particuliers se basent au mieux sur des filtres regex basiques et des règles de prix strictes.\r\nChaque set Lego ayant un prix en constante évolution, il faudrait donc créer un filtre pour chaque produit existant (10 000 +)\r\nJ'ai donc implémenté une vérification du prix systématique pour chaque set grâce à l'API de sites de vente populaires et un caching de 24 h pour réduire la latence.",
+                "challenge": "Construire un outil permettant de trouver des annonces de lego en ligne ayant un prix avantageux avec un pourcentage de succès de plus de 70%.",
+                "challenge2": "",
                 "feature1_icon": "psychology",
                 "feature1_title": "Pourquoi Lego ?",
-                "feature1_desc": "Ces jouets ont la particularité de fortement gagner en valeur dans le temps, de plus, ils sont souvent sous-évalués par les particuliers.",
+                "feature1_desc": "Ces jouets ont la particularité de fortement gagner en valeur dans le temps, de plus, ils sont souvent sous évalués par les particuliers.",
                 "feature2_icon": "front_hand",
                 "feature2_title": "Vérification d'authenticité",
-                "feature2_desc": "Toute annonce détectée est vérifiée par une IA basée sur l'embedding d'images, puis par un LLM, ce qui permet de minimiser la charge de l'utilisateur.",
+                "feature2_desc": "Toute annonce détectée est vérifiée par une IA basé sur l'embedding d'image, puis, par un LLM, ce qui permet de minimiser la charge de l'utilisateur.",
                 "feature3_icon": "devices",
                 "feature3_title": "Notifications",
-                "feature3_desc": "L'utilisation d'un bot Discord a été choisie car cette application peut notifier l'utilisateur où qu'il soit. ",
-                "detail_image": ["./media/project_ms_interface.png"],
+                "feature3_desc": "L'utilisation d'un bot discord a été choisi car cet application peut notifier l'utilisateur où qu'il soit. ",
+                "detail_image": "./media/project_ms_interface.png",
                 "detail_image_alt": "interface",
                 "tech_tags": [
                     "Python",
@@ -53,8 +53,7 @@
             "category": "Software",
             "title": "Projet python",
             "tags": [
-                "Python",
-                "MariaDB"
+                "Python MariaDB"
             ],
             "description": "Le projet python est le premier projet réalisé dans le cursus du BTS SIO. Durant ce projet de 2 jours, j'ai pu essayer de configurer 2 machines virtuelles pour qu'elles aient accès à internet.",
             "image": "./media/project_py_thumb.jpg",
@@ -64,8 +63,8 @@
                 "status": "archived",
                 "stack": "python/SQL",
                 "year": "2026",
-                "challenge": "L’entreprise fictive STESIO souhaite utiliser un annuaire de serveur Windows afin de créer automatiquement les comptes utilisateurs du système de gestion de bases de données (SGBD). \r\nSTESIO veut pouvoir récupérer la liste des utilisateurs dans un fichier texte et générer un script contenant des ordres SQL pour la création des comptes. \r\nLe programme est donc écrit en langage Python.",
-                "challenge2": "Malheureusement, suite à de mauvaises conditions météorologiques, nous avons été confinés à domicile durant la majorité du projet, je n'ai donc pas pu remplir tous les objectifs.",
+                "challenge": "L’entreprise fictive STESIO souhaite utiliser un annuaire de serveur windows afin de créer automatiquement les comptes utilisateurs du système de gestion de bases de données (SGBD). \r\nSTESIO veut pouvoir récupérer la liste des utilisateurs dans un fichier texte et générer un script contenant des ordres SQL pour la création des comptes. \r\nLe programme est donc écrit en langage python.",
+                "challenge2": "Malheureusement, suite à des mauvaises conditions météorologiques, nous avons été confiné à domicile durant la majorité du projet, je n'ai donc pas pu remplir tout les objectifs.",
                 "feature1_icon": "mobile_text_2",
                 "feature1_title": "Cahier des charges et organisation d’un service à produire",
                 "feature1_desc": "Prise en compte du cahier des charges et rédaction. Nous avons aussi mis place un planning pour s’organiser et respecter les délais.",
@@ -74,7 +73,7 @@
                 "feature2_desc": "Jeu d’essai réalisé pour tester l’application. Chaque test nous permettait de régler les problèmes rencontrés.",
                 "feature3_icon": "database",
                 "feature3_title": "Conception d’une BDD",
-                "feature3_desc": "Utilisation de la base de données mise à disposition.",
+                "feature3_desc": "Utilisation de la base de données mise à disposition.conditions.",
                 "detail_image": "./media/project_py_ss.png",
                 "detail_image_alt": "Linux terminal",
                 "tech_tags": [
@@ -82,15 +81,15 @@
                 ],
                 "code_file": "format.py",
                 "code_version": "test",
-                "code_block": "f=open(\"testEntree.txt\",\"r\") \r\na=f.readline() \r\na=a[0]+a[6] #prends valeurs du str a en 0 et en 7 (a = a... -> mauvaise pratique)\r\n\r\nwith open(\"testEntree.txt\", \"w\") as f : #ouvre le fichier en écriture \r\n    f.write(a) #écrit la variable a dans le fichier testSortie.txt",
+                "code_block": "f=open(\"testEntree.txt\",\"r\") \r\na=f.readline() \r\na=a[0]+a[6] #prends valeurs du str a en 0 et en 7 (a = a... -> mauvaise pratique)\r\n\r\nwith open(\"testEntree.txt\", \"w\") as f : #ouvre le fichier en ecriture \r\n    f.write(a) #écrit la variable a dans le fichier testSortie.txt",
                 "detail_image2": "https://lh3.googleusercontent.com/aida-public/AB6AXuDjzF30Dre_fEuvWmTo5LnVarjPHAQAW0pp9YOan2CerD9wyQLfaC-iE19CqIW4LqITbk1Hn0jzd-oKR2amIUFakrTY8Zm2uXGSw8fbkzbEgQRdl2QnHJr6k36K5XQeWICEpFAbj8DchlhLYkYz6sa6Ufk0w27Urt4OeSstbCg0GDMplzR5URCQMJFmhQrk9dB0Vf_QznwczQkP4fBel0NOH4c3mDQEgaqkzZGOJk5mUc7NR0vGaHShv2gYmHBDKz9ciDh1kKTbzm88",
-                "detail_image2_alt": "idk man, a silver round thing I guess",
-                "detail_note": "Le but de ce projet était de confirmer nos connaissances en Python\r\nIl m'a appris à faire face aux difficultés techniques en présence de circonstances inhabituelles"
+                "detail_image2_alt": "idk man, a silver round thing i guess",
+                "detail_note": "Le but de ce projet était de confirmer nos connaissance en python\r\nIl m'a appris à faire face aux difficultés techniques en présence de circonstances inhabituelles"
             }
         },
         {
-            "id": 4,
-            "index": "04",
+            "id": 3,
+            "index": "03",
             "category": "web",
             "title": "StageUp",
             "tags": [
@@ -104,7 +103,7 @@
             "image": "./media/stageup_1.png",
             "image_alt": "clean macro shot of computer circuitry and glowing blue led lights in a dark server room environment",
             "detail": {
-                "subtitle": "04 / BTS-SIO / Security",
+                "subtitle": "03 / BTS-SIO / WEB",
                 "status": "In progress",
                 "stack": "PHP / MariaDB",
                 "year": "2026",
@@ -112,7 +111,7 @@
                 "challenge2": "",
                 "feature1_icon": "database",
                 "feature1_title": "Gestion ergonomique",
-                "feature1_desc": "Pour l'administration autant que pour les étudiants, la gestion des stages peut être difficile à organiser, le site est donc fait pour centraliser les documents liés aux conventions et aux évaluations.",
+                "feature1_desc": "Pour l'administration autant que pour les étudiants, la gestion des stages peu être difficile à organiser, le site est donc fait pour centraliser les documents liés aux conventions et aux évaluations.",
                 "feature2_icon": "",
                 "feature2_title": "",
                 "feature2_desc": "",
@@ -135,8 +134,8 @@
             }
         },
         {
-            "id": 5,
-            "index": "05",
+            "id": 4,
+            "index": "04",
             "category": "software",
             "title": "ToliV",
             "tags": [
@@ -146,18 +145,18 @@
                 "clip",
                 "pytorch"
             ],
-            "description": "Tinder est une application addictive et fastidieuse à utiliser.\r\nJ'ai donc décidé d'essayer d'automatiser son utilisation tout en testant mes compétences en Python.",
+            "description": "Tinder est une application addictive et fastidieuse à utiliser.\r\nJ'ai donc décider d'essayer d'automatiser son utilisation tout en testant mes compétences en python.",
             "image": "./media/toliv_1.png",
             "image_alt": "an iphone with the app on it",
             "detail": {
                 "status": "In Progress",
                 "stack": "Python",
                 "year": "2026",
-                "challenge": "Quantifier les préférences de l'utilisateur pour connaître la probabilité qu'il(elle) \"swipe\" à droite ou à gauche et ainsi obtenir un score pour chaque personne proposée par l'application.",
+                "challenge": "Quantifier les préférences de l'utilisateur pour connaître la probabilité qu'il(elle) \"swipe\" à droite ou a gauche et ainsi obtenir un score pour chaque personne proposée par l'application.",
                 "challenge2": "",
                 "feature1_icon": "percent",
                 "feature1_title": "Quantification du score \"d'attractivité\"",
-                "feature1_desc": "L'idée part du fait que des modèles de vectorisation d'images tels que CLIP (Contrastive Language–Image Pre-training) permettent d'associer des images à des coordonnées spécifiques dans un espace à 512 dimensions. C'est-à-dire que 2 images sémantiquement proches seront également dimensionnellement rapprochées.\r\nPartant de ce principe, on peut établir la moyenne de ce que représente une personne \"attractive\" et comparer cette moyenne à des photos pour établir un \"score\" qui définit la probabilité qu'un utilisateur \"swipe\" à droite ou à gauche.\r\n\r\nBien évidemment, cette approche est naïve et il existe des moyens plus complexes permettant de meilleurs résultats\r\n",
+                "feature1_desc": "L'idée part du fait que des modèles de vectorisation d'images tels que CLIP (Contrastive Language–Image Pre-training) permettent d'associer des images a des coordonnées spécifique dans un espace à 512 dimensions. C'est à dire que 2 images sémantiquement proches seront également dimentionellement rapprochées.\r\nPartant de ce principe, on peu établir la moyenne de ce que représente une personne \"attractive\" et comparer cette moyenne à des photos pour établir un \"score\" qui définit la probabilité qu'un utilisateur \"swipe\" à droite ou a gauche.\r\n\r\nBien évidemment cet approche est naïve et il existe des moyens plus complexes permettant de meilleurs résultats\r\n",
                 "feature2_icon": "image_search",
                 "feature2_title": "Lecture de l'interface",
                 "feature2_desc": "Étant donné que j'utilise le mirroring de l'écran d'un téléphone portable vers un ordinateur, pyautogui est utilisé pour chercher l'état de l'interface. De plus opencv est utilisé pour détecter les publicités et tesseract pour lire les données affichées par l'application.",
@@ -165,7 +164,7 @@
                 "feature3_title": "Implémentation actuelle",
                 "feature3_desc": "A l’issue de 2 semaines de programmation et ~800 lignes de python, le programme peut prévoir la décision de l'utilisateur 68% du temps, cela peut être optimisé en modifiant le calcul du score.",
                 "detail_image": "./media/toliv_2.png",
-                "detail_image_alt": "Une image d'un écran avec du code, à sa droite un écran de smartphone avec un score.",
+                "detail_image_alt": "Une image d'un ecran avec du code, a sa droite un ecran de smartphone avec un score.",
                 "tech_tags": [
                     "python",
                     "clip",
@@ -176,13 +175,13 @@
                 "code_block": "platform = UxPlay(detect=\"YOLO\", encoder=\"CLIP\", score=\"weighted_cosine\")\r\nwhile platform.session_is_live():\r\n    frame = platform.capture_screen(); profile = tesseract(frame)\r\n    g_view, b_view, f_view = platform.extract(frame, \"cascade_detection\")\r\n    emb_top, emb_body, emb_face = platform.encode_features([g_view, b_view, f_view])\r\n    if user.swipe(profile): \r\n        platform_embed.append(profile)\r\n    s_global = platform.similarity(emb_top, platform.preference(\"global\"))\r\n    s_body = platform.similarity(emb_body, platform.preference(\"body\"))\r\n    s_face = platform.similarity(emb_face, platform.preference_center(\"face\"))\r\n    b_score = 0.15 * s_global + 0.35 * s_body + 0.50 * s_face\r\n    platform.push_feedback(profile, b_score,\"confidence\")",
                 "detail_image2": "./media/toliv_3.png",
                 "detail_image2_alt": "a robot with the schema below it",
-                "detail_note": "Bien qu'il n'ait pas de réelle utilité, ce projet m'a permis d'approfondir mes connaissances dans le domaine de l'IA et de l'embedding. ",
-                "subtitle": ""
+                "detail_note": "Bien qu'il n'aie pas de réelles utilité, ce projet m'a permis d'approfondir mes connaissances dans le domaine de l'IA et de l'embedding. ",
+                "subtitle": "04 / PERSONAL / SOFtware"
             }
         },
         {
-            "id": 6,
-            "index": "06",
+            "id": 5,
+            "index": "05",
             "category": "Dev_Ops",
             "title": "Projet Java",
             "tags": [
@@ -190,7 +189,7 @@
                 "Swing",
                 "MariaDB"
             ],
-            "description": "Création d'un projet Java en groupe, en utilisant MariaDB et JFrame afin de créer un logiciel de ressources humaines.",
+            "description": "Création d'un projet Java en groupe, en utilisant MariaDB et JFrame afin de créer un logiciel de ressource humaine.",
             "image": "./media/sirh_1.jpg",
             "image_alt": "Diagramme de cas d'utilisation illustrant les interactions d'un DRH avec un système de gestion des salariés. Le diagramme montre les actions principales comme consulter la liste des salariés par service, choisir un service, et les extensions possibles telles que consulter, supprimer, ajouter ou modifier un salarié.",
             "detail": {
@@ -203,11 +202,11 @@
                 "feature1_title": "",
                 "feature1_desc": "",
                 "feature2_icon": "view_list",
-                "feature2_title": "Un menu dynamique",
-                "feature2_desc": "L'utilisation de l'événement JFrame ItemStateChanged a permis de changer l'état d'un tableau quand l'utilisateur choisit un tag dans un menu déroulant.",
+                "feature2_title": "Une menu dynamique",
+                "feature2_desc": "L'utilisation de JFrame ItemStateChanged, a permis de changer l'état d'un tableau quand utilisateur choisit un tag dans un menu déroulant.",
                 "feature3_icon": "Apps",
                 "feature3_title": "Une interface ergonomique",
-                "feature3_desc": "Grâce à Swing, il a été possible de créer facilement une interface lisible permettant de créer, lire, modifier et supprimer un utilisateur (CRUD).",
+                "feature3_desc": "Grace a swing, il a été possible de facilement créé une interface lisible permettant de Créer, Lire, Modifier et Supprimer un utilisateur (CRUD).",
                 "detail_image": "./media/sirh_2.png",
                 "detail_image_alt": "Interface of the app",
                 "tech_tags": [
@@ -221,12 +220,12 @@
                 "detail_image2": "./media/sirh_3.png",
                 "detail_image2_alt": "Diagramme de classes UML représentant une structure de gestion des salariés avec trois entités : Salarié, Catégorie et Service, chacune avec ses attributs spécifiques comme code, nom, date de naissance, fonction pour Salarié, et code, libellé, prime pour Catégorie. Les relations indiquent qu'un salarié appartient à une catégorie et un service, avec des cardinalités précisant les liens entre ces entités.",
                 "detail_note": "Ce projet m'a appris à faire face aux difficultés inattendues dans un environnement stressant.",
-                "subtitle": ""
+                "subtitle": "05 / BTS-SIO / DevOps"
             }
         },
         {
-            "id": 7,
-            "index": "07",
+            "id": 6,
+            "index": "06",
             "category": "software",
             "title": "Dataset artificiel",
             "tags": [
@@ -240,14 +239,14 @@
                 "status": "archived",
                 "stack": "python/blender",
                 "year": "2023-2024",
-                "challenge": "Créer un programme permettant de générer des rendus photoréalistes de pièces \"Lego\" dans le but d’entraîner une intelligence artificielle à reconnaître des pièces dans la réalité.",
+                "challenge": "Créer un programme permettant de générer des rendus photoréalistes de pièce \"Lego\" dans le but d’entraîner une intelligence artificielle à reconnaître des pièces dans la réalité.",
                 "challenge2": "",
                 "feature1_icon": "code_blocks",
                 "feature1_title": "Fonctionnement du script",
-                "feature1_desc": "Ce script permet de créer des dizaines de rendus réalistes grâce à quelques étapes simples. D'abord, une simulation de rigidbody est opérée pour donner une position réaliste bien qu'aléatoire à l'objet. Étant donné qu'il est difficile de donner une vélocité arbitraire à un objet sur Blender, j'ai choisi de donner une gravité aléatoire à la scène pendant un bref instant, ce qui revient au même résultat.\r\nPuis, la caméra est déplacée vers l'objet de sorte qu'il prenne l'entièreté du champ. Enfin, un rendu 3D en 128p est opéré.",
+                "feature1_desc": "Ce script permet de créer des dizaines de rendus réalistes grâce à quelques étapes simples. D'abord, une simulation de rigidbody est opérée pour donner une position réaliste bien qu'aléatoire à l'objet. Étant donné qu'il est difficile de donner une vélocité arbitraire a un objet sur blender, j'ai choisi de donner une gravité aléatoire à la scène pendant un bref instant ce qui revient au même résultat.\r\nPuis, la caméra est déplacé vers l'objet de sorte qu'il prenne l'entièreté du champ. Enfin, un rendu 3D en 128p est opéré.",
                 "feature2_icon": "download",
                 "feature2_title": "Sources des données",
-                "feature2_desc": "Les modèles 3D sont sourcés grâce à la bibliothèque open source LDRAW qui regroupe les modèles 3D de toutes les briques Lego existantes.",
+                "feature2_desc": "Les modèles 3D sont sourcés grâce a la bibliothèque Open Source LDRAW qui regroupe les modèles 3D de toutes les briques Lego existantes.",
                 "feature3_icon": "timeline",
                 "feature3_title": "Objectif Final",
                 "feature3_desc": "Ce script a pour but de simplifier la création d'un DataSet dans le but d’entraîner une IA de reconnaissance d'image.",
@@ -263,13 +262,13 @@
                 "code_block": "object = import_obj(\"C:\\ldrawmodels\\\"+part_name, ldrawpath)\r\nobject.scale = (import_scale,)*3\r\n \r\nfor i in range(iterations):\r\n    scene.keyframe_in(\"gravity\",(r.uniform(3*2,-3*2),r.uniform(3*2,-3*2),0),frame=0)\r\n    scene.keyframe_in(\"gravity\",(0.0, 0.0, -9.81), frame=26)\r\n    data.materials[\"Material_4_c\"].node_tree.nodes[\"Group\"].inputs[0].default_value = (r.random(), r.random(), r.random(),  1)\r\n    object.rotation_euler = (r.uniform(0, pi*2),r.uniform(0, pi*2),r.uniform(0, pi*2))\r\n    bpy.ops.rigidbody.bake_to_keyframes(frame_start = 1, frame_end = 90)\r\n    camera.frame_object(object)\r\n    bpy.ops.render()\r\n    data.images['Render'].save_render(filepath)\r\n    \r\ndata.objects.remove(imported_object, do_unlink=True)",
                 "detail_image2": "./media/ad_3.webp",
                 "detail_image2_alt": "",
-                "detail_note": "J'ai fait ce script à 15 ans en tant que mon premier projet sur Python. À une époque où la meilleure IA sur le marché était GPT 3.5. \r\nJe suis donc très fier d'en être venu à bout.",
-                "subtitle": ""
+                "detail_note": "J'ai fait ce script à 15 ans en tant que mon premier projet sur python. A une époque où la meilleure IA sur le marché était GPT 3.5. \r\nJe suis donc très fier d'en être venu à bout.",
+                "subtitle": "06 / Personal / software"
             }
         },
         {
-            "id": 8,
-            "index": "08",
+            "id": 7,
+            "index": "07",
             "category": "web",
             "title": "Portfolio",
             "tags": [
@@ -278,24 +277,24 @@
                 "php",
                 "svg"
             ],
-            "description": "Le site que vous êtes en train de voir actuellement. (développé en 2,5 jours) (~30 heures)",
+            "description": "Le site que vous êtes en train de voir actuellement",
             "image": "./media/portfolio_1.png",
             "image_alt": "",
             "detail": {
                 "status": "Deployed",
                 "stack": "html/css/php/javascript",
                 "year": "2026",
-                "challenge": "Créer un portfolio moderne permettant à la fois de montrer mes compétences, mes projets et la veille technologique que j'ai mise en place.",
+                "challenge": "Créer un portfolio moderne permettant d'à la fois montrer mes compétences, mes projets, et la veille technologiques que j'ai mit en place.",
                 "challenge2": "",
                 "feature1_icon": "border_color",
-                "feature1_title": "L'éditeur et le stockage de données",
-                "feature1_desc": "Pour la première version de mon site, j'ai décidé de ne pas utiliser de méthode complexe et d'utiliser un format JSON pour stocker ma veille technologique et mon portfolio, une approche valide pour de petits volumes de données en lecture seule.\r\n\r\nÉtant donné qu'éditer une page de projet dans un fichier JSON est peu pratique, j'ai utilisé Claude Code pour me créer un CRUD simple me permettant de visualiser le résultat final en temps réel.\r\n\r\n\r\n",
+                "feature1_title": "L'éditeur et le stockage de donnée",
+                "feature1_desc": "Pour la première version de mon site, j'ai décidé de ne pas utiliser de méthode complexe et d'utiliser un format JSON pour stocker ma veille technologique et mon portfolio, une approche valide pour de petit volumes de donnée en lecture seule.\r\n\r\nÉtant donné qu'éditer une page de projet dans un fichier JSON est peu pratique, j'ai utiliser Claude code pour me créer un CRUD simple me permettant de visualiser le résultat final en temps réel.\r\n\r\n\r\n",
                 "feature2_icon": "accessibility_new",
                 "feature2_title": "UX",
-                "feature2_desc": "Pour l'ergonomie de mon site, j'ai décidé de me limiter à 3 pages principales et 2 pages secondaires. En effet, utiliser une unique \"landing page\" n'est ni pratique ni scalable, et se limiter à un petit nombre de pages permet de ne pas perdre l'utilisateur.",
+                "feature2_desc": "Pour l'ergonomie de mon site, j'ai décidé de me limiter à 3 pages principales et 2 pages secondaires, en effet, utiliser une unique \"landing page\" est ni pratique ni scallable et se limiter a un petit nombre de page permet de ne pas perdre l'utilisateur.",
                 "feature3_icon": "shadow",
                 "feature3_title": "Design du site",
-                "feature3_desc": "Pour la direction artistique, je me suis inspiré du style Liquid Glass (Apple), qui combine l'aspect du verre dépoli avec la fluidité de l'eau. J'ai aussi utilisé des couleurs inspirées par le style Frutiger Aero.",
+                "feature3_desc": "Pour la direction artistique, j'ai pris inspiration du style Liquid Glass (Apple), qui combine l'aspect du verre dépoli avec la fluidité de l'eau. J'ai aussi utilisé des couleurs inspiré par le style Frutiger Aero.",
                 "detail_image": "./media/portfolio_2.png",
                 "detail_image_alt": "",
                 "tech_tags": [
@@ -307,9 +306,237 @@
                 "code_version": "",
                 "code_block": "<svg style=\"display: none\">\r\n    <filter id=\"glass-distortion\" x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" filterUnits=\"objectBoundingBox\">\r\n        <feTurbulence type=\"fractalNoise\" baseFrequency=\"0.01 0.01\" numOctaves=\"1\" seed=\"5\" result=\"turbulence\" />\r\n        <feGaussianBlur in=\"turbulence\" stdDeviation=\"3\" result=\"softMap\" />\r\n        <feSpecularLighting in=\"softMap\" surfaceScale=\"5\" specularConstant=\"1\" specularExponent=\"100\"\r\n            lighting-color=\"white\" result=\"specLight\">\r\n            <fePointLight x=\"-200\" y=\"-200\" z=\"300\" />\r\n        </feSpecularLighting>\r\n        <feDisplacementMap in=\"SourceGraphic\" in2=\"softMap\" scale=\"150\" xChannelSelector=\"R\" yChannelSelector=\"G\" />\r\n    </filter>\r\n</svg>",
                 "detail_image2": "https://lh3.googleusercontent.com/aida-public/AB6AXuDjzF30Dre_fEuvWmTo5LnVarjPHAQAW0pp9YOan2CerD9wyQLfaC-iE19CqIW4LqITbk1Hn0jzd-oKR2amIUFakrTY8Zm2uXGSw8fbkzbEgQRdl2QnHJr6k36K5XQeWICEpFAbj8DchlhLYkYz6sa6Ufk0w27Urt4OeSstbCg0GDMplzR5URCQMJFmhQrk9dB0Vf_QznwczQkP4fBel0NOH4c3mDQEgaqkzZGOJk5mUc7NR0vGaHShv2gYmHBDKz9ciDh1kKTbzm88",
-                "detail_image2_alt": "idk lan, a silver round thing i guess (it's an illustration)",
-                "detail_note": "Ce site - qui est le premier que je publie - m'a permis d'appliquer beaucoup des connaissances théoriques que j'ai emmagasinées durant ma formation. Cela me permettra de créer des projets plus complexes à l'avenir.",
-                "subtitle": ""
+                "detail_image2_alt": "idk lan, a silver round thing i guess (it's an illustraation)",
+                "detail_note": "Ce site - qui est le premier que je publie - m'a permis d'appliquer beaucoup des connaissances théoriques que j'ai emmagasiner durant ma formation. Cela me permettra de créer des projets plus complexes à l'avenir.",
+                "subtitle": "07 / BTS-SIO / web"
+            }
+        },
+        {
+            "id": 8,
+            "index": "08",
+            "category": "web",
+            "title": "Stage : Landing page WonderBento",
+            "tags": [
+                "CSS",
+                "TypeScript",
+                "React",
+                "Tailwind",
+                "Node"
+            ],
+            "description": "Page d'acceuil servant à présenter un produit de Wonder partner's : La création de bento grids à la demande. Le projet a consititué en l'amélioration d'une page existante.",
+            "image": "./media/wonder_acceuil_1.png",
+            "image_alt": "A laptop with the wonder partner website on it",
+            "detail": {
+                "status": "Deployed",
+                "stack": "TS/React/Tailwind",
+                "year": "2026",
+                "challenge": "Adapter une page d'accueil existante, codée en HTML et CSS, en appliquant des consignes graphiques précises (polices, logos), puis à la réécrire intégralement en React afin de la rendre plus facile à maintenir et à faire évoluer.",
+                "challenge2": "",
+                "feature1_icon": "",
+                "feature1_title": "Animation de la page",
+                "feature1_desc": "Deux composants d'animation réutilisables ont également été développés en React pour dynamiser cette page : un élément représentant un curseur se déplaçant aléatoirement sur une image, destiné à suggérer l'interactivité d'un dispositif, et un composant affichant plusieurs vidéos de façon aléatoire dans une mini-grille, avec un travail spécifique de compression vidéo et de flou appliqué en JavaScript pour masquer les artefacts de compression",
+                "feature2_icon": "",
+                "feature2_title": "Decouverte des Pull requests",
+                "feature2_desc": "Ce travail a fait l'objet d'une pull request sur GitHub, l'occasion d'une première prise en main de cet outil avec l'aide de mon tuteur.",
+                "feature3_icon": "",
+                "feature3_title": "Design responsive",
+                "feature3_desc": "Grace à la maintenabilité simplifiée de Tailwind et React, il a été très simple d'adapter la page de telle sorte qu'elle fonctionne correctement sur diverse taille d'écran.",
+                "detail_image": "./media/wonder_acceuil_2.jpg",
+                "detail_image_alt": "A before / after image showing the website",
+                "tech_tags": [
+                    ""
+                ],
+                "code_file": "",
+                "code_version": "",
+                "code_block": "",
+                "detail_image2": "./media/wonder_acceuil_3.jpg",
+                "detail_image2_alt": "",
+                "detail_note": "Ce projet m'a permis d'avoir une première expérience avec React et node, me permettant d'acquérir des bases solides pour la suite de mon stage.",
+                "subtitle": "08 / INTERNSHIP-1 / web"
+            }
+        },
+        {
+            "id": 9,
+            "index": "09",
+            "category": "web",
+            "title": "Stage : Bento grids",
+            "tags": [
+                "CSS",
+                "TypeScript",
+                "React",
+                "Tailwind",
+                "Node"
+            ],
+            "description": "Création de modèles de grilles facilement réutilisables pour accélérer la conception de nouvelles propositions commerciales.",
+            "image": "./media/bento_1.png",
+            "image_alt": "",
+            "detail": {
+                "status": "IN PROGRESS",
+                "stack": "TS/React/Tailwind",
+                "year": "2026",
+                "challenge": "Créer des modèles de grilles facilement réutilisables pour accélérer la conception de nouvelles propositions commerciales\r\n\r\n",
+                "challenge2": "",
+                "feature1_icon": "",
+                "feature1_title": "Qu'est-ce qu'une grille Bento ?",
+                "feature1_desc": "Les grilles « Bento » désignent, chez Wonder Partner's, des ensembles de cartes permettant de présenter de façon synthétique et visuellement organisée une quantité importante d'informations sur un produit ou une marque ; il s'agit d'un des formats les plus demandés par les prospects de l'entreprise.",
+                "feature2_icon": "",
+                "feature2_title": "Facilité d'utilisation",
+                "feature2_desc": "Cette nouvelle architecture a pu servir de base à la réalisation de grilles sur mesure pour plusieurs prospects (Home Depot, castorama), à partir de concepts graphiques existant.",
+                "feature3_icon": "",
+                "feature3_title": "Nouvelle architecture",
+                "feature3_desc": "Après une phase de recherche, j'ai conçu une nouvelle architecture de\r\ncomposants React permettant de facilement ajouter retirer des éléments dans une grille sans avoir à tout refaire, contrairement à l'architecture précédente qui imposait de tout réécrire à chaque nouvelle utilisation.",
+                "detail_image": [
+                    "./media/bento_2.png",
+                    "./media/bento_4.png"
+                ],
+                "detail_image_alt": "",
+                "tech_tags": [
+                    ""
+                ],
+                "code_file": "",
+                "code_version": "",
+                "code_block": "",
+                "detail_image2": "",
+                "detail_image2_alt": "",
+                "detail_note": "",
+                "subtitle": "09 / INTERNSHIP-1 / web"
+            }
+        },
+        {
+            "id": 10,
+            "index": "10",
+            "category": "software",
+            "title": "Stage : Projet Buffallo",
+            "tags": [
+                "Python",
+                "OpenCV",
+                "AR"
+            ],
+            "description": "Animation d'un coloriage en réalité augmentée",
+            "image": "./media/buffallo_1.png",
+            "image_alt": "",
+            "detail": {
+                "status": "IN PROGRESS",
+                "stack": "PYTHON, OPENCV, AE",
+                "year": "2026",
+                "challenge": "Cette mission consistait à réaliser un “Proof of concept” pour une commande du client Buffalo Grill : permettre à un enfant de colorier un dessin prédéfini, puis de voir ce coloriage prendre vie sous forme d'animation, en réalité augmentée, en reprenant les couleurs effectivement choisies pour chaque zone du dessin. La contrainte principale était de garder un traitement suffisamment léger pour fonctionner correctement sur un smartphone de milieu de gamme.\r\n\r\n",
+                "challenge2": "",
+                "feature1_icon": "",
+                "feature1_title": "Détection du coloriage",
+                "feature1_desc": "La façon dont fonctionne le prototype est assez simple : d’abord, on détecte le marqueur Aruco dont on connaît la position relative au coloriage. Cela permet d'inférer la zone approximative dans laquelle se trouve le coloriage, de plus, le marqueur Aruco étant Noir et Blanc, on corrige les couleurs du reste de l’image grâce à ces données. Cependant, il reste encore à affiner la détection, pour cela, j’ai trouvé une technique efficace: \r\nD’abord, on convertie l’image en noir et blanc, et en partant du principe que le coin gauche est isolé du coloriage, on peut déduire que tout pixel voisin de même couleur fait parti de l’exterieur du coloriage. Grâce à cette déduction, on peut avoir un carré propre qui peut être détecté par un algorithme de détection de contour classique.",
+                "feature2_icon": "",
+                "feature2_title": "Pré traitement",
+                "feature2_desc": "Pour savoir quelle couleur du coloriage correspond a quelle zone de l'animation, il faut créer des masques : dans un premier temps, j'ai généré une animation avec l'IA, puis, j'ai remplacé les couleurs de l'animation avec After effect, enfin, j'ai créé un script python pour nettoyer l'image.",
+                "feature3_icon": "",
+                "feature3_title": "Nouvelle architecture",
+                "feature3_desc": "Enfin, dès que le coloriage est détecté, on peut superposer le masque et l’image pour trouver\r\nquelle couleur du masque correspond à quelle couleur du coloriage. Il suffit alors de\r\nremplacer les couleurs de la vidéo par les couleurs trouvées.",
+                "detail_image": [
+                    "./media/buffallo_4.png",
+                    "./media/buffallo_5.png",
+                    "./media/buffallo_6.png",
+                    "./media/buffallo_7.png"
+                ],
+                "detail_image_alt": "",
+                "tech_tags": [
+                    ""
+                ],
+                "code_file": "",
+                "code_version": "",
+                "code_block": "",
+                "detail_image2": "./media/buffallo_3.png",
+                "detail_image2_alt": "",
+                "detail_note": "Pour permettre de bonne performance, le prototype a ensuite été optimisé pour fonctionner en temps réel, avec un gain de performance significatif de 5 images par seconde vers 15 grâce à plusieurs optimisations. Par exemple le remplacement de certains calculs par des multiplications matricielles, ou le pré calcul des couleurs de chaque image à la place d'un calcul à l'exécution). Le prototype a ensuite été présenté au directeur général de l'entreprise.",
+                "subtitle": "10 / INTERNSHIP-1 / software"
+            }
+        },
+        {
+            "id": 11,
+            "index": "11",
+            "category": "other",
+            "title": "Stage : Veille technologique",
+            "tags": [
+                "ComfyUI",
+                "Trellis V2"
+            ],
+            "description": "Exploration de la génération de modèles 3D par intelligence\r\nartificielle",
+            "image": "./media/comfyui_2.png",
+            "image_alt": "",
+            "detail": {
+                "status": "ARCHIVED",
+                "stack": "ComfyUI, Trellis V2",
+                "year": "2026",
+                "challenge": "À la suite de l'annonce, par Microsoft, d'un nouvel outil de génération de modèles 3D à partir d'images (Trellis V2), j'ai proposé de le tester afin d'évaluer un gain de productivité potentiel pour les projets où la qualité du modèle final n'est pas la priorité absolue. L'installation\r\ndirecte du projet s'étant révélée trop complexe, j'ai utilisé l'interface ComfyUI, qui permet d'obtenir de très bons résultats avec ce modèle à partir d'une seule image.",
+                "challenge2": "",
+                "feature1_icon": "",
+                "feature1_title": "Génération a partir de plusieurs images",
+                "feature1_desc": "Dans une tentative d'améliorer les résultats, j'ai fait beaucoup de recherches dans l'utilisation de plusieurs images pour générer un seul modèle. Cependant, les résultats n'ont pas été concluant. En effet, la quantité de VRAM utilisée pour l’exécution de l'outil est proportionnel au nombre d'images utilisées en entrée. De plus, les résultats n'ont pas connu d'amélioration significative, allant jusqu'à des résultat moins qualitatifs dans certains cas.",
+                "feature2_icon": "",
+                "feature2_title": "",
+                "feature2_desc": "",
+                "feature3_icon": "",
+                "feature3_title": "",
+                "feature3_desc": "",
+                "detail_image": [
+                    "./media/comfyui_2.png",
+                    "./media/comfyui_4.png"
+                ],
+                "detail_image_alt": "",
+                "tech_tags": [
+                    ""
+                ],
+                "code_file": "",
+                "code_version": "",
+                "code_block": "",
+                "detail_image2": "./media/comfyui_3.png",
+                "detail_image2_alt": "",
+                "detail_note": "ComfyUI a permis de grandement faciliter la mise en place d'IA générative locale. Cela m'a permis de me concentrer sur l'optimisation du processus.",
+                "subtitle": "11 / INTERNSHIP-1 / STudy"
+            }
+        },
+        {
+            "id": 12,
+            "index": "12",
+            "category": "software",
+            "title": "Stage : Scrapping",
+            "tags": [
+                "Python",
+                "LBC",
+                "curl-cffi",
+                "SQLite"
+            ],
+            "description": "Collecte et catégorisation de données par scraping et intelligence artificielle.",
+            "image": "./media/scrapping_4.png",
+            "image_alt": "",
+            "detail": {
+                "status": "ARCHIVED",
+                "stack": "Python, curl-cffi, SQLite",
+                "year": "2026",
+                "challenge": "L'entreprise dans lequel je faisait mon stage ayant besoin d'un grand nombre d'images de salles de bains, nous avons décider d'opter pour le scrapping d'annonces immobilières sur Leboncoin.\r\nLes difficultés principales ont portées sur le contournement des protections anti-robots du site. De plus, le téléchargement en masse d'images et la classification automatique ont aussi constituées un challenge.",
+                "challenge2": "",
+                "feature1_icon": "",
+                "feature1_title": "Contournement de Datadome",
+                "feature1_desc": "Sans rentrer dans les détails, l'utilisation de techniques de rotation d'User Agent et plus généralement la création d'User Agents réalistes a permis d'accéder à l'API non officielle de Leboncoin sans difficultée.",
+                "feature2_icon": "l",
+                "feature2_title": "Séparation des images",
+                "feature2_desc": "Pour séparer les images de salles de bains des autres types d'images, l'IA générative Gemini 3.5 Flash a pu être utilisée, ce qui a permis de trier l'intégralité des 30 000 images en moins de 45 minutes.",
+                "feature3_icon": "",
+                "feature3_title": "Stockage des données",
+                "feature3_desc": "Etant donné que la quantité d'image est importante sans être énorme, j'ai opté pour le stockage des images dans le système de fichier local tout en utilisant une base de donnée SQLIte pour les métadonnées.",
+                "detail_image": [
+                    "./media/scrapping_4.png",
+                    "./media/scrapping_2.png"
+                ],
+                "detail_image_alt": "",
+                "tech_tags": [
+                    ""
+                ],
+                "code_file": "",
+                "code_version": "",
+                "code_block": "",
+                "detail_image2": "./media/scrapping_3.jpg",
+                "detail_image2_alt": "",
+                "detail_note": "Pour permettre de bonne performance, le prototype a ensuite été optimisé pour fonctionner en temps réel, avec un gain de performance significatif de 5 images par seconde vers 15 grâce à plusieurs optimisations. Par exemple le remplacement de certains calculs par des multiplications matricielles, ou le pré calcul des couleurs de chaque image à la place d'un calcul à l'exécution). Le prototype a ensuite été présenté au directeur général de l'entreprise.",
+                "subtitle": "12 / INTERNSHIP-1 / software"
             }
         }
     ]

@@ -82,9 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             'image'     => '',
             'image_alt' => '',
             'detail'    => [
-                'status'   => '',
-                'stack' => '',
-                'year' => '',
+                'status'   => 'Deployed',
+                'stack' => 'TS/React/Tailwind',
+                'year' => '2026',
                 'challenge' => '',
                 'challenge2' => '',
                 'feature1_icon' => '',
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 'feature3_icon' => '',
                 'feature3_title' => '',
                 'feature3_desc' => '',
-                'detail_image' => '',
+                'detail_image' => ["./media/"],
                 'detail_image_alt' => '',
                 'tech_tags'    => [],
                 'code_file'    => '',
@@ -105,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 'detail_image2' => '',
                 'detail_image2_alt' => '',
                 'detail_note' => '',
+                'subtitle' => 'NN / CONTEXT / CATEGORY',
             ]
         ];
         file_put_contents($jsonPath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
@@ -512,7 +513,7 @@ function eta($name, $value, $rows = 3, $class = '')
                         ?>
                         <img alt="<?= htmlspecialchars($d['detail_image_alt']) ?>"
                             class="w-full h-full object-cover transition-all duration-700"
-                            style="transition: filter 0.7s ease;"
+                            style="transition: filter 0.7s ease; position: relative; object-fit: contain;"
                             onmouseover="this.style.filter='grayscale(0)'"
                             onmouseout="this.style.filter='grayscale(100%)'"
                             src="<?= $imgSrc ?>" id="preview-detail-image" />
