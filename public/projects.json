@@ -412,7 +412,7 @@
                 "OpenCV",
                 "AR"
             ],
-            "description": "Animation d'un coloriage en réalité augmentée",
+            "description": "Animation dynamique en réalité augmentée de coloriages",
             "image": "./media/buffallo_1.png",
             "image_alt": "",
             "detail": {

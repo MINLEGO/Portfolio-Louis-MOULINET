@@ -284,8 +284,7 @@ $recent_projects = array_filter($projects, function ($project) use ($higlighted_
         <section class="cta-section">
             <div class="cta-bg"></div>
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="font-headline text-5xl font-bold tracking-tighter mb-12">Construire le prochain
-                    standard numérique.</h2>
+                <h2 class="font-headline text-5xl font-bold tracking-tighter mb-12"></h2>
                 <div class="cta-buttons">
                     <a href="media/Recherche de stage BTS SIO SLAM MOULINET--PRIMA Louis.pdf" download
                         class="btn-primary glass-btn shadow-xl">
