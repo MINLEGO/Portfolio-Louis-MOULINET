@@ -278,7 +278,11 @@ $articlesData = $veilleData['articles'] ?? [];
             let sidebarCount = 0;
             const microlinkPromises = [];
 
-            veilleData.forEach((article, index) => {
+            const sortedVeilleData = [...veilleData].sort((a, b) => {
+                return (b.priority ?? Infinity) - (a.priority ?? Infinity);
+            });
+
+            sortedVeilleData.forEach((article, index) => {
                 const link = article.link ? article.link.replace(/\s+/g, '') : null;
 
                 if (!link) {
