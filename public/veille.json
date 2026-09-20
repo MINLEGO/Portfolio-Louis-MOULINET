@@ -59,6 +59,91 @@
     ],
     "articles": [
         {
+            "theme_id": 5,
+            "link": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+            "priority": 5
+        },
+        {
+            "theme_id": 4,
+            "link": "https://www.youtube.com/watch?v=EvCMaE94p1g",
+            "priority": 2
+        },
+        {
+            "theme_id": 8,
+            "link": "https://www.youtube.com/watch?v=hwJcWaouDhI",
+            "priority": 2
+        },
+        {
+            "theme_id": 8,
+            "link": "https://www.youtube.com/watch?v=Se0etN27I6Y",
+            "priority": 3
+        },
+        {
+            "theme_id": 7,
+            "link": "https://www.youtube.com/watch?v=Qddzc5iqP5U",
+            "priority": 3
+        },
+        {
+            "theme_id": 1,
+            "link": "https://www.youtube.com/watch?v=fyygMxVCAWI",
+            "priority": 4
+        },
+        {
+            "theme_id": 5,
+            "link": "https://www.youtube.com/watch?v=ujapQTaEqzU",
+            "priority": 4
+        },
+        {
+            "theme_id": 7,
+            "link": "https://www.youtube.com/watch?v=9XYt-_GdPIU",
+            "priority": 4
+        },
+        {
+            "theme_id": 7,
+            "link": "https://www.youtube.com/watch?v=pmjyB-lc4KQ",
+            "priority": 5
+        },
+        {
+            "theme_id": 7,
+            "link": "https://www.youtube.com/watch?v=_6jZlnRsXXQ",
+            "priority": 5
+        },
+        {
+            "theme_id": 6,
+            "link": "https://www.youtube.com/watch?v=qznFV59f3Uk",
+            "priority": 5
+        },
+        {
+            "theme_id": 6,
+            "link": "https://www.youtube.com/watch?v=s9w3gtgvNSU",
+            "priority": 5
+        },
+        {
+            "theme_id": 6,
+            "link": "https://www.youtube.com/watch?v=n9xKblqyQ28",
+            "priority": 5
+        },
+        {
+            "theme_id": 4,
+            "link": "https://www.anthropic.com/research/persona-selection-model",
+            "priority": 4
+        },
+        {
+            "theme_id": 7,
+            "link": "https://openai.com/index/introducing-gpt-live-1-in-the-api/",
+            "priority": 2
+        },
+        {
+            "theme_id": 1,
+            "link": "https://openai.com/fr-FR/index/hugging-face-incident-and-the-road-ahead/",
+            "priority": 5
+        },
+        {
+            "theme_id": 7,
+            "link": "https://openai.com/index/navier-stokes-solution/",
+            "priority": 4
+        },
+        {
             "theme_id": 3,
             "link": "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3",
             "priority": 2
