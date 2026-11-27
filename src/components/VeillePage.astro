@@ -133,8 +133,9 @@ const formats = [['', 'Tous'], ['Vidéo', 'Vidéo'], ['Code', 'Code'], ['Modèle
         </section>
     </main>
 
-    <!-- Détail d'une Source / Expérimentation (fenêtre centrée ou tiroir) -->
-    <div class="vs-panel" id="vs-panel" hidden>
+    <!-- Détail d'une Source / Expérimentation (fenêtre centrée ou tiroir).
+         Après le footer : sinon une tabulation sortant d'une iframe du panneau atterrit dans les liens du footer. -->
+    <div slot="after-footer" class="vs-panel" id="vs-panel" hidden>
         <div class="vs-panel-backdrop" data-close></div>
         <div class="vs-panel-box" role="dialog" aria-modal="true" aria-labelledby="vs-panel-title">
             <button class="vs-close" data-close aria-label="Fermer"><span class="material-symbols-outlined">close</span></button>
