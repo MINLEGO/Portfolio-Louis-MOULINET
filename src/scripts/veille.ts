@@ -1,14 +1,14 @@
 // Page Veille et archive (window.VEILLE fourni par components/VeillePage.astro).
-import type { Demo, Experiment, VeillePageData } from '../lib/experiments';
+import type { Demo } from '../lib/experiment-meta';
+import type { Experiment, VeillePageData } from '../lib/experiments';
+import { youtubeId } from '../lib/shared';
 import { skeletons } from '../lib/skeletons';
-import type { Source } from '../lib/veille';
+import type { ListedSource, ListResponse, Source } from '../lib/veille';
 
 declare global {
     interface Window { VEILLE: VeillePageData }
 }
 
-/** Source telle que renvoyée par le relais. */
-type ListedSource = Source & { exp: string | null };
 type View = 'exp' | 'src';
 
 (() => {
@@ -22,7 +22,6 @@ type View = 'exp' | 'src';
     const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, c => ENTITIES[c]!);
     const safeUrl = (u: string) => /^https?:\/\//i.test(u || '') ? u : '#';
     const fmtDate = (iso?: string) => iso ? new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
-    const ytId = (url: string) => (String(url).match(/(?:[?&]v=|youtu\.be\/|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
 
     const state = { q: V.q || '', format: '', kw: '', offset: 0, total: 0, loading: false, token: 0, items: new Map<string, ListedSource>() };
     const thumbs = new Map<number, string | null>();
@@ -79,7 +78,7 @@ type View = 'exp' | 'src';
         const token = ++state.token;
         state.loading = true;
         const params = new URLSearchParams({ q: state.q, format: state.format, kw: state.kw, offset: String(state.offset), limit: String(PAGE) });
-        let data: { results: ListedSource[]; total: number; stale_since: string | null };
+        let data: ListResponse;
         try {
             const res = await fetch('/veille_api.php?' + params);
             const body = await res.json();
@@ -287,7 +286,7 @@ type View = 'exp' | 'src';
             </figure>`;
         }
         if (d.type === 'video') {
-            const id = ytId(d.url);
+            const id = youtubeId(String(d.url));
             return id
                 ? `<div class="vs-video"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="Vidéo de démonstration" allowfullscreen loading="lazy"></iframe></div>`
                 : `<video class="vs-video" controls preload="metadata" src="${esc(d.url.startsWith('http') ? d.url : base + d.url)}"></video>`;

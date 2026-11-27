@@ -7,6 +7,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import MarkdownIt from 'markdown-it';
 import sanitizeHtml from 'sanitize-html';
+import { builtExperiments, isSourceOf, type ExperimentMeta } from './experiment-meta';
+import { cut, cutQuery, youtubeId } from './shared';
 import fixture from './veille_fixture.json';
 
 // `astro dev` et `npm start` ne chargent pas `.env` ; les variables déjà définies restent prioritaires.
@@ -51,30 +53,27 @@ export interface Source {
   thumb: string | null;
 }
 
-export interface SourceSet {
-  data: Source[];
+/** Données servies par le cache. */
+export interface Entry<T> {
+  data: T;
   /** Instant des données, en millisecondes. */
   at: number;
   /** Vrai si l'API est injoignable (ancien cache) ou non configurée (données de secours). */
   stale: boolean;
 }
 
-export interface ExperimentLink {
-  slug: string;
-  source_url?: string;
+/** Source telle que renvoyée par le relais, avec le slug de son Expérimentation. */
+export type ListedSource = Source & { exp: string | null };
+
+/** Réponse JSON de la liste, partagée avec le script de la page. */
+export interface ListResponse {
+  results: ListedSource[];
+  total: number;
+  offset: number;
+  stale_since: string | null;
 }
 
-const experimentMetas = import.meta.glob<Omit<ExperimentLink, 'slug'>>('/public/experimentations/*/meta.json', {
-  eager: true,
-  import: 'default',
-});
-export const builtExperiments: ExperimentLink[] = Object.entries(experimentMetas).map(([file, meta]) => ({
-  ...meta,
-  slug: file.split('/').at(-2)!,
-}));
-
-/** Clé de comparaison entre l'URL d'une Source et le `source_url` d'une Expérimentation. */
-export const normUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '');
+export type ExperimentLink = Pick<ExperimentMeta, 'source_url'> & { slug: string };
 
 // `html: false` : le HTML des résumés (générés depuis des pages externes) est échappé, pas interprété.
 const markdown = new MarkdownIt({ html: false, linkify: true });
@@ -111,8 +110,6 @@ function formatOf(site: string): Source['format'] {
   if (site === 'huggingface.co') return 'Modèle';
   return 'Article';
 }
-
-const youtubeId = (url: string) => url.match(/(?:[?&]v=|youtu\.be\/|\/shorts\/|\/embed\/)([\w-]{11})/)?.[1];
 
 const isPrivate = (s: RawSource) => s.keywords.some(k => k.normalize('NFC').trim().toLowerCase() === 'privé');
 
@@ -175,8 +172,6 @@ function intParam(value: string | null, fallback: number): number {
   return Number.isFinite(n) ? n : 0;
 }
 
-const cut = (value: string | null, length: number) => Array.from(value ?? '').slice(0, length).join('');
-
 /** `jj/mm/aaaa hh:mm`, heure locale du serveur. */
 const formatDate = (at: number) =>
   new Date(at)
@@ -215,7 +210,6 @@ export function createRelay({
     return (await res.json()) as T;
   }
 
-  type Entry<T> = { data: T; at: number; stale: boolean };
   const pending = new Map<string, Promise<Entry<any>>>();
 
   /** Échecs récents : l'API n'est pas rappelée avant `until`. */
@@ -299,7 +293,7 @@ export function createRelay({
    * Toutes les Sources publiques, triées par date de parution puis de capture.
    * Données de secours si l'API n'est pas configurée ; lève si elle échoue sans cache.
    */
-  async function allSources(): Promise<SourceSet> {
+  async function allSources(): Promise<Entry<Source[]>> {
     try {
       return withoutPrivate(await cached('all', TTL, async () => {
         const all: RawSource[] = [];
@@ -346,22 +340,21 @@ export function createRelay({
       () => (isRepo(s) ? socialImage(s.url) : null),
     );
 
-  async function list(params: URLSearchParams) {
-    const q = cut(params.get('q'), 200).trim();
+  async function list(params: URLSearchParams): Promise<ListResponse> {
+    const q = cutQuery(params.get('q')).trim();
     const format = params.get('format') ?? '';
     const keyword = cut(params.get('kw'), 100).toLowerCase();
     const offset = Math.max(0, intParam(params.get('offset'), 0));
     const limit = Math.min(100, Math.max(1, intParam(params.get('limit'), 24)));
 
     const res = q === '' ? await allSources() : await search(q);
-    const slugs = new Map(experiments.map(e => [normUrl(e.source_url ?? ''), e.slug]));
     const items = res.data.filter(
       s => (!format || s.format === format) && (!keyword || s.keywords.some(k => k.toLowerCase() === keyword)),
     );
     return {
       results: items.slice(offset, offset + limit).map(s => ({
         ...s,
-        exp: slugs.get(normUrl(s.url)) ?? slugs.get(normUrl(s.canonical_url)) ?? null,
+        exp: experiments.findLast(e => isSourceOf(s, e.source_url))?.slug ?? null,
       })),
       total: items.length,
       offset,

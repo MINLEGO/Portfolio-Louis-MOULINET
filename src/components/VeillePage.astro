@@ -5,6 +5,7 @@ import '../styles/fonts/mono-500.css';
 // Après le Layout : veille.css doit être chargé après style.css.
 import '../styles/veille.css';
 import { joinExperiments, type VeillePageData } from '../lib/experiments';
+import { cutQuery } from '../lib/shared';
 import { skeletons } from '../lib/skeletons';
 import { relay } from '../lib/veille';
 
@@ -25,7 +26,7 @@ const sources = await relay.allSources().then(
 );
 const pageData: VeillePageData = {
   mode,
-  q: Array.from(Astro.url.searchParams.get('q') ?? '').slice(0, 200).join(''),
+  q: cutQuery(Astro.url.searchParams.get('q')),
   experiments: joinExperiments(sources),
 };
 // `<` échappé : `q`, titres et mots-clés viennent de l'extérieur, un `</script>` ne doit pas sortir du bloc.
