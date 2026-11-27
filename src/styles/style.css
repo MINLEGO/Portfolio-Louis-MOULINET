@@ -69,28 +69,28 @@
 
 @font-face {
     font-family: 'JT Marnie';
-    src: url('./media/jt-marnie/JTMarnie-Regular.otf') format('opentype');
+    src: url('./media/jt-marnie/JTMarnie-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'JT Marnie';
-    src: url('./media/jt-marnie/JTMarnie-Medium.otf') format('opentype');
+    src: url('./media/jt-marnie/JTMarnie-Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'JT Marnie';
-    src: url('./media/jt-marnie/JTMarnie-Bold.otf') format('opentype');
+    src: url('./media/jt-marnie/JTMarnie-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'JT Marnie';
-    src: url('./media/jt-marnie/JTMarnie-ExtraBold.otf') format('opentype');
+    src: url('./media/jt-marnie/JTMarnie-ExtraBold.woff2') format('woff2');
     font-weight: 900;
     font-style: normal;
 }
