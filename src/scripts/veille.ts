@@ -1,4 +1,5 @@
 // Page Veille et archive (window.VEILLE fourni par components/VeillePage.astro).
+import formatIcons from '../data/format-icons.json';
 import type { Demo } from '../lib/experiment-meta';
 import type { Experiment, VeillePageData } from '../lib/experiments';
 import { youtubeId } from '../lib/shared';
@@ -15,8 +16,8 @@ type View = 'exp' | 'src';
     const V = window.VEILLE;
     const isHome = V.mode === 'home';
     const PAGE = isHome ? 12 : 24;
-    // Nouvelle icône posée par un script : l'ajouter à DYNAMIC dans scripts/icons.mjs, puis `npm run icons`.
-    const ICONS: Record<string, string> = { 'Vidéo': 'play_circle', 'Code': 'code', 'Modèle': 'neurology', 'Article': 'article' };
+    // Icône d'un Format : data/format-icons.json (lu aussi par scripts/icons.mjs), puis `npm run icons`.
+    const ICONS: Record<string, string> = formatIcons;
     const $ = <T extends Element = HTMLElement>(sel: string, el: ParentNode = document) => el.querySelector<T>(sel)!;
     const ENTITIES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
     const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, c => ENTITIES[c]!);
