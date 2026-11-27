@@ -268,19 +268,26 @@ type View = 'exp' | 'src';
     // les autres s'affichent à la fin. N commence à 1.
     function expView(e: Experiment) {
         const demos = e.demos || [], used = new Set<number>();
-        const take = (n: number) => { const d = demos[n - 1]; if (!d) return ''; used.add(n - 1); return demoHtml(d, e.base); };
+        const take = (n: number) => { const d = demos[n - 1]; if (!d) return ''; used.add(n - 1); return demoHtml(d, e); };
         const header = e.entete ? `<div class="vs-exp-header">${take(e.entete)}</div>` : '';
         const body = e.html.replace(/\{\{demo:(\d+)\}\}/g, (m, n: string) => take(+n) || m);
         return { meta: `Expérimentation · ${fmtDate(e.date)}`, title: e.titre, body: `${header}
             <div class="vs-md">${body}</div>
-            ${demos.map((d, i) => used.has(i) ? '' : demoHtml(d, e.base)).join('')}` };
+            ${demos.map((d, i) => used.has(i) ? '' : demoHtml(d, e)).join('')}` };
     }
 
-    function demoHtml(d: Demo, base: string) {
+    // Attributs width/height : le navigateur réserve la place de l'image, le panneau ne saute pas au chargement.
+    const sizeAttrs = (e: Experiment, file = '') => {
+        const size = e.sizes[file];
+        return size ? `width="${size[0]}" height="${size[1]}"` : '';
+    };
+
+    function demoHtml(d: Demo, e: Experiment) {
+        const base = e.base;
         if (d.type === 'galerie') {
             const imgs = d.images || [], caps = d.legendes || [];
             return `<figure class="vs-gallery">
-                <img class="vs-gallery-main" src="${esc(base + imgs[0])}" alt="${esc(caps[0] || '')}">
+                <img class="vs-gallery-main" ${sizeAttrs(e, imgs[0])} src="${esc(base + imgs[0])}" alt="${esc(caps[0] || '')}">
                 <figcaption>${esc(caps[0] || '')}</figcaption>
                 <div class="vs-gallery-thumbs">${imgs.map((src, i) =>
                     `<button data-src="${esc(base + src)}" data-cap="${esc(caps[i] || '')}" aria-label="Image ${i + 1}"><img src="${esc(base + src)}" alt=""></button>`).join('')}</div>
