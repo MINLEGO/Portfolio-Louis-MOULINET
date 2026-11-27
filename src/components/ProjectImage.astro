@@ -13,7 +13,7 @@ const slots = {
   square: { ratio: 1, fit: 'cover', from: 1280, box: 600, md: 47, sm: 95, widths: [400, 640, 800, 1200, 1456] },
 };
 
-type Props = Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'slot'> & {
+type Props = Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'slot' | 'width' | 'height'> & {
   src: string;
   alt: string;
   layout: keyof typeof slots;
