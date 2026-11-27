@@ -15,6 +15,7 @@ type View = 'exp' | 'src';
     const V = window.VEILLE;
     const isHome = V.mode === 'home';
     const PAGE = isHome ? 12 : 24;
+    // Nouvelle icône posée par un script : l'ajouter à DYNAMIC dans scripts/icons.mjs, puis `npm run icons`.
     const ICONS: Record<string, string> = { 'Vidéo': 'play_circle', 'Code': 'code', 'Modèle': 'neurology', 'Article': 'article' };
     const $ = <T extends Element = HTMLElement>(sel: string, el: ParentNode = document) => el.querySelector<T>(sel)!;
     const ENTITIES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };

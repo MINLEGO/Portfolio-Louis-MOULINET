@@ -204,7 +204,7 @@
                 "feature2_icon": "view_list",
                 "feature2_title": "Une menu dynamique",
                 "feature2_desc": "L'utilisation de JFrame ItemStateChanged, a permis de changer l'état d'un tableau quand utilisateur choisit un tag dans un menu déroulant.",
-                "feature3_icon": "Apps",
+                "feature3_icon": "apps",
                 "feature3_title": "Une interface ergonomique",
                 "feature3_desc": "Grace a swing, il a été possible de facilement créé une interface lisible permettant de Créer, Lire, Modifier et Supprimer un utilisateur (CRUD).",
                 "detail_image": "./media/sirh_2.png",

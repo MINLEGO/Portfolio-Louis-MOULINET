@@ -1,6 +1,8 @@
 ---
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+// Avant style.css, qui redéfinit des propriétés de .material-symbols-outlined.
+import '../styles/fonts/fonts.css';
 import '../styles/style.css';
 
 interface Props {
@@ -13,8 +15,6 @@ interface Props {
   ogDescription?: string;
   ogType?: 'website' | 'article';
   keywords?: string;
-  /** Graisses de JetBrains Mono chargées : elles changent le rendu du gras synthétique. */
-  monoWeights?: '400' | '400;500';
   /** Données structurées schema.org. */
   jsonLd?: Record<string, unknown>;
   /** Filtre SVG de déformation du verre. Désactivé sur la Veille, qui ne l'a jamais eu. */
@@ -30,7 +30,6 @@ const {
   ogDescription = description,
   ogType = 'website',
   keywords,
-  monoWeights = '400;500',
   jsonLd,
   glassFilter = true,
 } = Astro.props;
@@ -65,14 +64,6 @@ const image = new URL(ogImage, Astro.site).href;
     <meta property="twitter:title" content={ogTitle} />
     <meta property="twitter:description" content={ogDescription} />
     <meta property="twitter:image" content={image} />
-
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-        href={`https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@${monoWeights}&display=swap`}
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
 </head>
 
 <body class="bg-surface font-body text-on-surface">

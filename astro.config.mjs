@@ -12,5 +12,6 @@ export default defineConfig({
   // shortcut: CSS non minifié. Lightning CSS (défaut de Vite) supprime `backdrop-filter` quand
   // `-webkit-backdrop-filter` le suit, et Chrome perd le flou. À réactiver avec un autre minifieur
   // (vérifier les 11 déclarations) si le poids du CSS pèse dans les mesures Lighthouse.
-  vite: { build: { cssMinify: false } },
+  // Les polices restent des fichiers : sous 4 Ko, Vite les recopierait en base64 dans le CSS, qui bloque l'affichage.
+  vite: { build: { cssMinify: false, assetsInlineLimit: (file) => (file.endsWith('.woff2') ? false : undefined) } },
 });
