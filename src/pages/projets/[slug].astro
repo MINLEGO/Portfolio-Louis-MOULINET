@@ -1,0 +1,245 @@
+---
+import Lines from '../../components/Lines.astro';
+import Layout from '../../layouts/Layout.astro';
+import { absolutePath, projects } from '../../lib/projects';
+
+export function getStaticPaths() {
+  return projects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, prev: projects[i - 1], next: projects[i + 1] },
+  }));
+}
+
+type Project = (typeof projects)[number];
+
+interface Props {
+  project: Project;
+  prev?: Project;
+  next?: Project;
+}
+
+const { project, prev, next } = Astro.props;
+const d = project.detail;
+const number = String(project.id).padStart(2, '0');
+const images = [d.detail_image].flat().filter(Boolean).map(absolutePath);
+const isCarousel = images.length > 1;
+const includeFeature = Boolean(d.feature1_desc || d.feature2_desc || d.feature3_desc);
+---
+
+<Layout
+    active="projets"
+    title={`${project.title} | Projets - Louis MOULINET`}
+    description={project.description.slice(0, 160)}
+    ogTitle={`${project.title} | Louis MOULINET`}
+    ogDescription={project.description}
+    ogType="article"
+    ogImage={project.image}
+    monoWeights="400"
+>
+    <main class="pt-24 px-8 max-w-7xl">
+        <!-- Hero Section -->
+        <header class="detail-hero mb-20">
+            <div class="md:col-span-8">
+                <span class="font-label text-primary font-semibold tracking-widest uppercase text-xs mb-4 block">
+                    {number} / BTS-SIO / {project.category}
+                </span>
+                <h1 class="font-headline text-6xl font-bold tracking-tighter leading-none mb-6">
+                    {project.title}
+                </h1>
+                <p class="font-body text-xl text-on-surface-variant max-w-xl leading-relaxed">
+                    {project.description}
+                </p>
+            </div>
+            <div class="md:col-span-4 flex justify-end">
+                <div class="detail-hero-meta">
+                    <span class="detail-hero-meta-item">Statut : {d.status}</span>
+                    <span class="detail-hero-meta-item">Stack : {d.stack}</span>
+                    <span class="detail-hero-meta-item">Année : {d.year}</span>
+                </div>
+            </div>
+        </header>
+        <!-- High-Res Project Image -->
+        <section>
+            <div class="detail-image-banner glass-surface big-glass" id={isCarousel ? 'detail-carousel' : undefined}>
+                {isCarousel ? (
+                    <div class="carousel-track">
+                        {images.map((src, i) => (
+                            <img alt={d.detail_image_alt}
+                                class:list={['carousel-slide', { active: i === 0 }]}
+                                src={src} />
+                        ))}
+                    </div>
+                    <div class="detail-image-overlay"></div>
+                    <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image">&#8249;</button>
+                    <button class="carousel-arrow carousel-arrow-right" aria-label="Next image">&#8250;</button>
+                ) : images.length === 1 && (
+                    <img alt={d.detail_image_alt}
+                        class="w-full h-full transition-all duration-700"
+                        style="transition: filter 0.7s ease; position: relative; object-fit: contain;"
+                        onmouseover="this.style.filter='grayscale(0)'"
+                        onmouseout="this.style.filter='grayscale(100%)'"
+                        src={images[0]} />
+                    <div class="detail-image-overlay"></div>
+                )}
+            </div>
+        </section>
+        <!-- Project Narrative Grid -->
+        <div class="detail-narrative">
+            <!-- Left Column: The Challenge -->
+            {(d.challenge || d.challenge2) && (
+                <div class={includeFeature ? 'md:col-span-5' : 'md:col-span-10'}>
+                    <h2 class="font-headline text-3xl font-bold mb-8 flex items-center gap-3">
+                        <span class="w-8 h-px bg-primary"></span> Le Défi
+                    </h2>
+                    <div class="space-y-6 text-on-surface-variant leading-loose font-light">
+                        <p><Lines text={d.challenge} /></p>
+                        <p><Lines text={d.challenge2} /></p>
+                    </div>
+                </div>
+            )}
+            <!-- Right Column: Key Features (Bento Style) -->
+            {includeFeature && (
+                <div class="md:col-span-7 feature-grid">
+                    {d.feature1_desc && (
+                        <div class="glass-surface small-glass feature-card feature-card--span-2">
+                            <span class="material-symbols-outlined text-primary mb-4">{d.feature1_icon}</span>
+                            <h3 class="font-headline font-bold text-lg mb-2">{d.feature1_title}</h3>
+                            <p class="text-sm text-on-surface-variant font-medium"><Lines text={d.feature1_desc} /></p>
+                        </div>
+                    )}
+                    {d.feature2_desc && (
+                        <div class="glass-surface small-glass feature-card">
+                            <span class="material-symbols-outlined text-primary mb-4">{d.feature2_icon}</span>
+                            <h3 class="font-headline font-bold text-lg mb-2">{d.feature2_title}</h3>
+                            <p class="text-sm text-on-surface-variant font-medium"><Lines text={d.feature2_desc} /></p>
+                        </div>
+                    )}
+                    {d.feature3_desc && (
+                        <div class="feature-card feature-card--primary glass-btn shadow-lg" style="display:inline">
+                            <span class="material-symbols-outlined mb-4 opacity-70">{d.feature3_icon}</span>
+                            <h3 class="font-headline font-bold text-lg mb-2">{d.feature3_title}</h3>
+                            <p class="text-sm font-medium opacity-90"><Lines text={d.feature3_desc} /></p>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+        <!-- Technical Specification / Code Block -->
+        {d.code_block && (
+            <section class="mb-32">
+                <div class="tech-spec-section">
+                    <div class="tech-spec-sidebar">
+                        <h2 class="font-headline text-3xl font-bold mb-6">Architecture Technique</h2>
+                        <p class="text-on-surface-variant mb-8 font-body">
+                            Extrait de code principal illustrant le modèle d'implémentation clé de ce projet.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            {d.tech_tags.map((tag) => (
+                                <span class="tech-tag-pill">{tag}</span>
+                            ))}
+                        </div>
+                    </div>
+                    <div class="tech-spec-code">
+                        <div class="glass-surface shadow-lg code-block-wrap">
+                            <div class="code-block-header">
+                                <span>{d.code_file}</span>
+                                <span>{d.code_version}</span>
+                            </div>
+                            <pre class="leading-relaxed text-on-surface-variant font-bold">{d.code_block}</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        )}
+        <!-- Secondary Imagery / Detail View -->
+        {d.detail_note && (
+            <section class="detail-secondary-images">
+                <div class="bg-surface-container-low aspect-square overflow-hidden">
+                    <img alt={d.detail_image2_alt}
+                        class="w-full h-full object-cover mix-blend-multiply opacity-80"
+                        src={absolutePath(d.detail_image2)} />
+                </div>
+                <div class="detail-number-card">
+                    <span class="font-headline text-5xl font-bold mb-4">{number}</span>
+                    <p class="font-body text-xl text-on-surface-variant" style="font-weight:500;">
+                        <Lines text={d.detail_note} />
+                    </p>
+                </div>
+            </section>
+        )}
+        <!-- Navigation between projects -->
+        <nav class="project-nav">
+            <div>
+                {prev && (
+                    <a href={`/projets/${prev.slug}`}
+                        class="group flex items-center gap-3 font-headline font-bold uppercase tracking-tight hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                        <span class="text-sm">{prev.title}</span>
+                    </a>
+                )}
+            </div>
+            <a href="/projets" class="font-mono text-xs text-outline uppercase tracking-widest hover:text-primary transition-colors">
+                Tous les Projets
+            </a>
+            <div>
+                {next && (
+                    <a href={`/projets/${next.slug}`}
+                        class="group flex items-center gap-3 font-headline font-bold uppercase tracking-tight hover:text-primary transition-colors">
+                        <span class="text-sm">{next.title}</span>
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                )}
+            </div>
+        </nav>
+    </main>
+    {isCarousel && (
+        <script is:inline>
+            (function () {
+                'use strict';
+                const carousel = document.getElementById('detail-carousel');
+                if (!carousel) return;
+
+                const slides = carousel.querySelectorAll('.carousel-slide');
+                if (slides.length === 0) return;
+
+                var currentIndex = 0;
+                var intervalId = setInterval(autoAdvance, 10000);
+
+                function goToSlide(index) {
+                    for (var i = 0; i < slides.length; i++) {
+                        slides[i].classList.toggle('active', i === index);
+                    }
+                    currentIndex = index;
+                }
+
+                function autoAdvance() {
+                    var next = (currentIndex + 1) % slides.length;
+                    goToSlide(next);
+                }
+
+                function prevSlide() {
+                    var prev = (currentIndex - 1 + slides.length) % slides.length;
+                    goToSlide(prev);
+                    resetTimer();
+                }
+
+                function nextSlide() {
+                    var next = (currentIndex + 1) % slides.length;
+                    goToSlide(next);
+                    resetTimer();
+                }
+
+                function resetTimer() {
+                    clearInterval(intervalId);
+                    intervalId = setInterval(autoAdvance, 10000);
+                }
+
+                var leftArrow = carousel.querySelector('.carousel-arrow-left');
+                var rightArrow = carousel.querySelector('.carousel-arrow-right');
+
+                if (leftArrow) leftArrow.addEventListener('click', prevSlide);
+                if (rightArrow) rightArrow.addEventListener('click', nextSlide);
+            })();
+        </script>
+    )}
+</Layout>
