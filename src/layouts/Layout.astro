@@ -4,6 +4,13 @@ import Header from '../components/Header.astro';
 // Avant style.css, qui redéfinit des propriétés de .material-symbols-outlined.
 import '../styles/fonts/fonts.css';
 import '../styles/style.css';
+import iconsFont from '../styles/fonts/material-symbols-outlined.woff2?url';
+import marnieBold from '../styles/media/jt-marnie/JTMarnie-Bold.woff2?url';
+import marnieMedium from '../styles/media/jt-marnie/JTMarnie-Medium.woff2?url';
+import marnieRegular from '../styles/media/jt-marnie/JTMarnie-Regular.woff2?url';
+
+// Utilisées par toutes les pages : préchargées pour arriver avant le premier affichage, sinon la mise en page saute.
+const preloadedFonts = [marnieRegular, marnieMedium, marnieBold, iconsFont];
 
 interface Props {
   active: 'accueil' | 'projets' | 'veille';
@@ -64,6 +71,8 @@ const image = new URL(ogImage, Astro.site).href;
     <meta property="twitter:title" content={ogTitle} />
     <meta property="twitter:description" content={ogDescription} />
     <meta property="twitter:image" content={image} />
+
+    {preloadedFonts.map((href) => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin="anonymous" />)}
 </head>
 
 <body class="bg-surface font-body text-on-surface">
