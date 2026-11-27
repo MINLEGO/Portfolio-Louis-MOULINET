@@ -1,23 +1,18 @@
 // Expérimentations : public/experimentations/<slug>/{meta.json,index.md}, lues au build et liées à leur Source par URL.
-import MarkdownIt from 'markdown-it';
-import { builtExperiments, normUrl, type Source } from './veille';
+import type { ImageMetadata, MarkdownInstance } from 'astro';
+import { builtExperiments, isSourceOf, type ExperimentMeta } from './experiment-meta';
+import type { Source } from './veille';
 
-export type Demo =
-  | { type: 'galerie'; images?: string[]; legendes?: string[] }
-  | { type: 'video'; url: string }
-  | { type: 'html'; fichier: string; hauteur?: number };
+// Dimensions des images, mesurées au build par Astro : leur place est réservée avant le chargement.
+// Seules les dimensions servent : les fichiers restent servis depuis /experimentations/<slug>/.
+const images = import.meta.glob<ImageMetadata>('/public/experimentations/*/*.{png,jpg,jpeg,gif,webp,avif,svg}', {
+  eager: true,
+  import: 'default',
+});
 
-/** Contenu de meta.json. */
-interface Meta {
-  titre: string;
-  date?: string;
-  source_url?: string;
-  /** Numéro de la Démonstration placée sous le titre. */
-  entete?: number;
-  demos?: Demo[];
-}
-
-export interface Experiment extends Meta {
+export interface Experiment extends ExperimentMeta {
+  /** Dimensions des images du dossier : nom de fichier -> [largeur, hauteur]. */
+  sizes: Record<string, [number, number]>;
   slug: string;
   /** Dossier des fichiers de Démonstration, chemin absolu. */
   base: string;
@@ -32,26 +27,37 @@ export interface VeillePageData {
   experiments: Experiment[];
 }
 
-const texts = import.meta.glob<string>('/public/experimentations/*/index.md', {
+// Contenu de confiance, écrit par l'auteur du site : rendu markdown d'Astro, HTML gardé tel quel, aucun nettoyage
+// (à l'inverse des résumés). Réglages : `markdown` dans astro.config.mjs.
+const texts = import.meta.glob<MarkdownInstance<Record<string, unknown>>>('/public/experimentations/*/index.md', {
   eager: true,
-  query: '?raw',
-  import: 'default',
 });
 
-// Contenu de confiance, écrit par l'auteur du site : HTML autorisé, aucun nettoyage (à l'inverse des résumés).
-const markdown = new MarkdownIt({ html: true, linkify: true });
-markdown.linkify.set({ fuzzyLink: false, fuzzyEmail: false });
+async function render(text: MarkdownInstance<Record<string, unknown>> | undefined): Promise<string> {
+  if (!text) return '';
+  let html = await text.compiledContent();
+  // Astro donne un `id` à chaque titre, sans option pour l'éviter : retirés, ils pourraient doubler ceux de la page.
+  for (const { depth, slug } of text.getHeadings()) html = html.replace(`<h${depth} id="${slug}">`, `<h${depth}>`);
+  return html;
+}
+
+const sizesOf = (folder: string): Experiment['sizes'] =>
+  Object.fromEntries(
+    Object.entries(images)
+      .filter(([file]) => file.startsWith(folder))
+      .map(([file, { width, height }]) => [file.slice(folder.length), [width, height]]),
+  );
 
 /** Expérimentations de la plus récente à la plus ancienne, jointes aux Sources données. */
-export function joinExperiments(sources: Source[]): Experiment[] {
-  const bySourceUrl = new Map(sources.flatMap(s => [[normUrl(s.url), s], [normUrl(s.canonical_url), s]] as const));
-  return (builtExperiments as (Meta & { slug: string })[])
-    .map(meta => ({
+export async function joinExperiments(sources: Source[]): Promise<Experiment[]> {
+  const experiments = await Promise.all(
+    builtExperiments.map(async meta => ({
       ...meta,
-      slug: meta.slug,
       base: `/experimentations/${meta.slug}/`,
-      html: markdown.render(texts[`/public/experimentations/${meta.slug}/index.md`] ?? ''),
-      source: bySourceUrl.get(normUrl(meta.source_url ?? '')) ?? null,
-    }))
-    .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
+      sizes: sizesOf(`/public/experimentations/${meta.slug}/`),
+      html: await render(texts[`/public/experimentations/${meta.slug}/index.md`]),
+      source: sources.findLast(s => isSourceOf(s, meta.source_url)) ?? null,
+    })),
+  );
+  return experiments.sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
 }

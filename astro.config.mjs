@@ -1,4 +1,5 @@
 // @ts-check
+import { satteri } from '@astrojs/markdown-satteri';
 import node from '@astrojs/node';
 import { defineConfig } from 'astro/config';
 
@@ -9,6 +10,12 @@ export default defineConfig({
   adapter: node({ mode: 'standalone' }),
   // Le défaut ('jsx') supprime les retours à la ligne entre éléments en ligne, ce qui change le rendu.
   compressHTML: true,
+  // Textes des Expérimentations : réglés pour leur rendu d'origine (ni typographie « intelligente »,
+  // ni coloration du code, ni notes de bas de page).
+  markdown: {
+    syntaxHighlight: false,
+    processor: satteri({ features: { gfm: { footnotes: false }, smartPunctuation: false } }),
+  },
   // shortcut: CSS non minifié. Lightning CSS (défaut de Vite) supprime `backdrop-filter` quand
   // `-webkit-backdrop-filter` le suit, et Chrome perd le flou. À réactiver avec un autre minifieur
   // (vérifier les 11 déclarations) si le poids du CSS pèse dans les mesures Lighthouse.

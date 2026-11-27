@@ -9,8 +9,10 @@ process.chdir(fileURLToPath(new URL('..', import.meta.url)));
 const FONT = 'src/styles/fonts/material-symbols-outlined.woff2';
 const LIST = 'src/styles/fonts/material-symbols.json';
 
-// Noms posés par du code à l'exécution (Header.astro, scripts/veille.ts), que la recherche ci-dessous ne voit pas.
-const DYNAMIC = ['menu', 'close', 'play_circle', 'code', 'neurology', 'article'];
+// Noms posés par du code à l'exécution, que la recherche ci-dessous ne voit pas : ceux du menu (Header.astro).
+// Ceux des Formats (`${ICONS…}` dans scripts/veille.ts) sont lus dans leur fichier, plus bas.
+const DYNAMIC = ['menu', 'close'];
+const FORMAT_ICONS = 'src/data/format-icons.json';
 // Valeur présente dans projects.json qui n'est pas une icône : elle affiche la lettre « l » de la police, comme avant.
 const LETTERS = ['l'];
 
@@ -20,6 +22,7 @@ const used = new Map();
 const add = (name, where) => name && !used.has(name) && used.set(name, where);
 
 DYNAMIC.forEach((name) => add(name, 'scripts/icons.mjs, DYNAMIC'));
+Object.values(JSON.parse(read(FORMAT_ICONS))).forEach((name) => add(name, FORMAT_ICONS));
 for (const { title, detail } of JSON.parse(read('src/data/projects.json')).projects) {
   for (const n of [1, 2, 3]) add(detail[`feature${n}_icon`], `projects.json, « ${title} », feature${n}_icon`);
 }

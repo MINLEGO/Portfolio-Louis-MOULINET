@@ -1,28 +1,28 @@
 // Page Veille et archive (window.VEILLE fourni par components/VeillePage.astro).
-import type { Demo, Experiment, VeillePageData } from '../lib/experiments';
+import formatIcons from '../data/format-icons.json';
+import type { Demo } from '../lib/experiment-meta';
+import type { Experiment, VeillePageData } from '../lib/experiments';
+import { youtubeId } from '../lib/shared';
 import { skeletons } from '../lib/skeletons';
-import type { Source } from '../lib/veille';
+import type { ListedSource, ListResponse, Source } from '../lib/veille';
 
 declare global {
     interface Window { VEILLE: VeillePageData }
 }
 
-/** Source telle que renvoyée par le relais. */
-type ListedSource = Source & { exp: string | null };
 type View = 'exp' | 'src';
 
 (() => {
     const V = window.VEILLE;
     const isHome = V.mode === 'home';
     const PAGE = isHome ? 12 : 24;
-    // Nouvelle icône posée par un script : l'ajouter à DYNAMIC dans scripts/icons.mjs, puis `npm run icons`.
-    const ICONS: Record<string, string> = { 'Vidéo': 'play_circle', 'Code': 'code', 'Modèle': 'neurology', 'Article': 'article' };
+    // Icône d'un Format : data/format-icons.json (lu aussi par scripts/icons.mjs), puis `npm run icons`.
+    const ICONS: Record<string, string> = formatIcons;
     const $ = <T extends Element = HTMLElement>(sel: string, el: ParentNode = document) => el.querySelector<T>(sel)!;
     const ENTITIES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
     const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, c => ENTITIES[c]!);
     const safeUrl = (u: string) => /^https?:\/\//i.test(u || '') ? u : '#';
     const fmtDate = (iso?: string) => iso ? new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
-    const ytId = (url: string) => (String(url).match(/(?:[?&]v=|youtu\.be\/|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
 
     const state = { q: V.q || '', format: '', kw: '', offset: 0, total: 0, loading: false, token: 0, items: new Map<string, ListedSource>() };
     const thumbs = new Map<number, string | null>();
@@ -79,7 +79,7 @@ type View = 'exp' | 'src';
         const token = ++state.token;
         state.loading = true;
         const params = new URLSearchParams({ q: state.q, format: state.format, kw: state.kw, offset: String(state.offset), limit: String(PAGE) });
-        let data: { results: ListedSource[]; total: number; stale_since: string | null };
+        let data: ListResponse;
         try {
             const res = await fetch('/veille_api.php?' + params);
             const body = await res.json();
@@ -268,26 +268,33 @@ type View = 'exp' | 'src';
     // les autres s'affichent à la fin. N commence à 1.
     function expView(e: Experiment) {
         const demos = e.demos || [], used = new Set<number>();
-        const take = (n: number) => { const d = demos[n - 1]; if (!d) return ''; used.add(n - 1); return demoHtml(d, e.base); };
+        const take = (n: number) => { const d = demos[n - 1]; if (!d) return ''; used.add(n - 1); return demoHtml(d, e); };
         const header = e.entete ? `<div class="vs-exp-header">${take(e.entete)}</div>` : '';
         const body = e.html.replace(/\{\{demo:(\d+)\}\}/g, (m, n: string) => take(+n) || m);
         return { meta: `Expérimentation · ${fmtDate(e.date)}`, title: e.titre, body: `${header}
             <div class="vs-md">${body}</div>
-            ${demos.map((d, i) => used.has(i) ? '' : demoHtml(d, e.base)).join('')}` };
+            ${demos.map((d, i) => used.has(i) ? '' : demoHtml(d, e)).join('')}` };
     }
 
-    function demoHtml(d: Demo, base: string) {
+    // Attributs width/height : le navigateur réserve la place de l'image, le panneau ne saute pas au chargement.
+    const sizeAttrs = (e: Experiment, file = '') => {
+        const size = e.sizes[file];
+        return size ? `width="${size[0]}" height="${size[1]}"` : '';
+    };
+
+    function demoHtml(d: Demo, e: Experiment) {
+        const base = e.base;
         if (d.type === 'galerie') {
             const imgs = d.images || [], caps = d.legendes || [];
             return `<figure class="vs-gallery">
-                <img class="vs-gallery-main" src="${esc(base + imgs[0])}" alt="${esc(caps[0] || '')}">
+                <img class="vs-gallery-main" ${sizeAttrs(e, imgs[0])} src="${esc(base + imgs[0])}" alt="${esc(caps[0] || '')}">
                 <figcaption>${esc(caps[0] || '')}</figcaption>
                 <div class="vs-gallery-thumbs">${imgs.map((src, i) =>
                     `<button data-src="${esc(base + src)}" data-cap="${esc(caps[i] || '')}" aria-label="Image ${i + 1}"><img src="${esc(base + src)}" alt=""></button>`).join('')}</div>
             </figure>`;
         }
         if (d.type === 'video') {
-            const id = ytId(d.url);
+            const id = youtubeId(String(d.url));
             return id
                 ? `<div class="vs-video"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="Vidéo de démonstration" allowfullscreen loading="lazy"></iframe></div>`
                 : `<video class="vs-video" controls preload="metadata" src="${esc(d.url.startsWith('http') ? d.url : base + d.url)}"></video>`;

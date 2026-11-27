@@ -85,7 +85,7 @@
 /* Démonstrations */
 .vs-exp-header > * { margin-top: .6rem !important; }
 .vs-gallery { margin: 1.25rem 0; }
-.vs-gallery-main { width: 100%; border-radius: .8rem; background: var(--surface-container); }
+.vs-gallery-main { width: 100%; height: auto; border-radius: .8rem; background: var(--surface-container); }
 .vs-gallery figcaption { font-size: .85rem; color: var(--outline); margin: .4rem 0; }
 .vs-gallery-thumbs { display: flex; gap: .5rem; }
 .vs-gallery-thumbs button { width: 90px; border-radius: .5rem; overflow: hidden; cursor: pointer; outline-offset: 2px; }

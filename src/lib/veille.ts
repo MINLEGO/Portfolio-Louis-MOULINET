@@ -1,17 +1,22 @@
 // Relais VeilleFacile, côté serveur uniquement : la clé ne doit jamais atteindre le navigateur
 // (docs/adr/0001-relais-php-vers-veillefacile.md). Ne pas importer depuis un script client.
 import { createHash } from 'node:crypto';
+import { readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { readFile, rename, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import MarkdownIt from 'markdown-it';
 import sanitizeHtml from 'sanitize-html';
+import { builtExperiments, isSourceOf, type ExperimentMeta } from './experiment-meta';
+import { cut, cutQuery, youtubeId } from './shared';
 import fixture from './veille_fixture.json';
 
 // `astro dev` et `npm start` ne chargent pas `.env` ; les variables déjà définies restent prioritaires.
 try { process.loadEnvFile(); } catch { /* pas de .env : environnement réel ou données de secours */ }
 
 const TTL = 10 * 60_000;
+/** Après un échec sans aucun cache : délai court, pour ne pas prolonger une panne brève. */
+const RETRY = 60_000;
 const THUMB_TTL = 30 * 86_400_000;
 const SECTIONS: Record<string, string> = {
   'What it is': "Ce que c'est",
@@ -48,30 +53,27 @@ export interface Source {
   thumb: string | null;
 }
 
-export interface SourceSet {
-  data: Source[];
+/** Données servies par le cache. */
+export interface Entry<T> {
+  data: T;
   /** Instant des données, en millisecondes. */
   at: number;
   /** Vrai si l'API est injoignable (ancien cache) ou non configurée (données de secours). */
   stale: boolean;
 }
 
-export interface ExperimentLink {
-  slug: string;
-  source_url?: string;
+/** Source telle que renvoyée par le relais, avec le slug de son Expérimentation. */
+export type ListedSource = Source & { exp: string | null };
+
+/** Réponse JSON de la liste, partagée avec le script de la page. */
+export interface ListResponse {
+  results: ListedSource[];
+  total: number;
+  offset: number;
+  stale_since: string | null;
 }
 
-const experimentMetas = import.meta.glob<Omit<ExperimentLink, 'slug'>>('/public/experimentations/*/meta.json', {
-  eager: true,
-  import: 'default',
-});
-export const builtExperiments: ExperimentLink[] = Object.entries(experimentMetas).map(([file, meta]) => ({
-  ...meta,
-  slug: file.split('/').at(-2)!,
-}));
-
-/** Clé de comparaison entre l'URL d'une Source et le `source_url` d'une Expérimentation. */
-export const normUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '');
+export type ExperimentLink = Pick<ExperimentMeta, 'source_url'> & { slug: string };
 
 // `html: false` : le HTML des résumés (générés depuis des pages externes) est échappé, pas interprété.
 const markdown = new MarkdownIt({ html: false, linkify: true });
@@ -108,8 +110,6 @@ function formatOf(site: string): Source['format'] {
   if (site === 'huggingface.co') return 'Modèle';
   return 'Article';
 }
-
-const youtubeId = (url: string) => url.match(/(?:[?&]v=|youtu\.be\/|\/shorts\/|\/embed\/)([\w-]{11})/)?.[1];
 
 const isPrivate = (s: RawSource) => s.keywords.some(k => k.normalize('NFC').trim().toLowerCase() === 'privé');
 
@@ -172,8 +172,6 @@ function intParam(value: string | null, fallback: number): number {
   return Number.isFinite(n) ? n : 0;
 }
 
-const cut = (value: string | null, length: number) => Array.from(value ?? '').slice(0, length).join('');
-
 /** `jj/mm/aaaa hh:mm`, heure locale du serveur. */
 const formatDate = (at: number) =>
   new Date(at)
@@ -212,31 +210,40 @@ export function createRelay({
     return (await res.json()) as T;
   }
 
-  type Entry<T> = { data: T; at: number; stale: boolean };
   const pending = new Map<string, Promise<Entry<any>>>();
+
+  /** Échecs récents : l'API n'est pas rappelée avant `until`. */
+  const failures = new Map<string, { until: number; error: unknown }>();
 
   async function refresh<T>(key: string, ttl: number, load: () => Promise<T>): Promise<Entry<T>> {
     const file = join(cacheDir, `veille-node_${createHash('md5').update(key).digest('hex')}.json`);
     const hit: { data: T; at: number } | null = await readFile(file, 'utf8').then(JSON.parse).catch(() => null);
     if (hit && now() - hit.at < ttl) return { ...hit, stale: false };
+    const orStale = (error: unknown): Entry<T> => {
+      if (hit) return { ...hit, stale: true };
+      throw error;
+    };
+    const failed = failures.get(key);
+    if (failed && now() < failed.until) return orStale(failed.error);
     let data: T;
     try {
       data = await load();
     } catch (error) {
-      if (hit) return { ...hit, stale: true };
-      throw error;
+      // Les échecs expirés sont purgés : une clé par recherche, la table ne doit pas grossir sans fin.
+      for (const [k, f] of failures) if (f.until <= now()) failures.delete(k);
+      failures.set(key, { until: now() + (hit ? TTL : RETRY), error });
+      return orStale(error);
     }
+    failures.delete(key);
     const at = now();
-    if (data !== null) {
-      // Écriture puis renommage : jamais de fichier à moitié écrit. Un cache non inscriptible n'est pas fatal.
-      await writeFile(`${file}.tmp`, JSON.stringify({ at, data }))
-        .then(() => rename(`${file}.tmp`, file))
-        .catch(error => console.warn('Cache Veille non écrit :', error.message));
-    }
+    // Écriture puis renommage : jamais de fichier à moitié écrit. Un cache non inscriptible n'est pas fatal.
+    await writeFile(`${file}.tmp`, JSON.stringify({ at, data }))
+      .then(() => rename(`${file}.tmp`, file))
+      .catch(error => console.warn('Cache Veille non écrit :', error.message));
     return { data, at, stale: false };
   }
 
-  /** Cache fichier : sert l'ancien cache si `load` échoue, n'enregistre pas null, un seul appel à la fois par clé. */
+  /** Cache fichier : sert l'ancien cache si `load` échoue (et attend avant de réessayer), un seul appel à la fois par clé. */
   function cached<T>(key: string, ttl: number, load: () => Promise<T>): Promise<Entry<T>> {
     let entry = pending.get(key);
     if (!entry) {
@@ -246,16 +253,49 @@ export function createRelay({
     return entry;
   }
 
-  const fetchSources = async (query: Record<string, string>) =>
-    (await api<{ results: RawSource[] }>('/api/sources', query)).results;
+  // Sources vues privées par la réponse de l'API la plus récente qui les contenait : retirées de tout cache servi,
+  // même plus ancien. Gardées sur disque, comme les caches qu'elles filtrent.
+  const privateFile = join(cacheDir, 'veille-node_privees.json');
+  const privateIds = new Set<number>();
+  try {
+    for (const id of JSON.parse(readFileSync(privateFile, 'utf8'))) privateIds.add(id);
+  } catch { /* aucune Source privée vue */ }
+
+  function rememberPrivate(raw: RawSource[]) {
+    let changed = false;
+    for (const s of raw) {
+      const hidden = isPrivate(s);
+      if (hidden === privateIds.has(s.id)) continue;
+      changed = true;
+      if (hidden) privateIds.add(s.id);
+      else privateIds.delete(s.id);
+    }
+    if (!changed) return;
+    // Synchrone : deux réponses simultanées ne peuvent pas entremêler leurs écritures.
+    try {
+      writeFileSync(`${privateFile}.tmp`, JSON.stringify([...privateIds]));
+      renameSync(`${privateFile}.tmp`, privateFile);
+    } catch (error) {
+      console.warn('Cache Veille non écrit :', (error as Error).message);
+    }
+  }
+
+  const withoutPrivate = (set: Entry<Source[]>): Entry<Source[]> =>
+    ({ ...set, data: set.data.filter(s => !privateIds.has(s.id)) });
+
+  async function fetchSources(query: Record<string, string>) {
+    const { results } = await api<{ results: RawSource[] }>('/api/sources', query);
+    rememberPrivate(results);
+    return results;
+  }
 
   /**
    * Toutes les Sources publiques, triées par date de parution puis de capture.
    * Données de secours si l'API n'est pas configurée ; lève si elle échoue sans cache.
    */
-  async function allSources(): Promise<SourceSet> {
+  async function allSources(): Promise<Entry<Source[]>> {
     try {
-      return await cached('all', TTL, async () => {
+      return withoutPrivate(await cached('all', TTL, async () => {
         const all: RawSource[] = [];
         for (let offset = 0; ; offset += 100) {
           const page = await fetchSources({ limit: '100', offset: String(offset) });
@@ -263,7 +303,7 @@ export function createRelay({
           if (page.length < 100) break;
         }
         return prepare(all).sort(byDateDesc);
-      });
+      }));
     } catch (error) {
       if (configured()) throw error;
       const raw = fixture.results as RawSource[];
@@ -272,51 +312,49 @@ export function createRelay({
   }
 
   /** Recherche hybride de l'API, ordre de pertinence conservé. */
-  const search = (q: string) =>
-    cached(`q:${q.toLowerCase()}`, TTL, async () => prepare(await fetchSources({ q, limit: '100' })));
+  const search = async (q: string) =>
+    withoutPrivate(await cached(`q:${q.toLowerCase()}`, TTL, async () => prepare(await fetchSources({ q, limit: '100' }))));
 
-  async function microlink(url: string): Promise<string | null> {
-    try {
-      const res = await send(`https://api.microlink.io/?url=${encodeURIComponent(url)}`, {
-        signal: AbortSignal.timeout(10_000),
-      });
-      const body = (await res.json()) as { data?: { image?: { url?: string }; logo?: { url?: string } } };
-      return body.data?.image?.url ?? body.data?.logo?.url ?? null;
-    } catch {
-      return null;
-    }
-  }
+  const isRepo = (s: Source) => s.site === 'github.com' || s.site === 'huggingface.co';
 
-  async function resolveThumb(s: Source): Promise<string | null> {
-    if (s.site !== 'github.com' && s.site !== 'huggingface.co') {
-      const url = await microlink(s.url);
-      // L'URL vient d'un tiers et finit dans un `src` : http(s) uniquement.
-      return typeof url === 'string' && /^https?:\/\//i.test(url) ? url : null;
-    }
-    try {
+  /** Lève si la résolution échoue : `cached` ressert alors l'ancienne miniature, et réessaiera. */
+  async function resolveThumb(s: Source): Promise<string> {
+    if (isRepo(s)) {
       const { text } = await api<{ text: string }>(`/api/sources/${s.id}/text`, { length: '200000' });
-      const image = readmeImage(text, s.url);
-      if (image) return image;
-    } catch { /* image sociale du dépôt */ }
-    return socialImage(s.url);
+      return readmeImage(text, s.url) ?? socialImage(s.url);
+    }
+    const res = await send(`https://api.microlink.io/?url=${encodeURIComponent(s.url)}`, {
+      signal: AbortSignal.timeout(10_000),
+    });
+    const body = (await res.json()) as { data?: { image?: { url?: string }; logo?: { url?: string } } };
+    const url = body.data?.image?.url ?? body.data?.logo?.url;
+    // L'URL vient d'un tiers et finit dans un `src` : http(s) uniquement.
+    if (typeof url !== 'string' || !/^https?:\/\//i.test(url)) throw new Error(`Microlink : aucune image (HTTP ${res.status})`);
+    return url;
   }
 
-  async function list(params: URLSearchParams) {
-    const q = cut(params.get('q'), 200).trim();
+  /** Sans aucune miniature en cache : image sociale pour un dépôt (non gardée), rien sinon. */
+  const thumbOf = (s: Source): Promise<string | null> =>
+    cached(`thumb:${s.id}${s.url}`, THUMB_TTL, () => resolveThumb(s)).then(
+      entry => entry.data,
+      () => (isRepo(s) ? socialImage(s.url) : null),
+    );
+
+  async function list(params: URLSearchParams): Promise<ListResponse> {
+    const q = cutQuery(params.get('q')).trim();
     const format = params.get('format') ?? '';
     const keyword = cut(params.get('kw'), 100).toLowerCase();
     const offset = Math.max(0, intParam(params.get('offset'), 0));
     const limit = Math.min(100, Math.max(1, intParam(params.get('limit'), 24)));
 
     const res = q === '' ? await allSources() : await search(q);
-    const slugs = new Map(experiments.map(e => [normUrl(e.source_url ?? ''), e.slug]));
     const items = res.data.filter(
       s => (!format || s.format === format) && (!keyword || s.keywords.some(k => k.toLowerCase() === keyword)),
     );
     return {
       results: items.slice(offset, offset + limit).map(s => ({
         ...s,
-        exp: slugs.get(normUrl(s.url)) ?? slugs.get(normUrl(s.canonical_url)) ?? null,
+        exp: experiments.findLast(e => isSourceOf(s, e.source_url))?.slug ?? null,
       })),
       total: items.length,
       offset,
@@ -333,7 +371,7 @@ export function createRelay({
       // Seules les Sources publiques connues peuvent déclencher une résolution de miniature.
       const source = (await allSources()).data.find(s => s.id === id);
       if (!source) return json({ thumb: null });
-      return json({ thumb: (await cached(`thumb:${source.id}${source.url}`, THUMB_TTL, () => resolveThumb(source))).data });
+      return json({ thumb: await thumbOf(source) });
     } catch (error) {
       console.warn('Relais VeilleFacile :', error instanceof Error ? error.message : error);
       return json({ error: 'VeilleFacile est indisponible pour le moment.' }, 502);

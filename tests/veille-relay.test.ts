@@ -151,6 +151,55 @@ describe('Sources privées', () => {
   });
 });
 
+describe('Source devenue privée', () => {
+  const MIN = 60_000;
+  const open = source(9, { title: 'SECRET' });
+  const closed = source(9, { title: 'SECRET', keywords: ['privé'] });
+
+  test.each([
+    ['ancienne recherche encore fraîche', 0],
+    ['ancienne recherche expirée, API en panne', 11],
+  ])('après un rafraîchissement de la liste : %s', async (_nom, wait) => {
+    const { api, clock, get, ids } = setup([open, source(1)]);
+    await ids();
+    clock.now += 9 * MIN;
+    expect(await ids({ q: 'x' })).toEqual([9, 1]);
+    api.sources = [closed, source(1)];
+    clock.now += 2 * MIN;
+    expect(await ids()).toEqual([1]);
+    api.down = true;
+    clock.now += wait * MIN;
+    expect((await get({ q: 'x' })).body).toMatchObject({ total: 1, results: [{ id: 1 }] });
+    expect((await get({ thumb: '9' })).body).toEqual({ thumb: null });
+  });
+
+  test("vue privée par une recherche : l'ancienne liste et l'ancienne miniature ne la ressortent pas", async () => {
+    const { api, clock, get, ids } = setup([open, source(1)]);
+    api.other = () => Response.json({ data: { image: { url: 'https://cdn.test/secret.png' } } });
+    expect((await get({ thumb: '9' })).body.thumb).toBe('https://cdn.test/secret.png');
+    api.sources = [closed, source(1)];
+    await ids({ q: 'x' });
+    api.down = true;
+    clock.now += 11 * MIN;
+    expect((await get()).body).toMatchObject({ total: 1, results: [{ id: 1 }] });
+    expect((await get({ thumb: '9' })).body).toEqual({ thumb: null });
+
+    // Un redémarrage garde les caches sur disque : il doit aussi garder ce qui a été vu privé.
+    const restarted = setup();
+    restarted.api.down = true;
+    restarted.clock.now = clock.now + 11 * MIN;
+    expect(await restarted.ids()).toEqual([1]);
+  });
+
+  test('redevenue publique, elle réapparaît', async () => {
+    const { api, clock, ids } = setup([closed, source(1)]);
+    expect(await ids()).toEqual([1]);
+    api.sources = [open, source(1)];
+    clock.now += 11 * MIN;
+    expect(await ids()).toEqual([9, 1]);
+  });
+});
+
 describe('Paramètres', () => {
   const many = Array.from({ length: 120 }, (_, i) => source(i + 1, { published_at: null }));
 
@@ -242,6 +291,38 @@ describe('Cache', () => {
       type: 'application/json; charset=utf-8',
       body: { error: 'VeilleFacile est indisponible pour le moment.' },
     });
+  });
+});
+
+describe("Après un échec de l'API", () => {
+  const MIN = 60_000;
+
+  test("ancien cache : servi sans rappeler l'API pendant 10 minutes", async () => {
+    const { api, clock, get, ids } = setup([source(1)]);
+    await get();
+    api.down = true;
+    clock.now += 11 * MIN;
+    await get();
+    api.down = false;
+    api.sources = [source(2)];
+    clock.now += 10 * MIN - 1000;
+    expect((await get()).body).toMatchObject({ results: [{ id: 1 }], stale_since: expect.any(String) });
+    expect(api.calls).toHaveLength(2);
+    clock.now += 2000;
+    expect(await ids()).toEqual([2]);
+    expect(api.calls).toHaveLength(3);
+  });
+
+  test("sans cache : 502 sans rappeler l'API pendant 1 minute seulement", async () => {
+    const { api, clock, get, ids } = setup([source(1)]);
+    api.down = true;
+    expect((await get()).status).toBe(502);
+    api.down = false;
+    clock.now += MIN - 1000;
+    expect((await get()).status).toBe(502);
+    expect(api.calls).toHaveLength(1);
+    clock.now += 2000;
+    expect(await ids()).toEqual([1]);
   });
 });
 
@@ -372,12 +453,48 @@ describe('Miniature', () => {
     expect(await thumb()).toBe('https://cdn.test/2.png');
   });
 
-  test('un échec de résolution n\'est pas mis en cache', async () => {
-    const { api, get } = setup([source(3)]);
+  test("un échec de résolution n'est pas gardé : nouvel essai après 1 minute", async () => {
+    const { api, clock, get } = setup([source(3)]);
     api.other = () => { throw new TypeError('réseau'); };
     expect((await get({ thumb: '3' })).body).toEqual({ thumb: null });
     api.other = () => Response.json({ data: { image: { url: 'https://cdn.test/ok.png' } } });
+    clock.now += 60_000;
     expect((await get({ thumb: '3' })).body).toEqual({ thumb: 'https://cdn.test/ok.png' });
+  });
+
+  const image = (url: string) => () => Response.json({ data: { image: { url } } });
+  const down = () => new Response('panne', { status: 503 });
+  const quota = () => Response.json({ status: 'fail' }, { status: 429 });
+  const unreachable = (): Response => { throw new TypeError('réseau'); };
+  const fromReadme = 'https://raw.githubusercontent.com/moi/outil/HEAD/a.png';
+  const newImage = 'https://cdn.test/new.png';
+
+  test.each([
+    ['Microlink injoignable', source(3), image('https://cdn.test/old.png'), unreachable, image(newImage), 'https://cdn.test/old.png'],
+    ['quota Microlink dépassé', source(3), image('https://cdn.test/old.png'), quota, image(newImage), 'https://cdn.test/old.png'],
+    ['/text en échec', repo, readme('![a](a.png)'), down, readme(`![b](${newImage})`), fromReadme],
+  ])('miniature expirée, %s : ancienne resservie, nouvel essai après 10 minutes', async (_nom, src, before, failing, after, old) => {
+    const { api, clock, get } = setup([src]);
+    const thumb = async () => (await get({ thumb: String(src.id) })).body.thumb;
+    api.other = before;
+    expect(await thumb()).toBe(old);
+    clock.now += 31 * 86400_000;
+    api.other = failing;
+    expect(await thumb()).toBe(old);
+    api.other = after;
+    clock.now += 9 * 60_000;
+    expect(await thumb()).toBe(old);
+    clock.now += 2 * 60_000;
+    expect(await thumb()).toBe(newImage);
+  });
+
+  test('/text en échec sans ancienne miniature : image sociale, sans la garder 30 jours', async () => {
+    const { api, clock, get } = setup([repo]);
+    const thumb = async () => (await get({ thumb: '1' })).body.thumb;
+    expect(await thumb()).toBe('https://opengraph.githubassets.com/1/moi/outil');
+    api.other = readme('![a](a.png)');
+    clock.now += 60_000;
+    expect(await thumb()).toBe(fromReadme);
   });
 
   test('identifiant inconnu : aucune résolution', async () => {
