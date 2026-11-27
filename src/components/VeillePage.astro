@@ -1,70 +1,65 @@
-<?php
-// Page Veille. Sert aussi l'archive (articles.php définit $mode = 'archive').
-require_once __DIR__ . '/lib/veille.php';
-$mode = $mode ?? 'home';
-$isHome = $mode === 'home';
-$experiments = vf_experiments(vf_all_sources()['data']);
-$pageData = ['mode' => $mode, 'q' => mb_substr((string) ($_GET['q'] ?? ''), 0, 200), 'experiments' => $experiments];
-?>
-<!DOCTYPE html>
-<html class="light" lang="fr">
+---
+// Gabarit commun à la page principale de la Veille et à son archive. Rendu à la requête.
+import Layout from '../layouts/Layout.astro';
+// Après le Layout : veille.css doit être chargé après style.css.
+import '../styles/veille.css';
+import { joinExperiments, type VeillePageData } from '../lib/experiments';
+import { relay } from '../lib/veille';
 
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title><?= $isHome ? 'Veille Technologique' : 'Archive de la veille' ?> | Louis MOULINET</title>
-    <?php $canonical = 'https://louismoulinet.com/' . ($isHome ? 'veille.php' : 'articles.php'); ?>
-    <meta name="description" content="<?= $isHome
+interface Props {
+  mode: VeillePageData['mode'];
+}
+
+const { mode } = Astro.props;
+const isHome = mode === 'home';
+
+// API en panne et sans cache : la page s'affiche, et le script montre le message d'erreur du relais.
+const sources = await relay.allSources().then(
+  set => set.data,
+  error => {
+    console.warn('Page Veille sans Sources :', error instanceof Error ? error.message : error);
+    return [];
+  },
+);
+const pageData: VeillePageData = {
+  mode,
+  q: Array.from(Astro.url.searchParams.get('q') ?? '').slice(0, 200).join(''),
+  experiments: joinExperiments(sources),
+};
+// `<` échappé : `q`, titres et mots-clés viennent de l'extérieur, un `</script>` ne doit pas sortir du bloc.
+const pageScript = `window.VEILLE = ${JSON.stringify(pageData).replaceAll('<', '\\u003c')};`;
+
+const title = `${isHome ? 'Veille Technologique' : 'Archive de la veille'} | Louis MOULINET`;
+const formats = [['', 'Tous'], ['Vidéo', 'Vidéo'], ['Code', 'Code'], ['Modèle', 'Modèle'], ['Article', 'Article']];
+---
+
+<Layout
+    active="veille"
+    title={title}
+    description={isHome
         ? "Explorez ma veille technologique sur l'IA générative : sources analysées, méthode de veille et expérimentations, par Louis MOULINET."
-        : "Archive complète de ma veille technologique sur l'IA générative, avec recherche sémantique." ?>" />
-    <link rel="canonical" href="<?= $canonical ?>" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="<?= $canonical ?>" />
-    <meta property="og:title" content="<?= $isHome ? 'Veille Technologique' : 'Archive de la veille' ?> | Louis MOULINET" />
-    <meta property="og:description" content="Suivez mes découvertes et analyses sur les dernières tendances tech." />
-    <meta property="og:image" content="https://louismoulinet.com/media/og-image-veille.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="veille.css">
-</head>
-
-<body class="bg-surface font-body text-on-surface">
-    <nav class="nav-container fixed glass-surface z-50">
-        <div class="nav-logo">Louis MOULINET</div>
-        <button class="mobile-menu-toggle" aria-label="Menu" onclick="let menu=document.querySelector('.nav-links'); menu.classList.toggle('active-mobile'); this.querySelector('.material-symbols-outlined').textContent = menu.classList.contains('active-mobile') ? 'close' : 'menu';">
-            <span class="material-symbols-outlined text-3xl">menu</span>
-        </button>
-        <div class="nav-links">
-            <a class="nav-link glass-btn" href="index.php">Accueil</a>
-            <a class="nav-link glass-btn" style="font-size:1.3rem" href="projects.php">Projets</a>
-            <a class="nav-link glass-btn active" href="veille.php">Veille</a>
-            <a class="nav-link glass-btn nav-link-contact" href="mailto:moulinet.l03@gmail.com">Contact</a>
-        </div>
-        <button class="btn-contact glass-btn">
-            <script>
-                document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">contact</a>');
-            </script>
-        </button>
-    </nav>
-
+        : "Archive complète de ma veille technologique sur l'IA générative, avec recherche sémantique."}
+    ogDescription="Suivez mes découvertes et analyses sur les dernières tendances tech."
+    ogImage="/media/og-image-veille.png"
+    glassFilter={false}
+>
     <main class="pt-32 pb-20 px-8 md:px-12 max-w-7xl vs-main">
         <header class="mb-12">
             <div class="veille-hero-tag">
-                <span class="hero-tag">/execute as lab run <?= $isHome ? 'VEILLE' : 'ARCHIVE' ?></span>
+                <span class="hero-tag">/execute as lab run {isHome ? 'VEILLE' : 'ARCHIVE'}</span>
                 <div class="veille-divider"></div>
             </div>
             <h1 class="font-headline text-8xl font-bold tracking-tighter text-on-background mb-6">
-                <?= $isHome ? 'Veille' : 'Archive' ?> <span class="text-gradient shine"><?= $isHome ? 'Technologique' : 'des Sources' ?></span>
+                {isHome ? 'Veille' : 'Archive'} <span class="text-gradient shine">{isHome ? 'Technologique' : 'des Sources'}</span>
             </h1>
             <p class="max-w-2xl text-lg text-on-surface-variant font-body leading-relaxed">
-                <?= $isHome
+                {isHome
                     ? "L'IA générative appliquée à la productivité : les Sources que je capture, et ce que j'en ai testé."
-                    : 'Toutes les Sources capturées dans VeilleFacile, avec recherche sémantique.' ?>
+                    : 'Toutes les Sources capturées dans VeilleFacile, avec recherche sémantique.'}
             </p>
         </header>
 
-        <?php if ($isHome): ?>
+        {isHome && (<Fragment>
             <!-- Domaine & Méthode de veille : PREMIER JET, à réécrire -->
             <section class="glass-surface small-glass rounded-1xl vs-section">
                 <div class="section-heading-bar pb-4">
@@ -110,7 +105,7 @@ $pageData = ['mode' => $mode, 'q' => mb_substr((string) ($_GET['q'] ?? ''), 0, 2
                 </div>
                 <div class="vs-grid" id="vs-exp-row"></div>
             </section>
-        <?php endif; ?>
+        </Fragment>)}
 
         <section class="glass-surface small-glass rounded-1xl vs-section">
             <div class="section-heading-bar pb-4">
@@ -125,28 +120,18 @@ $pageData = ['mode' => $mode, 'q' => mb_substr((string) ($_GET['q'] ?? ''), 0, 2
                     <input type="search" id="vs-q" placeholder="Recherche sémantique (via VeilleFacile)…" aria-label="Rechercher une Source">
                 </label>
                 <div class="vs-chips" role="group" aria-label="Filtrer par format">
-                    <?php foreach (['' => 'Tous', 'Vidéo' => 'Vidéo', 'Code' => 'Code', 'Modèle' => 'Modèle', 'Article' => 'Article'] as $value => $label): ?>
-                        <button class="vs-chip" data-format="<?= $value ?>" aria-pressed="<?= $value === '' ? 'true' : 'false' ?>"><?= $label ?></button>
-                    <?php endforeach; ?>
+                    {formats.map(([value, label]) => (
+                        <button class="vs-chip" data-format={value} aria-pressed={value === '' ? 'true' : 'false'}>{label}</button>
+                    ))}
                     <span id="vs-active-kw"></span>
                 </div>
             </div>
             <p class="vs-notice" id="vs-notice" role="status"></p>
             <div class="vs-grid" id="vs-grid" aria-live="polite"></div>
             <div id="vs-sentinel"></div>
-            <?php if ($isHome): ?>
-                <a class="archive-link vs-more" id="vs-more" href="articles.php">Voir l'archive complète</a>
-            <?php endif; ?>
+            {isHome && <a class="archive-link vs-more" id="vs-more" href="/veille/archive">Voir l'archive complète</a>}
         </section>
     </main>
-
-    <footer class="site-footer">
-        <div class="footer-copy">© 2026 Louis MOULINET | Portfolio BTS SIO</div>
-        <div class="footer-links">
-            <a class="footer-link" href="https://github.com/MINLEGO">GitHub</a>
-            <a class="footer-link" href="https://www.linkedin.com/in/louis-moulinet-406965384/">LinkedIn</a>
-        </div>
-    </footer>
 
     <!-- Détail d'une Source / Expérimentation (fenêtre centrée ou tiroir) -->
     <div class="vs-panel" id="vs-panel" hidden>
@@ -157,8 +142,8 @@ $pageData = ['mode' => $mode, 'q' => mb_substr((string) ($_GET['q'] ?? ''), 0, 2
         </div>
     </div>
 
-    <script>window.VEILLE = <?= json_encode($pageData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;</script>
-    <script src="veille.js"></script>
-</body>
-
-</html>
+    <script is:inline set:html={pageScript} />
+    <script>
+        import '../scripts/veille';
+    </script>
+</Layout>
