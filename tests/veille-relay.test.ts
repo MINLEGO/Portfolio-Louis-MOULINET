@@ -336,6 +336,12 @@ describe('Données de secours (API non configurée)', () => {
     expect(api.calls).toEqual([]);
   });
 
+  test('l\'instantané est trié par date de parution, à défaut de capture', async () => {
+    const { get } = setup([], { env: {} });
+    const dates = (await get({ limit: '100' })).body.results.map((s: any) => Date.parse(s.date));
+    expect(dates).toEqual([...dates].sort((a, b) => b - a));
+  });
+
   test('la recherche répond 502', async () => {
     const { get } = setup([], { env: {} });
     expect((await get({ q: 'agents' })).status).toBe(502);

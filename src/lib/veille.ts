@@ -307,7 +307,7 @@ export function createRelay({
     } catch (error) {
       if (configured()) throw error;
       const raw = fixture.results as RawSource[];
-      return { data: prepare(raw), at: Math.max(...raw.map(s => Date.parse(s.created_at))), stale: true };
+      return { data: prepare(raw).sort(byDateDesc), at: Math.max(...raw.map(s => Date.parse(s.created_at))), stale: true };
     }
   }
 
