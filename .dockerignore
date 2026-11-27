@@ -1,3 +1,6 @@
 .git
-nixpacks.toml
-public/prototype_editor
+.claude
+.env
+node_modules
+dist
+.astro

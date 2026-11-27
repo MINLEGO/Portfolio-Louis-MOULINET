@@ -1,10 +1,17 @@
-# PHP pinned to a patched release (php2shell, CVE-2026-109618 / CVE-2026-109619).
-# Do not build PHP from Nixpacks: its nixpkgs snapshot ships an unpatched 8.3.15.
-FROM php:8.3.36-apache
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build && npm prune --omit=dev
 
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
- && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
-COPY . /var/www/html/
+FROM node:22-alpine
+WORKDIR /app
+# Port 80, comme l'ancienne image Apache : la configuration Coolify reste valable.
+ENV NODE_ENV=production HOST=0.0.0.0 PORT=80
+COPY --from=build /app/package.json ./
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+USER node
+EXPOSE 80
+CMD ["node", "./dist/server/entry.mjs"]
