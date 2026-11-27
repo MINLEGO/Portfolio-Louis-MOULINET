@@ -1,0 +1,99 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+// Avant style.css, qui redéfinit des propriétés de .material-symbols-outlined.
+import '../styles/fonts/fonts.css';
+import '../styles/style.css';
+import iconsFont from '../styles/fonts/material-symbols-outlined.woff2?url';
+import marnieBold from '../styles/media/jt-marnie/JTMarnie-Bold.woff2?url';
+import marnieMedium from '../styles/media/jt-marnie/JTMarnie-Medium.woff2?url';
+import marnieRegular from '../styles/media/jt-marnie/JTMarnie-Regular.woff2?url';
+
+// Utilisées par toutes les pages : préchargées pour arriver avant le premier affichage, sinon la mise en page saute.
+const preloadedFonts = [marnieRegular, marnieMedium, marnieBold, iconsFont];
+
+interface Props {
+  active: 'accueil' | 'projets' | 'veille';
+  title: string;
+  description: string;
+  /** Chemin sur le site ("/…") ou URL complète. */
+  ogImage: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogType?: 'website' | 'article';
+  keywords?: string;
+  /** Données structurées schema.org. */
+  jsonLd?: Record<string, unknown>;
+  /** Filtre SVG de déformation du verre. Désactivé sur la Veille, qui ne l'a jamais eu. */
+  glassFilter?: boolean;
+}
+
+const {
+  active,
+  title,
+  description,
+  ogImage,
+  ogTitle = title,
+  ogDescription = description,
+  ogType = 'website',
+  keywords,
+  jsonLd,
+  glassFilter = true,
+} = Astro.props;
+
+// Sans slash final (au build le chemin est "/projets/"), sauf pour la racine.
+const canonical = new URL(Astro.url.pathname.replace(/(?<=.)\/$/, ''), Astro.site).href;
+const image = new URL(ogImage, Astro.site).href;
+---
+
+<!DOCTYPE html>
+<html class="light" lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <link rel="canonical" href={canonical} />
+    {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd).replaceAll('<', '\\u003c')} />}
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:image" content={image} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={ogTitle} />
+    <meta property="twitter:description" content={ogDescription} />
+    <meta property="twitter:image" content={image} />
+
+    {preloadedFonts.map((href) => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin="anonymous" />)}
+</head>
+
+<body class="bg-surface font-body text-on-surface">
+    <Header active={active} />
+    <slot />
+    <Footer />
+    <slot name="after-footer" />
+    {glassFilter && (<Fragment>
+    <!-- Liquid Glass SVG Distortion Filter -->
+    <svg style="display: none">
+        <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" seed="5" result="turbulence" />
+            <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+            <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100"
+                lighting-color="white" result="specLight">
+                <fePointLight x="-200" y="-200" z="300" />
+            </feSpecularLighting>
+            <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+    </Fragment>)}
+</body>
+
+</html>

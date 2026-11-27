@@ -1,0 +1,247 @@
+---
+import ProjectImage from '../components/ProjectImage.astro';
+import Layout from '../layouts/Layout.astro';
+import '../styles/fonts/mono-500.css';
+import { projects } from '../lib/projects';
+
+const highlighted = [10, 9];
+// `index` est la position dans la liste complète triée par id (pas dans la sélection) :
+// c'est elle qui décide si l'image est à gauche (pair) ou à droite (impair).
+const featured = [...projects]
+  .sort((a, b) => a.id - b.id)
+  .map((project, index) => ({ project, index }))
+  .filter(({ project }) => highlighted.includes(project.id));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Louis MOULINET',
+  url: Astro.site!.origin,
+  jobTitle: 'Etudiant en développement Full Stack',
+  alumniOf: 'La Joliverie',
+  knowsAbout: ['PHP', 'Java', 'Python', 'Docker', 'IA', 'Développement Web'],
+  sameAs: [
+    'https://github.com/MINLEGO',
+    'https://www.linkedin.com/in/louis-moulinet-406965384/',
+  ],
+};
+---
+
+<Layout
+    active="accueil"
+    title="Louis MOULINET - Etudiant en développement Full Stack & Logiciel | Portfolio"
+    description="Portfolio de Louis MOULINET, étudiant en BTS SIO SLAM à la Joliverie passionné par l'IA et l'ingénierie logicielle. Projets, veille technologique et compétences en PHP, Java, Python."
+    keywords="Joliverie,Louis MOULINET, Portfolio, Développeur Full Stack, Etudiant, BTS SIO SLAM, Nantes, Développement Web, Java, Python, PHP"
+    ogTitle="Louis MOULINET - Etudiant en développement Full Stack & Logiciel"
+    ogDescription="Explorez mes projets de développement web et logiciel. Étudiant en BTS SIO SLAM à Nantes."
+    ogImage="/media/og-image.png"
+    jsonLd={jsonLd}
+>
+    <main class="pt-24 min-h-screen">
+        <!-- Hero Section -->
+        <section class="hero-section blueprint-grid">
+            <div class="max-w-5xl">
+                <div class="hero-tag">
+                    <span class="material-symbols-outlined text-sm">terminal</span>
+                    <span>root@bts_sio:~/portfolio</span>
+                </div>
+                <h1 class="hero-title">
+                    Développement <br><span class="text-gradient shine">Full Stack</span>
+                    et gestion de projet.
+                </h1>
+                <div class="hero-badges">
+                    <div class="hero-badge glass-surface small-glass rounded-full">
+                        <span class="w-2\.5 h-2\.5 rounded-full bg-primary animate-pulse"></span>
+                        <span class="hero-badge-label">En
+                            recherche de stage</span>
+                    </div>
+                    <div class="hero-badge glass-surface small-glass rounded-full">
+                        <span class="material-symbols-outlined text-sm">location_on</span>
+                        <span class="hero-badge-label">Nantes,
+                            FR</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Compétences - Bento Grid -->
+        <section class="arsenal-section">
+            <div class="arsenal-grid">
+                <div class="arsenal-header md:col-span-12">
+                    <h2 class="font-headline text-4xl font-bold tracking-tight mb-2">Compétences<span
+                            class="text-gradient">...</span></h2>
+                    <div class="h-1 max-w-xl bg-primary-gradient"></div>
+                </div>
+                <!-- Formation card -->
+                <div
+                    class="md:col-span-12 glass-surface big-glass p-10 justify-between group transition-all duration-500 hover:shadow-2xl rounded-3xl">
+                    <div>
+                        <div class="font-mono text-primary text-sm mb-4 font-bold">01 / Formation</div>
+                        <h3 class="font-headline text-3xl font-bold mb-6">BTS SIO SLAM</h3>
+                        <p class="text-on-surface-variant max-w-4xl leading-relaxed mb-8 font-medium">
+                            Le BTS SIO (Services Informatiques aux Organisations) forme à la mise en place de solutions
+                            informatiques au sein des entreprises et propose 2 options : SISR « Solutions
+                            d’Infrastructures, Systèmes et Réseaux » et SLAM « Solutions Logicielles et Applications
+                            Métiers ».
+                            <br><br>
+                            Ce site a donc été créé dans le cadre de mon BTS à La Joliverie, en vue de regrouper l’ensemble des activités
+                            effectuées et des compétences acquises durant mes deux années de formation ainsi que mes deux
+                            stages.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-tag">Html5</span>
+                        <span class="skill-tag">PHP</span>
+                        <span class="skill-tag">CSS</span>
+                    </div>
+                </div>
+                <!-- Full Stack Card -->
+                <div class="md:col-span-4 bg-primary p-10 justify-between transition-all duration-300 rounded-3xl glass-surface small-glass shadow-lg max-w-xl"
+                    style="transform-origin: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    <span class="material-symbols-outlined text-8xl opacity-30">computer</span>
+                    <div>
+                        <div class="font-mono text-xs mb-2 opacity-80 font-bold">02 / WEB</div>
+                        <h3 class="font-headline text-2xl font-bold mb-4">Développement Full Stack</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
+                                <span class="font-headline font-semibold">HTML5</span>
+                                <span class="material-symbols-outlined">code_xml</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
+                                <span class="font-headline font-semibold">CSS</span>
+                                <span class="material-symbols-outlined">brush</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
+                                <span class="font-headline font-semibold">PHP</span>
+                                <span class="material-symbols-outlined">manufacturing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Java/Python Card -->
+                <div class="md:col-span-4 bg-primary p-10 justify-between transition-all duration-300 rounded-3xl glass-surface small-glass shadow-lg max-w-xl"
+                    style="transform-origin: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    <span class="material-symbols-outlined text-8xl opacity-30">code_blocks</span>
+                    <div>
+                        <div class="font-mono text-xs mb-2 opacity-80 font-bold">03 / LOGIC</div>
+                        <h3 class="font-headline text-2xl font-bold mb-4">Systèmes Cœurs</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
+                                <span class="font-headline font-semibold">Java</span>
+                                <span class="material-symbols-outlined">coffee</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-on-primary/10 pb-2">
+                                <span class="font-headline font-semibold">Python</span>
+                                <span class="material-symbols-outlined">rebase_edit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- SQL / Data Card -->
+                <div
+                    class="md:col-span-4 glass-surface small-glass p-10 flex flex-col items-center text-center justify-center border-t-4 border-tertiary">
+                    <span class="material-symbols-outlined text-5xl text-tertiary mb-6"
+                        data-weight="fill">database</span>
+                    <h3 class="font-headline text-2xl font-bold mb-2">Intégrité des Données</h3>
+                    <p class="text-sm font-label text-on-surface-variant mb-6 uppercase tracking-widest font-semibold">
+                        MariaDB &amp; SQLite</p>
+                    <div class="w-full bg-surface-variant h-px"></div>
+                </div>
+            </div>
+        </section>
+        <!-- Projects - Featured Split -->
+        <section class="projects-section glass-surface big-glass">
+            <div class="max-w-7xl">
+                <div class="projects-header">
+                    <div class="max-w-xl">
+                        <h2 class="font-headline text-5xl font-bold tracking-tighter mb-6">Projets récents</h2>
+                        <p class="text-on-surface-variant font-body text-lg leading-relaxed">
+                            Une sélection de projets que j'ai été amené à réaliser pour mon intérêt personnel ou pour ma
+                            formation.
+                        </p>
+                    </div>
+                    <a class="group flex items-center gap-4 font-headline font-bold text-lg uppercase tracking-tight"
+                        href="/projets">
+                        Voir Tous Les Projets
+                        <span
+                            class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+                <div class="grid grid-cols-1 gap-16">
+                    {featured.map(({ project, index }) => index % 2 === 0 ? (
+                        <a class="project-item glass-btn group" href={`/projets/${project.slug}`}
+                            style="border-radius: 2rem 0rem 0rem 2rem;">
+                            <div class="relative group transition-all ">
+                                <ProjectImage layout="featured" alt={project.image_alt}
+                                    class=" grayscale group-hover:grayscale-0 w-full aspect-video object-cover transition-transform  "
+
+                                    src={project.image} />
+                                <div class="project-overlay   " style="cursor:pointer"></div>
+                            </div>
+                            <div>
+                                <div class="font-mono text-primary font-bold mb-4">
+                                    {project.detail.subtitle}
+                                </div>
+                                <h3 class="font-headline text-4xl font-bold mb-6">
+                                    {project.title}
+                                </h3>
+                                <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                                    {project.description}
+                                </p>
+                                <div class="flex gap-6 items-center">
+                                    <span class="project-tag secondary-btn">Détails du projet</span>
+                                    <span
+                                        class="material-symbols-outlined text-3xl group-hover:translate-x-2 transition-transform">open_in_new</span>
+                                </div>
+                            </div>
+                        </a>
+                    ) : (
+                        <a class="project-item glass-btn group" href={`/projets/${project.slug}`}
+                            style="border-radius: 0rem 2rem 2rem 0rem;padding-left: 1rem;">
+                            <div class="md:order-1">
+                                <div class="font-mono text-primary font-bold mb-4">
+                                    {project.detail.subtitle}
+                                </div>
+                                <h3 class="font-headline text-4xl font-bold mb-6">
+                                    {project.title}
+                                </h3>
+                                <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                                    {project.description}
+                                </p>
+                                <div class="flex gap-6 items-center">
+                                    <span class="project-tag secondary-btn">Détails du projet</span>
+                                    <span
+                                        class="material-symbols-outlined text-3xl group-hover:text-primary transition-colors">open_in_new</span>
+                                </div>
+                            </div>
+                            <div class="relative md:order-2 group transition-all ">
+                                <ProjectImage layout="featured" alt={project.image_alt}
+                                    class="grayscale group-hover:grayscale-0 w-full aspect-video object-cover transition-transform"
+
+                                    src={project.image} />
+                                <div class="project-overlay" style="cursor:pointer"></div>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        </section>
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-bg"></div>
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-headline text-5xl font-bold tracking-tighter mb-12"></h2>
+                <div class="cta-buttons">
+                    <a href="/media/Recherche de stage BTS SIO SLAM MOULINET--PRIMA Louis.pdf" download
+                        class="btn-primary glass-btn shadow-xl">
+                        Télécharger le CV
+                    </a>
+                    <button class="btn-secondary glass-surface glass-btn border-2 border-primary/20">
+                        <script is:inline>
+                            document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">Prendre contact</a>');
+                        </script>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>

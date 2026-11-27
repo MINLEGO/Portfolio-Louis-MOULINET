@@ -1,5 +1,7 @@
 # Relais PHP vers VeilleFacile plutôt qu'un appel depuis le navigateur
 
+> La décision reste valable ; le relais et le rendu markdown décrits ici ont changé avec l'[ADR 0002](0002-migration-astro-rendu-hybride.md).
+
 Les Sources de la section Veille viennent de l'API VeilleFacile. VeilleFacile propose une clé en lecture seule (`READ_API_KEY`) et le CORS, ce qui permettrait au JavaScript du portfolio de l'appeler directement. Nous passons quand même par un relais PHP (`public/veille_api.php`) qui garde la clé côté serveur.
 
 Raisons :

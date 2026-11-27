@@ -1,0 +1,154 @@
+---
+// Gabarit commun à la page principale de la Veille et à son archive. Rendu à la requête.
+import Layout from '../layouts/Layout.astro';
+import '../styles/fonts/mono-500.css';
+// Après le Layout : veille.css doit être chargé après style.css.
+import '../styles/veille.css';
+import { joinExperiments, type VeillePageData } from '../lib/experiments';
+import { cutQuery } from '../lib/shared';
+import { skeletons } from '../lib/skeletons';
+import { relay } from '../lib/veille';
+
+interface Props {
+  mode: VeillePageData['mode'];
+}
+
+const { mode } = Astro.props;
+const isHome = mode === 'home';
+
+// API en panne et sans cache : la page s'affiche, et le script montre le message d'erreur du relais.
+const sources = await relay.allSources().then(
+  set => set.data,
+  error => {
+    console.warn('Page Veille sans Sources :', error instanceof Error ? error.message : error);
+    return [];
+  },
+);
+const pageData: VeillePageData = {
+  mode,
+  q: cutQuery(Astro.url.searchParams.get('q')),
+  experiments: await joinExperiments(sources),
+};
+// `<` échappé : `q`, titres et mots-clés viennent de l'extérieur, un `</script>` ne doit pas sortir du bloc.
+const pageScript = `window.VEILLE = ${JSON.stringify(pageData).replaceAll('<', '\\u003c')};`;
+
+const title = `${isHome ? 'Veille Technologique' : 'Archive de la veille'} | Louis MOULINET`;
+const formats = [['', 'Tous'], ['Vidéo', 'Vidéo'], ['Code', 'Code'], ['Modèle', 'Modèle'], ['Article', 'Article']];
+---
+
+<Layout
+    active="veille"
+    title={title}
+    description={isHome
+        ? "Explorez ma veille technologique sur l'IA générative : sources analysées, méthode de veille et expérimentations, par Louis MOULINET."
+        : "Archive complète de ma veille technologique sur l'IA générative, avec recherche sémantique."}
+    ogDescription="Suivez mes découvertes et analyses sur les dernières tendances tech."
+    ogImage="/media/og-image-veille.png"
+    glassFilter={false}
+>
+    <main class="pt-32 pb-20 px-8 md:px-12 max-w-7xl vs-main">
+        <header class="mb-12">
+            <div class="veille-hero-tag">
+                <span class="hero-tag">/execute as lab run {isHome ? 'VEILLE' : 'ARCHIVE'}</span>
+                <div class="veille-divider"></div>
+            </div>
+            <h1 class="font-headline text-8xl font-bold tracking-tighter text-on-background mb-6">
+                {isHome ? 'Veille' : 'Archive'} <span class="text-gradient shine">{isHome ? 'Technologique' : 'des Sources'}</span>
+            </h1>
+            <p class="max-w-2xl text-lg text-on-surface-variant font-body leading-relaxed">
+                {isHome
+                    ? "L'IA générative appliquée à la productivité : les Sources que je capture, et ce que j'en ai testé."
+                    : 'Toutes les Sources capturées dans VeilleFacile, avec recherche sémantique.'}
+            </p>
+        </header>
+
+        {isHome && (<Fragment>
+            <!-- Domaine & Méthode de veille : PREMIER JET, à réécrire -->
+            <section class="glass-surface small-glass rounded-1xl vs-section">
+                <div class="section-heading-bar pb-4">
+                    <h2 class="font-headline text-2xl font-bold tracking-tight flex items-center gap-2 px-4">
+                        <span class="material-symbols-outlined text-primary">explore</span> Domaine &amp; méthode
+                    </h2>
+                </div>
+                <div class="vs-method">
+                    <div class="vs-method-block">
+                        <h3>Sujet</h3>
+                        <p>L'IA générative et son usage pour améliorer la productivité. Le domaine change chaque semaine : je le suis pour toujours utiliser les outils les plus efficaces.</p>
+                    </div>
+                    <div class="vs-method-block">
+                        <h3>Sources suivies</h3>
+                        <ul>
+                            <li>Blogs et annonces des labs (Anthropic, Google DeepMind…)</li>
+                            <li>Chaînes YouTube de vulgarisation et d'actualité</li>
+                            <li>Dépôts GitHub et modèles Hugging Face en tendance</li>
+                            <li>Benchmarks (Artificial Analysis, ARC Prize)</li>
+                        </ul>
+                    </div>
+                    <div class="vs-method-block">
+                        <h3>Outil</h3>
+                        <p><a class="vs-link" href="https://github.com/MINLEGO/VeilleFacile" target="_blank" rel="noopener">VeilleFacile</a>, mon propre outil : il capture une page, la résume avec un LLM, en extrait des mots-clés et permet une recherche sémantique. C'est lui qui alimente cette page.</p>
+                    </div>
+                    <div class="vs-method-block">
+                        <h3>Processus</h3>
+                        <ol class="vs-steps">
+                            <li><strong>Capturer</strong> la Source depuis le navigateur</li>
+                            <li><strong>Résumer</strong> et indexer automatiquement</li>
+                            <li><strong>Trier</strong> par mots-clés, retrouver par recherche</li>
+                            <li><strong>Expérimenter</strong> les nouveautés les plus prometteuses</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <section class="glass-surface small-glass rounded-1xl vs-section" id="vs-exp-section">
+                <div class="section-heading-bar pb-4">
+                    <h2 class="font-headline text-2xl font-bold tracking-tight flex items-center gap-2 px-4">
+                        <span class="material-symbols-outlined text-primary">science</span> Expérimentations
+                    </h2>
+                </div>
+                <div class="vs-grid" id="vs-exp-row" set:html={skeletons(pageData.experiments.length)}></div>
+            </section>
+        </Fragment>)}
+
+        <section class="glass-surface small-glass rounded-1xl vs-section">
+            <div class="section-heading-bar pb-4">
+                <h2 class="font-headline text-2xl font-bold tracking-tight flex items-center gap-2 px-4">
+                    <span class="material-symbols-outlined text-primary">article</span> Sources
+                </h2>
+                <span class="font-mono text-xs text-outline" id="vs-count">COMPTE : …</span>
+            </div>
+            <div class="vs-filters">
+                <label class="vs-search">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="search" id="vs-q" placeholder="Recherche sémantique (via VeilleFacile)…" aria-label="Rechercher une Source">
+                </label>
+                <div class="vs-chips" role="group" aria-label="Filtrer par format">
+                    {formats.map(([value, label]) => (
+                        <button class="vs-chip" data-format={value} aria-pressed={value === '' ? 'true' : 'false'}>{label}</button>
+                    ))}
+                    <span id="vs-active-kw"></span>
+                </div>
+            </div>
+            <p class="vs-notice" id="vs-notice" role="status"></p>
+            <!-- Squelettes dès le HTML : le script est un module, exécuté après le premier affichage ; sans eux le footer saute. -->
+            <div class="vs-grid" id="vs-grid" aria-live="polite" set:html={skeletons(6)}></div>
+            <div id="vs-sentinel"></div>
+            {isHome && <a class="archive-link vs-more" id="vs-more" href="/veille/archive">Voir l'archive complète</a>}
+        </section>
+    </main>
+
+    <!-- Détail d'une Source / Expérimentation (fenêtre centrée ou tiroir).
+         Après le footer : sinon une tabulation sortant d'une iframe du panneau atterrit dans les liens du footer. -->
+    <div slot="after-footer" class="vs-panel" id="vs-panel" hidden>
+        <div class="vs-panel-backdrop" data-close></div>
+        <div class="vs-panel-box" role="dialog" aria-modal="true" aria-labelledby="vs-panel-title">
+            <button class="vs-close" data-close aria-label="Fermer"><span class="material-symbols-outlined">close</span></button>
+            <div id="vs-panel-content"></div>
+        </div>
+    </div>
+
+    <script is:inline set:html={pageScript} />
+    <script>
+        import '../scripts/veille';
+    </script>
+</Layout>
