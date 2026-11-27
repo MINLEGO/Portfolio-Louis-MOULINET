@@ -1,11 +1,11 @@
 ---
-import projects from '../data/projects.json';
 import Layout from '../layouts/Layout.astro';
+import { projects } from '../lib/projects';
 
 const highlighted = [10, 9];
 // `index` est la position dans la liste complète triée par id (pas dans la sélection) :
 // c'est elle qui décide si l'image est à gauche (pair) ou à droite (impair).
-const featured = [...projects.projects]
+const featured = [...projects]
   .sort((a, b) => a.id - b.id)
   .map((project, index) => ({ project, index }))
   .filter(({ project }) => highlighted.includes(project.id));
@@ -166,7 +166,7 @@ const jsonLd = {
                 </div>
                 <div class="grid grid-cols-1 gap-16">
                     {featured.map(({ project, index }) => index % 2 === 0 ? (
-                        <a class="project-item glass-btn group" href={`/project_detail.php?id=${project.id}`}
+                        <a class="project-item glass-btn group" href={`/projets/${project.slug}`}
                             style="border-radius: 2rem 0rem 0rem 2rem;">
                             <div class="relative group transition-all ">
                                 <img alt={project.image_alt}
@@ -193,7 +193,7 @@ const jsonLd = {
                             </div>
                         </a>
                     ) : (
-                        <a class="project-item glass-btn group" href={`/project_detail.php?id=${project.id}`}
+                        <a class="project-item glass-btn group" href={`/projets/${project.slug}`}
                             style="border-radius: 0rem 2rem 2rem 0rem;padding-left: 1rem;">
                             <div class="md:order-1">
                                 <div class="font-mono text-primary font-bold mb-4">

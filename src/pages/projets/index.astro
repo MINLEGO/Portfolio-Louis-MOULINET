@@ -1,0 +1,93 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { absolutePath, filters, projects } from '../../lib/projects';
+
+const states = [{ key: 'all', label: 'Tous les Projets', style: undefined }, ...filters];
+
+// Filtrage sans JavaScript : `/projets#<clé>`. Une barre de filtres par état, seule celle de
+// l'état courant est affichée (les classes actif/inactif restent celles du CSS global).
+const filterCss = [
+  '.filter-target { position: absolute; top: 0; }',
+  '.filter-list:not([data-state="all"]) { display: none; }',
+  ...filters.flatMap(({ key }) => [
+    `main:has(#${key}:target) .filter-list:not([data-state="${key}"]) { display: none; }`,
+    `main:has(#${key}:target) .filter-list[data-state="${key}"] { display: flex; }`,
+    // !important : l'article porte un `display: block` en ligne.
+    `main:has(#${key}:target) article:not([data-filters~="${key}"]) { display: none !important; }`,
+  ]),
+].join('\n');
+---
+
+<Layout
+    active="projets"
+    title="Projets"
+    description="Explorez la galerie des projets de Louis MOULINET : applications web et logiciels. Solutions innovantes développées en BTS SIO."
+    ogTitle="Mes Projets | Louis MOULINET"
+    ogDescription="Découvrez mes réalisations techniques et projets académiques."
+    ogImage="/media/og-image-projects.png"
+>
+    <main class="pt-32 pb-24 px-8 max-w-7xl">
+        <style is:inline set:html={filterCss}></style>
+        {filters.map(({ key }) => <span id={key} class="filter-target"></span>)}
+        <!-- Hero Section -->
+        <header class="projects-hero">
+            <div class="max-w-2xl">
+                <span class="hero-tag">C:/archive/portfolio</span>
+                <h1 class="font-headline font-bold text-6xl hero-title tracking-tighter leading-none mb-6">Projets</h1>
+                <p class="text-on-surface-variant text-lg font-body leading-relaxed font-medium">
+                    Une collection de solutions, articles, et expérimentations, axée sur l'avancée de l'IA, les nouvelles technologies FrontEnd / BackEnd ainsi que les processus de développement modernes.
+                </p>
+            </div>
+        </header>
+        <!-- Filters -->
+        <section class="filter-bar">
+            {states.map((state) => (
+                <div class="filter-list font-medium" data-state={state.key}>
+                    {states.map(({ key, label, style }) => (
+                        <a href={key === 'all' ? '/projets' : `#${key}`}
+                            class:list={['filter-btn glass-btn', key === state.key ? 'filter-btn--active' : 'filter-btn--inactive']}
+                            style={style}>
+                            {label}</a>
+                    ))}
+                </div>
+            ))}
+        </section>
+        <!-- Projects Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-x-8 px-8">
+            {projects.map((project) => (
+                <article class="group glass-btn p-3 rounded-3xl transition-all duration-500" style="margin: 0rem 0 2rem; cursor: pointer; display: block"
+                    data-filters={filters.filter(({ category }) => project.category.toLowerCase().includes(category.toLowerCase())).map(({ key }) => key).join(' ')}>
+                    <a href={`/projets/${project.slug}`}>
+                        <div class="project-card-image-wrap">
+                            <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                                src={absolutePath(project.image)}
+                                alt={project.image_alt} />
+                            <div class="project-card-badge">
+                                {project.index} / {project.category}
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="flex justify-between items-start mb-4">
+                                <h2 class="project-card-title font-headline font-bold text-3xl tracking-tight">{project.title}</h2>
+                                <div class="glass-btn p-2 rounded-full">
+                                    <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_outward</span>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2 project-tags mb-6 flex-wrap">
+                                {project.tags.map((tag) => (
+                                    <span class="project-card-tag glass-surface small-glass">{tag}</span>
+                                ))}
+                            </div>
+                            <p class="text-on-surface-variant leading-relaxed mb-6 font-medium">
+                                {project.description}
+                            </p>
+                        </div>
+                    </a>
+
+                </article>
+            ))}
+        </div>
+
+    </main>
+</Layout>
