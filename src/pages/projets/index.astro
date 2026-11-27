@@ -1,7 +1,8 @@
 ---
+import ProjectImage from '../../components/ProjectImage.astro';
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/fonts/mono-500.css';
-import { absolutePath, filters, projects } from '../../lib/projects';
+import { filters, projects } from '../../lib/projects';
 
 const states = [{ key: 'all', label: 'Tous les Projets', style: undefined }, ...filters];
 
@@ -55,14 +56,15 @@ const filterCss = [
         </section>
         <!-- Projects Grid -->
         <div class="grid grid-cols-2 md:grid-cols-3 gap-x-8 px-8">
-            {projects.map((project) => (
+            {projects.map((project, i) => (
                 <article class="group glass-btn p-3 rounded-3xl transition-all duration-500" style="margin: 0rem 0 2rem; cursor: pointer; display: block"
                     data-filters={filters.filter(({ category }) => project.category.toLowerCase().includes(category.toLowerCase())).map(({ key }) => key).join(' ')}>
                     <a href={`/projets/${project.slug}`}>
                         <div class="project-card-image-wrap">
-                            <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                                src={absolutePath(project.image)}
-                                alt={project.image_alt} />
+                            <ProjectImage layout="card" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                                src={project.image}
+                                alt={project.image_alt}
+                                loading={i < 3 ? 'eager' : 'lazy'} />
                             <div class="project-card-badge">
                                 {project.index} / {project.category}
                             </div>
