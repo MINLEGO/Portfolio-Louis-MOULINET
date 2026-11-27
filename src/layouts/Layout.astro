@@ -17,6 +17,8 @@ interface Props {
   monoWeights?: '400' | '400;500';
   /** Données structurées schema.org. */
   jsonLd?: Record<string, unknown>;
+  /** Filtre SVG de déformation du verre. Désactivé sur la Veille, qui ne l'a jamais eu. */
+  glassFilter?: boolean;
 }
 
 const {
@@ -30,6 +32,7 @@ const {
   keywords,
   monoWeights = '400;500',
   jsonLd,
+  glassFilter = true,
 } = Astro.props;
 
 // Sans slash final (au build le chemin est "/projets/"), sauf pour la racine.
@@ -76,6 +79,7 @@ const image = new URL(ogImage, Astro.site).href;
     <Header active={active} />
     <slot />
     <Footer />
+    {glassFilter && (<Fragment>
     <!-- Liquid Glass SVG Distortion Filter -->
     <svg style="display: none">
         <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
@@ -88,6 +92,7 @@ const image = new URL(ogImage, Astro.site).href;
             <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G" />
         </filter>
     </svg>
+    </Fragment>)}
 </body>
 
 </html>

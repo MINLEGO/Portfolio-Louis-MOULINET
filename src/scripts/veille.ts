@@ -1,29 +1,42 @@
-// Page Veille et archive (window.VEILLE fourni par veille.php).
+// Page Veille et archive (window.VEILLE fourni par components/VeillePage.astro).
+import type { Demo, Experiment, VeillePageData } from '../lib/experiments';
+import type { Source } from '../lib/veille';
+
+declare global {
+    interface Window { VEILLE: VeillePageData }
+}
+
+/** Source telle que renvoyée par le relais. */
+type ListedSource = Source & { exp: string | null };
+type View = 'exp' | 'src';
+
 (() => {
     const V = window.VEILLE;
     const isHome = V.mode === 'home';
     const PAGE = isHome ? 12 : 24;
-    const ICONS = { 'Vidéo': 'play_circle', 'Code': 'code', 'Modèle': 'neurology', 'Article': 'article' };
-    const $ = (sel, el = document) => el.querySelector(sel);
-    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-    const safeUrl = u => /^https?:\/\//i.test(u || '') ? u : '#';
-    const fmtDate = iso => iso ? new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
-    const ytId = url => (String(url).match(/(?:[?&]v=|youtu\.be\/|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
+    const ICONS: Record<string, string> = { 'Vidéo': 'play_circle', 'Code': 'code', 'Modèle': 'neurology', 'Article': 'article' };
+    const $ = <T extends Element = HTMLElement>(sel: string, el: ParentNode = document) => el.querySelector<T>(sel)!;
+    const ENTITIES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, c => ENTITIES[c]!);
+    const safeUrl = (u: string) => /^https?:\/\//i.test(u || '') ? u : '#';
+    const fmtDate = (iso?: string) => iso ? new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+    const ytId = (url: string) => (String(url).match(/(?:[?&]v=|youtu\.be\/|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
 
-    const state = { q: V.q || '', format: '', kw: '', offset: 0, total: 0, loading: false, token: 0, items: new Map() };
-    const thumbs = new Map();
+    const state = { q: V.q || '', format: '', kw: '', offset: 0, total: 0, loading: false, token: 0, items: new Map<string, ListedSource>() };
+    const thumbs = new Map<number, string | null>();
 
-    const grid = $('#vs-grid'), count = $('#vs-count'), notice = $('#vs-notice'), more = $('#vs-more');
+    const grid = $('#vs-grid'), count = $('#vs-count'), notice = $('#vs-notice');
+    const more = document.querySelector<HTMLAnchorElement>('#vs-more'); // absent de l'archive
     const panel = $('#vs-panel'), content = $('#vs-panel-content');
 
     // ---------- Cartes ----------
-    const thumbHtml = (url, format) => url
+    const thumbHtml = (url: string | null | undefined, format?: string) => url
         ? `<img src="${esc(url)}" alt="" loading="lazy" class="${/\.svg(\?|$)/.test(url) ? 'contain' : ''}">`
-        : `<span class="material-symbols-outlined vs-icon">${ICONS[format] || 'article'}</span>`;
+        : `<span class="material-symbols-outlined vs-icon">${ICONS[format ?? ''] || 'article'}</span>`;
 
-    const kwButtons = (kws) => kws.map(k => `<span class="vs-kw" role="button" tabindex="0" data-kw="${esc(k)}">#${esc(k)}</span>`).join('');
+    const kwButtons = (kws: string[]) => kws.map(k => `<span class="vs-kw" role="button" tabindex="0" data-kw="${esc(k)}">#${esc(k)}</span>`).join('');
 
-    function sourceCard(s) {
+    function sourceCard(s: ListedSource) {
         return `<article class="vs-card glass-btn" data-id="${s.id}" tabindex="0" role="button" aria-haspopup="dialog">
             <div class="vs-thumb">
                 ${thumbHtml(s.thumb || thumbs.get(s.id), s.format)}
@@ -38,9 +51,10 @@
         </article>`;
     }
 
-    function expCard(e) {
+    function expCard(e: Experiment) {
         const gallery = (e.demos || []).find(d => d.type === 'galerie');
-        const img = gallery?.images?.[0] ? e.base + gallery.images[0] : e.source?.thumb;
+        const first = gallery?.type === 'galerie' ? gallery.images?.[0] : undefined;
+        const img = first ? e.base + first : e.source?.thumb;
         return `<article class="vs-card glass-btn" data-exp="${esc(e.slug)}" tabindex="0" role="button" aria-haspopup="dialog">
             <div class="vs-thumb">${thumbHtml(img, 'Article')}<span class="vs-badge vs-badge--exp">Expérimenté</span></div>
             <div class="vs-body">
@@ -51,10 +65,10 @@
         </article>`;
     }
 
-    const skeletons = n => '<div class="vs-card vs-skeleton" aria-hidden="true"><div class="vs-thumb"></div><div class="vs-body"><span></span><span></span><span></span></div></div>'.repeat(n);
+    const skeletons = (n: number) => '<div class="vs-card vs-skeleton" aria-hidden="true"><div class="vs-thumb"></div><div class="vs-body"><span></span><span></span><span></span></div></div>'.repeat(n);
 
     // ---------- Chargement ----------
-    async function load(reset) {
+    async function load(reset: boolean) {
         if (reset) {
             state.offset = 0; state.total = 0; state.items.clear();
             grid.innerHTML = skeletons(6);
@@ -64,17 +78,20 @@
         }
         const token = ++state.token;
         state.loading = true;
-        const params = new URLSearchParams({ q: state.q, format: state.format, kw: state.kw, offset: state.offset, limit: PAGE });
-        let data;
+        const params = new URLSearchParams({ q: state.q, format: state.format, kw: state.kw, offset: String(state.offset), limit: String(PAGE) });
+        let data: { results: ListedSource[]; total: number; stale_since: string | null };
         try {
-            const res = await fetch('veille_api.php?' + params);
-            data = await res.json();
-            if (!res.ok) throw new Error(data.error);
+            const res = await fetch('/veille_api.php?' + params);
+            const body = await res.json();
+            if (!res.ok) throw new Error(body.error);
+            data = body;
         } catch (err) {
             if (token !== state.token) return;
             state.loading = false;
             grid.querySelectorAll('.vs-skeleton').forEach(n => n.remove());
-            notice.textContent = 'Impossible de charger les Sources : ' + (err.message || 'erreur réseau');
+            notice.textContent = 'Impossible de charger les Sources : ' + ((err as Error).message || 'erreur réseau');
+            // Un lien direct vers une Expérimentation s'ouvre même quand les Sources sont indisponibles.
+            if (reset) openFromHash();
             return;
         }
         if (token !== state.token) return; // une recherche plus récente a été lancée
@@ -94,10 +111,10 @@
         if (reset) openFromHash();
     }
 
-    async function loadThumb(s) {
+    async function loadThumb(s: ListedSource) {
         thumbs.set(s.id, null);
         try {
-            const { thumb } = await (await fetch('veille_api.php?thumb=' + s.id)).json();
+            const { thumb } = await (await fetch('/veille_api.php?thumb=' + s.id)).json();
             if (!thumb) return;
             thumbs.set(s.id, thumb);
             document.querySelectorAll(`.vs-card[data-id="${s.id}"] .vs-thumb`).forEach(el => {
@@ -110,7 +127,7 @@
     // Carte : une ligne de mots-clés ; le premier qui dépasse est raccourci (… dans son propre fond), les suivants masqués.
     function fitKeywords() {
         document.querySelectorAll('.vs-card .vs-kws').forEach(box => {
-            const kws = [...box.children];
+            const kws = [...box.children] as HTMLElement[];
             kws.forEach(k => { k.hidden = false; k.style.maxWidth = ''; });
             const right = box.getBoundingClientRect().right;
             let cut = false;
@@ -124,18 +141,19 @@
             }
         });
     }
-    let resizeTimer;
-    addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitKeywords, 150); });
+    let resizeTimer: number | undefined;
+    addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = window.setTimeout(fitKeywords, 150); });
     document.fonts?.ready.then(fitKeywords);
 
     // Image cassée -> icône du format
     document.addEventListener('error', e => {
-        if (e.target.matches?.('.vs-thumb img')) e.target.outerHTML = `<span class="material-symbols-outlined vs-icon">image</span>`;
+        const img = e.target as Element;
+        if (img.matches?.('.vs-thumb img')) img.outerHTML = `<span class="material-symbols-outlined vs-icon">image</span>`;
     }, true);
 
     function updateMore() {
         if (!more) return;
-        more.href = 'articles.php' + (state.q ? '?q=' + encodeURIComponent(state.q) : '');
+        more.href = '/veille/archive' + (state.q ? '?q=' + encodeURIComponent(state.q) : '');
         more.textContent = state.q ? `Voir tous les résultats (${state.total})` : "Voir l'archive complète";
     }
 
@@ -143,18 +161,18 @@
     let sentinelVisible = false;
     if (!isHome) {
         new IntersectionObserver(([entry]) => {
-            sentinelVisible = entry.isIntersecting;
+            sentinelVisible = entry!.isIntersecting;
             if (sentinelVisible) load(false);
         }, { rootMargin: '600px' }).observe($('#vs-sentinel'));
     }
 
     // ---------- Recherche et filtres ----------
-    const input = $('#vs-q');
+    const input = $<HTMLInputElement>('#vs-q');
     input.value = state.q;
-    let debounce;
+    let debounce: number | undefined;
     input.addEventListener('input', () => {
         clearTimeout(debounce);
-        debounce = setTimeout(() => {
+        debounce = window.setTimeout(() => {
             if (input.value.trim() === state.q) return;
             state.q = input.value.trim();
             if (!isHome) history.replaceState(null, '', state.q ? '?q=' + encodeURIComponent(state.q) : location.pathname);
@@ -162,58 +180,61 @@
         }, 400);
     });
 
-    document.querySelectorAll('.vs-chip[data-format]').forEach(chip => chip.addEventListener('click', () => {
-        document.querySelectorAll('.vs-chip[data-format]').forEach(c => c.setAttribute('aria-pressed', c === chip));
-        state.format = chip.dataset.format;
+    document.querySelectorAll<HTMLElement>('.vs-chip[data-format]').forEach(chip => chip.addEventListener('click', () => {
+        document.querySelectorAll('.vs-chip[data-format]').forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
+        state.format = chip.dataset.format!;
         load(true);
     }));
 
-    function setKeyword(kw) {
+    function setKeyword(kw: string) {
         state.kw = kw;
         $('#vs-active-kw').innerHTML = kw ? `<button class="vs-chip" aria-pressed="true" id="vs-kw-clear" aria-label="Retirer le filtre ${esc(kw)}">#${esc(kw)} <span class="material-symbols-outlined">close</span></button>` : '';
-        $('#vs-kw-clear')?.addEventListener('click', () => setKeyword(''));
+        document.querySelector('#vs-kw-clear')?.addEventListener('click', () => setKeyword(''));
         load(true);
     }
 
     // ---------- Clics sur les cartes ----------
     document.addEventListener('click', e => {
-        const kw = e.target.closest('.vs-kw');
+        const target = e.target as Element;
+        const kw = target.closest<HTMLElement>('.vs-kw');
         if (kw) {
             e.stopPropagation();
             closePanel();
-            setKeyword(kw.dataset.kw);
+            setKeyword(kw.dataset.kw!);
             grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
             return;
         }
-        const card = e.target.closest('.vs-card[data-id], .vs-card[data-exp]');
+        const card = target.closest<HTMLElement>('.vs-card[data-id], .vs-card[data-exp]');
         if (card) openCard(card);
     });
     document.addEventListener('keydown', e => {
-        const card = e.target.closest?.('.vs-card[data-id], .vs-card[data-exp]');
+        const target = e.target as HTMLElement;
+        const card = target.closest?.<HTMLElement>('.vs-card[data-id], .vs-card[data-exp]');
         if (e.key !== 'Enter' && e.key !== ' ') return;
-        if (e.target.matches?.('.vs-kw')) { e.preventDefault(); e.target.click(); }
-        else if (card && e.target === card) { e.preventDefault(); openCard(card); }
+        if (target.matches?.('.vs-kw')) { e.preventDefault(); target.click(); }
+        else if (card && target === card) { e.preventDefault(); openCard(card); }
     });
 
-    function openCard(card) {
+    function openCard(card: HTMLElement) {
         if (card.dataset.exp) {
-            const exp = V.experiments.find(x => x.slug === card.dataset.exp);
+            const exp = V.experiments.find(x => x.slug === card.dataset.exp)!;
             return openPanel(exp.source, exp, 'exp');
         }
-        const s = state.items.get(card.dataset.id);
+        const s = state.items.get(card.dataset.id!)!;
         const exp = s.exp && V.experiments.find(x => x.slug === s.exp);
         openPanel(s, exp || null, exp ? 'exp' : 'src');
     }
 
     // ---------- Panneau de détail ----------
-    let lastFocus = null;
+    let lastFocus: HTMLElement | null = null;
 
-    function openPanel(source, exp, view) {
-        lastFocus = document.activeElement;
+    // Une Source ou une Expérimentation est toujours fournie ; la Source peut manquer à une Expérimentation.
+    function openPanel(source: Source | null, exp: Experiment | null, view: View) {
+        lastFocus = document.activeElement as HTMLElement | null;
         panel.hidden = false;
         document.body.style.overflow = 'hidden';
         renderPanel(source, exp, view);
-        history.replaceState(null, '', location.pathname + location.search + '#' + (exp ? 'exp-' + exp.slug : 'src-' + source.id));
+        history.replaceState(null, '', location.pathname + location.search + '#' + (exp ? 'exp-' + exp.slug : 'src-' + source!.id));
         $('.vs-close', panel).focus();
     }
 
@@ -226,17 +247,17 @@
         lastFocus?.focus();
     }
 
-    function renderPanel(source, exp, view) {
-        const tab = (v, label) => `<button role="tab" class="vs-tab" data-view="${v}" aria-selected="${view === v}">${label}</button>`;
+    function renderPanel(source: Source | null, exp: Experiment | null, view: View) {
+        const tab = (v: View, label: string) => `<button role="tab" class="vs-tab" data-view="${v}" aria-selected="${view === v}">${label}</button>`;
         const tabs = exp && source ? `<div class="vs-tabs" role="tablist">${tab('exp', 'Expérimentation')}${tab('src', 'Source')}</div>` : '';
-        const v = view === 'exp' ? expView(exp) : srcView(source);
+        const v = view === 'exp' ? expView(exp!) : srcView(source!);
         content.innerHTML = `<div class="vs-panel-head">${tabs}<div><p class="vs-meta">${v.meta}</p>
             <h2 class="vs-panel-title" id="vs-panel-title">${esc(v.title)}</h2></div></div>` + v.body;
-        content.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => renderPanel(source, exp, b.dataset.view)));
+        content.querySelectorAll<HTMLElement>('[data-view]').forEach(b => b.addEventListener('click', () => renderPanel(source, exp, b.dataset.view as View)));
         $('.vs-panel-box', panel).scrollTop = 0;
     }
 
-    function srcView(s) {
+    function srcView(s: Source) {
         return { meta: `${esc(s.format)} · ${esc(s.site)} · ${s.date_kind === 'parution' ? 'publié le' : 'capturé le'} ${fmtDate(s.date)}`, title: s.title, body: `
             <div class="vs-kws">${kwButtons(s.keywords)}</div>
             <div class="vs-md">${s.summary_html}</div>
@@ -245,17 +266,17 @@
 
     // Médias : "entete": N les place sous le titre, {{demo:N}} dans le texte les insère sur place,
     // les autres s'affichent à la fin. N commence à 1.
-    function expView(e) {
-        const demos = e.demos || [], used = new Set();
-        const take = n => { const d = demos[n - 1]; if (!d) return ''; used.add(n - 1); return demoHtml(d, e.base); };
+    function expView(e: Experiment) {
+        const demos = e.demos || [], used = new Set<number>();
+        const take = (n: number) => { const d = demos[n - 1]; if (!d) return ''; used.add(n - 1); return demoHtml(d, e.base); };
         const header = e.entete ? `<div class="vs-exp-header">${take(e.entete)}</div>` : '';
-        const body = e.html.replace(/\{\{demo:(\d+)\}\}/g, (m, n) => take(+n) || m);
+        const body = e.html.replace(/\{\{demo:(\d+)\}\}/g, (m, n: string) => take(+n) || m);
         return { meta: `Expérimentation · ${fmtDate(e.date)}`, title: e.titre, body: `${header}
             <div class="vs-md">${body}</div>
             ${demos.map((d, i) => used.has(i) ? '' : demoHtml(d, e.base)).join('')}` };
     }
 
-    function demoHtml(d, base) {
+    function demoHtml(d: Demo, base: string) {
         if (d.type === 'galerie') {
             const imgs = d.images || [], caps = d.legendes || [];
             return `<figure class="vs-gallery">
@@ -273,30 +294,31 @@
         }
         if (d.type === 'html') {
             // Sans allow-same-origin : la démo ne peut pas toucher au site.
-            return `<iframe class="vs-demo-html" sandbox="allow-scripts" src="${esc(base + d.fichier)}" style="height:${parseInt(d.hauteur, 10) || 400}px" title="Démonstration interactive"></iframe>`;
+            return `<iframe class="vs-demo-html" sandbox="allow-scripts" src="${esc(base + d.fichier)}" style="height:${parseInt(String(d.hauteur), 10) || 400}px" title="Démonstration interactive"></iframe>`;
         }
         return '';
     }
 
     content.addEventListener('click', e => {
-        const thumb = e.target.closest('.vs-gallery-thumbs button');
+        const thumb = (e.target as Element).closest<HTMLElement>('.vs-gallery-thumbs button');
         if (!thumb) return;
-        const fig = thumb.closest('.vs-gallery');
-        $('.vs-gallery-main', fig).src = thumb.dataset.src;
-        $('.vs-gallery-main', fig).alt = thumb.dataset.cap;
-        $('figcaption', fig).textContent = thumb.dataset.cap;
+        const fig = thumb.closest('.vs-gallery')!;
+        const main = $<HTMLImageElement>('.vs-gallery-main', fig);
+        main.src = thumb.dataset.src!;
+        main.alt = thumb.dataset.cap!;
+        $('figcaption', fig).textContent = thumb.dataset.cap!;
     });
 
-    panel.addEventListener('click', e => { if (e.target.closest('[data-close]')) closePanel(); });
+    panel.addEventListener('click', e => { if ((e.target as Element).closest('[data-close]')) closePanel(); });
     document.addEventListener('keydown', e => {
         if (panel.hidden) return;
         if (e.key === 'Escape') return closePanel();
         if (e.key !== 'Tab') return;
         // Garde le focus dans le panneau
-        const f = [...panel.querySelectorAll('button, a[href], iframe, video, [tabindex="0"]')];
+        const f = [...panel.querySelectorAll<HTMLElement>('button, a[href], iframe, video, [tabindex="0"]')];
         if (!f.length) return;
-        if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f.at(-1).focus(); }
-        else if (!e.shiftKey && document.activeElement === f.at(-1)) { e.preventDefault(); f[0].focus(); }
+        if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f.at(-1)!.focus(); }
+        else if (!e.shiftKey && document.activeElement === f.at(-1)) { e.preventDefault(); f[0]!.focus(); }
     });
 
     function openFromHash() {
@@ -305,9 +327,9 @@
         if (kind === 'exp') {
             const exp = V.experiments.find(x => x.slug === key);
             if (exp) openPanel(exp.source, exp, 'exp');
-        } else if (state.items.has(key)) {
-            const s = state.items.get(key);
-            openPanel(s, null, 'src');
+        } else {
+            const s = state.items.get(key!);
+            if (s) openPanel(s, null, 'src');
         }
     }
 
