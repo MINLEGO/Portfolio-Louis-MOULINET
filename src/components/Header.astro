@@ -1,0 +1,29 @@
+---
+interface Props {
+  active: 'accueil' | 'projets' | 'veille';
+}
+
+const { active } = Astro.props;
+// Sur l'accueil, le lien Projets est mis en avant ; ailleurs il garde une taille intermédiaire.
+const home = active === 'accueil';
+---
+
+<!-- TopNavBar Shell -->
+<nav class="nav-container fixed glass-surface z-50">
+    <div class="nav-logo">Louis MOULINET</div>
+    <button class="mobile-menu-toggle" aria-label="Menu" onclick="let menu=document.querySelector('.nav-links'); menu.classList.toggle('active-mobile'); let icon=this.querySelector('.material-symbols-outlined'); icon.textContent = menu.classList.contains('active-mobile') ? 'close' : 'menu';">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+    <div class="nav-links">
+        <a class:list={['nav-link glass-btn', { active: home }]} href="/">Accueil</a>
+        <a class:list={['nav-link', { 'nav-link-big': home }, 'glass-btn', { active: active === 'projets' }]}
+            style={home ? undefined : 'font-size:1.3rem'} href="/projets">Projets</a>
+        <a class:list={['nav-link glass-btn', { active: active === 'veille' }]} href="/veille">Veille</a>
+        <a class="nav-link glass-btn nav-link-contact" href="mailto:moulinet.l03@gmail.com">Contact</a>
+    </div>
+    <button class="btn-contact glass-btn">
+        <script is:inline>
+            document.write('<a href="mailto:' + 'm' + 'o' + 'u' + 'l' + 'i' + 'n' + 'e' + 't' + '.' + 'l' + '0' + '3' + '@' + 'g' + 'm' + 'a' + 'i' + 'l' + '.' + 'c' + 'o' + 'm' + '">contact</a>');
+        </script>
+    </button>
+</nav>
