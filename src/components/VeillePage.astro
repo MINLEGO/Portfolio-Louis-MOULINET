@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 // Après le Layout : veille.css doit être chargé après style.css.
 import '../styles/veille.css';
 import { joinExperiments, type VeillePageData } from '../lib/experiments';
+import { skeletons } from '../lib/skeletons';
 import { relay } from '../lib/veille';
 
 interface Props {
@@ -103,7 +104,7 @@ const formats = [['', 'Tous'], ['Vidéo', 'Vidéo'], ['Code', 'Code'], ['Modèle
                         <span class="material-symbols-outlined text-primary">science</span> Expérimentations
                     </h2>
                 </div>
-                <div class="vs-grid" id="vs-exp-row"></div>
+                <div class="vs-grid" id="vs-exp-row" set:html={skeletons(pageData.experiments.length)}></div>
             </section>
         </Fragment>)}
 
@@ -127,14 +128,16 @@ const formats = [['', 'Tous'], ['Vidéo', 'Vidéo'], ['Code', 'Code'], ['Modèle
                 </div>
             </div>
             <p class="vs-notice" id="vs-notice" role="status"></p>
-            <div class="vs-grid" id="vs-grid" aria-live="polite"></div>
+            <!-- Squelettes dès le HTML : le script est un module, exécuté après le premier affichage ; sans eux le footer saute. -->
+            <div class="vs-grid" id="vs-grid" aria-live="polite" set:html={skeletons(6)}></div>
             <div id="vs-sentinel"></div>
             {isHome && <a class="archive-link vs-more" id="vs-more" href="/veille/archive">Voir l'archive complète</a>}
         </section>
     </main>
 
-    <!-- Détail d'une Source / Expérimentation (fenêtre centrée ou tiroir) -->
-    <div class="vs-panel" id="vs-panel" hidden>
+    <!-- Détail d'une Source / Expérimentation (fenêtre centrée ou tiroir).
+         Après le footer : sinon une tabulation sortant d'une iframe du panneau atterrit dans les liens du footer. -->
+    <div slot="after-footer" class="vs-panel" id="vs-panel" hidden>
         <div class="vs-panel-backdrop" data-close></div>
         <div class="vs-panel-box" role="dialog" aria-modal="true" aria-labelledby="vs-panel-title">
             <button class="vs-close" data-close aria-label="Fermer"><span class="material-symbols-outlined">close</span></button>

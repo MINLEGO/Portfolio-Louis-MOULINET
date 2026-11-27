@@ -1,5 +1,6 @@
 // Page Veille et archive (window.VEILLE fourni par components/VeillePage.astro).
 import type { Demo, Experiment, VeillePageData } from '../lib/experiments';
+import { skeletons } from '../lib/skeletons';
 import type { Source } from '../lib/veille';
 
 declare global {
@@ -64,8 +65,6 @@ type View = 'exp' | 'src';
             </div>
         </article>`;
     }
-
-    const skeletons = (n: number) => '<div class="vs-card vs-skeleton" aria-hidden="true"><div class="vs-thumb"></div><div class="vs-body"><span></span><span></span><span></span></div></div>'.repeat(n);
 
     // ---------- Chargement ----------
     async function load(reset: boolean) {

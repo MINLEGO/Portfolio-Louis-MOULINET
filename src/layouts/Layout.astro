@@ -79,6 +79,7 @@ const image = new URL(ogImage, Astro.site).href;
     <Header active={active} />
     <slot />
     <Footer />
+    <slot name="after-footer" />
     {glassFilter && (<Fragment>
     <!-- Liquid Glass SVG Distortion Filter -->
     <svg style="display: none">

@@ -4,7 +4,8 @@ import { defineConfig } from 'astro/config';
 
 // Statique par défaut ; une route rendue à la requête exporte `prerender = false` (ADR 0002).
 export default defineConfig({
-  site: 'https://louismoulinet.com',
+  // Seule source du domaine : canonicals, Open Graph, données structurées, sitemap et robots.txt en découlent.
+  site: 'https://louis-moulinet.fr',
   adapter: node({ mode: 'standalone' }),
   // Le défaut ('jsx') supprime les retours à la ligne entre éléments en ligne, ce qui change le rendu.
   compressHTML: true,
