@@ -127,7 +127,7 @@ const prepare = (raw: RawSource[]): Source[] =>
       format: formatOf(s.origin_site),
       date: s.published_at || s.created_at,
       date_kind: s.published_at ? 'parution' : 'capture',
-      keywords: Object.values(s.keywords),
+      keywords: s.keywords,
       excerpt: parts.get("Ce que c'est") ?? '',
       summary_html: renderSummary(
         parts.size ? [...parts].map(([h, body]) => `### ${h}\n\n${body}`).join('\n\n') : (s.summary ?? ''),
