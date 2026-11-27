@@ -1,6 +1,7 @@
 // Relais VeilleFacile, côté serveur uniquement : la clé ne doit jamais atteindre le navigateur
 // (docs/adr/0001-relais-php-vers-veillefacile.md). Ne pas importer depuis un script client.
 import { createHash } from 'node:crypto';
+import { readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { readFile, rename, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -258,8 +259,41 @@ export function createRelay({
     return entry;
   }
 
-  const fetchSources = async (query: Record<string, string>) =>
-    (await api<{ results: RawSource[] }>('/api/sources', query)).results;
+  // Sources vues privées par la réponse de l'API la plus récente qui les contenait : retirées de tout cache servi,
+  // même plus ancien. Gardées sur disque, comme les caches qu'elles filtrent.
+  const privateFile = join(cacheDir, 'veille-node_privees.json');
+  const privateIds = new Set<number>();
+  try {
+    for (const id of JSON.parse(readFileSync(privateFile, 'utf8'))) privateIds.add(id);
+  } catch { /* aucune Source privée vue */ }
+
+  function rememberPrivate(raw: RawSource[]) {
+    let changed = false;
+    for (const s of raw) {
+      const hidden = isPrivate(s);
+      if (hidden === privateIds.has(s.id)) continue;
+      changed = true;
+      if (hidden) privateIds.add(s.id);
+      else privateIds.delete(s.id);
+    }
+    if (!changed) return;
+    // Synchrone : deux réponses simultanées ne peuvent pas entremêler leurs écritures.
+    try {
+      writeFileSync(`${privateFile}.tmp`, JSON.stringify([...privateIds]));
+      renameSync(`${privateFile}.tmp`, privateFile);
+    } catch (error) {
+      console.warn('Cache Veille non écrit :', (error as Error).message);
+    }
+  }
+
+  const withoutPrivate = (set: Entry<Source[]>): Entry<Source[]> =>
+    ({ ...set, data: set.data.filter(s => !privateIds.has(s.id)) });
+
+  async function fetchSources(query: Record<string, string>) {
+    const { results } = await api<{ results: RawSource[] }>('/api/sources', query);
+    rememberPrivate(results);
+    return results;
+  }
 
   /**
    * Toutes les Sources publiques, triées par date de parution puis de capture.
@@ -267,7 +301,7 @@ export function createRelay({
    */
   async function allSources(): Promise<SourceSet> {
     try {
-      return await cached('all', TTL, async () => {
+      return withoutPrivate(await cached('all', TTL, async () => {
         const all: RawSource[] = [];
         for (let offset = 0; ; offset += 100) {
           const page = await fetchSources({ limit: '100', offset: String(offset) });
@@ -275,7 +309,7 @@ export function createRelay({
           if (page.length < 100) break;
         }
         return prepare(all).sort(byDateDesc);
-      });
+      }));
     } catch (error) {
       if (configured()) throw error;
       const raw = fixture.results as RawSource[];
@@ -284,8 +318,8 @@ export function createRelay({
   }
 
   /** Recherche hybride de l'API, ordre de pertinence conservé. */
-  const search = (q: string) =>
-    cached(`q:${q.toLowerCase()}`, TTL, async () => prepare(await fetchSources({ q, limit: '100' })));
+  const search = async (q: string) =>
+    withoutPrivate(await cached(`q:${q.toLowerCase()}`, TTL, async () => prepare(await fetchSources({ q, limit: '100' }))));
 
   const isRepo = (s: Source) => s.site === 'github.com' || s.site === 'huggingface.co';
 
