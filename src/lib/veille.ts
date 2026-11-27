@@ -65,7 +65,7 @@ const experimentMetas = import.meta.glob<Omit<ExperimentLink, 'slug'>>('/public/
   eager: true,
   import: 'default',
 });
-const builtExperiments: ExperimentLink[] = Object.entries(experimentMetas).map(([file, meta]) => ({
+export const builtExperiments: ExperimentLink[] = Object.entries(experimentMetas).map(([file, meta]) => ({
   ...meta,
   slug: file.split('/').at(-2)!,
 }));
