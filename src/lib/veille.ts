@@ -241,16 +241,14 @@ export function createRelay({
     }
     failures.delete(key);
     const at = now();
-    if (data !== null) {
-      // Écriture puis renommage : jamais de fichier à moitié écrit. Un cache non inscriptible n'est pas fatal.
-      await writeFile(`${file}.tmp`, JSON.stringify({ at, data }))
-        .then(() => rename(`${file}.tmp`, file))
-        .catch(error => console.warn('Cache Veille non écrit :', error.message));
-    }
+    // Écriture puis renommage : jamais de fichier à moitié écrit. Un cache non inscriptible n'est pas fatal.
+    await writeFile(`${file}.tmp`, JSON.stringify({ at, data }))
+      .then(() => rename(`${file}.tmp`, file))
+      .catch(error => console.warn('Cache Veille non écrit :', error.message));
     return { data, at, stale: false };
   }
 
-  /** Cache fichier : sert l'ancien cache si `load` échoue (et attend avant de réessayer), n'enregistre pas null, un seul appel à la fois par clé. */
+  /** Cache fichier : sert l'ancien cache si `load` échoue (et attend avant de réessayer), un seul appel à la fois par clé. */
   function cached<T>(key: string, ttl: number, load: () => Promise<T>): Promise<Entry<T>> {
     let entry = pending.get(key);
     if (!entry) {
@@ -289,31 +287,30 @@ export function createRelay({
   const search = (q: string) =>
     cached(`q:${q.toLowerCase()}`, TTL, async () => prepare(await fetchSources({ q, limit: '100' })));
 
-  async function microlink(url: string): Promise<string | null> {
-    try {
-      const res = await send(`https://api.microlink.io/?url=${encodeURIComponent(url)}`, {
-        signal: AbortSignal.timeout(10_000),
-      });
-      const body = (await res.json()) as { data?: { image?: { url?: string }; logo?: { url?: string } } };
-      return body.data?.image?.url ?? body.data?.logo?.url ?? null;
-    } catch {
-      return null;
+  const isRepo = (s: Source) => s.site === 'github.com' || s.site === 'huggingface.co';
+
+  /** Lève si la résolution échoue : `cached` ressert alors l'ancienne miniature, et réessaiera. */
+  async function resolveThumb(s: Source): Promise<string> {
+    if (isRepo(s)) {
+      const { text } = await api<{ text: string }>(`/api/sources/${s.id}/text`, { length: '200000' });
+      return readmeImage(text, s.url) ?? socialImage(s.url);
     }
+    const res = await send(`https://api.microlink.io/?url=${encodeURIComponent(s.url)}`, {
+      signal: AbortSignal.timeout(10_000),
+    });
+    const body = (await res.json()) as { data?: { image?: { url?: string }; logo?: { url?: string } } };
+    const url = body.data?.image?.url ?? body.data?.logo?.url;
+    // L'URL vient d'un tiers et finit dans un `src` : http(s) uniquement.
+    if (typeof url !== 'string' || !/^https?:\/\//i.test(url)) throw new Error(`Microlink : aucune image (HTTP ${res.status})`);
+    return url;
   }
 
-  async function resolveThumb(s: Source): Promise<string | null> {
-    if (s.site !== 'github.com' && s.site !== 'huggingface.co') {
-      const url = await microlink(s.url);
-      // L'URL vient d'un tiers et finit dans un `src` : http(s) uniquement.
-      return typeof url === 'string' && /^https?:\/\//i.test(url) ? url : null;
-    }
-    try {
-      const { text } = await api<{ text: string }>(`/api/sources/${s.id}/text`, { length: '200000' });
-      const image = readmeImage(text, s.url);
-      if (image) return image;
-    } catch { /* image sociale du dépôt */ }
-    return socialImage(s.url);
-  }
+  /** Sans aucune miniature en cache : image sociale pour un dépôt (non gardée), rien sinon. */
+  const thumbOf = (s: Source): Promise<string | null> =>
+    cached(`thumb:${s.id}${s.url}`, THUMB_TTL, () => resolveThumb(s)).then(
+      entry => entry.data,
+      () => (isRepo(s) ? socialImage(s.url) : null),
+    );
 
   async function list(params: URLSearchParams) {
     const q = cut(params.get('q'), 200).trim();
@@ -347,7 +344,7 @@ export function createRelay({
       // Seules les Sources publiques connues peuvent déclencher une résolution de miniature.
       const source = (await allSources()).data.find(s => s.id === id);
       if (!source) return json({ thumb: null });
-      return json({ thumb: (await cached(`thumb:${source.id}${source.url}`, THUMB_TTL, () => resolveThumb(source))).data });
+      return json({ thumb: await thumbOf(source) });
     } catch (error) {
       console.warn('Relais VeilleFacile :', error instanceof Error ? error.message : error);
       return json({ error: 'VeilleFacile est indisponible pour le moment.' }, 502);

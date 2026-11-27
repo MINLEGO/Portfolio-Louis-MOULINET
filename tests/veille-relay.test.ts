@@ -404,12 +404,48 @@ describe('Miniature', () => {
     expect(await thumb()).toBe('https://cdn.test/2.png');
   });
 
-  test('un échec de résolution n\'est pas mis en cache', async () => {
-    const { api, get } = setup([source(3)]);
+  test("un échec de résolution n'est pas gardé : nouvel essai après 1 minute", async () => {
+    const { api, clock, get } = setup([source(3)]);
     api.other = () => { throw new TypeError('réseau'); };
     expect((await get({ thumb: '3' })).body).toEqual({ thumb: null });
     api.other = () => Response.json({ data: { image: { url: 'https://cdn.test/ok.png' } } });
+    clock.now += 60_000;
     expect((await get({ thumb: '3' })).body).toEqual({ thumb: 'https://cdn.test/ok.png' });
+  });
+
+  const image = (url: string) => () => Response.json({ data: { image: { url } } });
+  const down = () => new Response('panne', { status: 503 });
+  const quota = () => Response.json({ status: 'fail' }, { status: 429 });
+  const unreachable = (): Response => { throw new TypeError('réseau'); };
+  const fromReadme = 'https://raw.githubusercontent.com/moi/outil/HEAD/a.png';
+  const newImage = 'https://cdn.test/new.png';
+
+  test.each([
+    ['Microlink injoignable', source(3), image('https://cdn.test/old.png'), unreachable, image(newImage), 'https://cdn.test/old.png'],
+    ['quota Microlink dépassé', source(3), image('https://cdn.test/old.png'), quota, image(newImage), 'https://cdn.test/old.png'],
+    ['/text en échec', repo, readme('![a](a.png)'), down, readme(`![b](${newImage})`), fromReadme],
+  ])('miniature expirée, %s : ancienne resservie, nouvel essai après 10 minutes', async (_nom, src, before, failing, after, old) => {
+    const { api, clock, get } = setup([src]);
+    const thumb = async () => (await get({ thumb: String(src.id) })).body.thumb;
+    api.other = before;
+    expect(await thumb()).toBe(old);
+    clock.now += 31 * 86400_000;
+    api.other = failing;
+    expect(await thumb()).toBe(old);
+    api.other = after;
+    clock.now += 9 * 60_000;
+    expect(await thumb()).toBe(old);
+    clock.now += 2 * 60_000;
+    expect(await thumb()).toBe(newImage);
+  });
+
+  test('/text en échec sans ancienne miniature : image sociale, sans la garder 30 jours', async () => {
+    const { api, clock, get } = setup([repo]);
+    const thumb = async () => (await get({ thumb: '1' })).body.thumb;
+    expect(await thumb()).toBe('https://opengraph.githubassets.com/1/moi/outil');
+    api.other = readme('![a](a.png)');
+    clock.now += 60_000;
+    expect(await thumb()).toBe(fromReadme);
   });
 
   test('identifiant inconnu : aucune résolution', async () => {
