@@ -1,7 +1,9 @@
 ---
 import Lines from '../../components/Lines.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
 import Layout from '../../layouts/Layout.astro';
-import { absolutePath, projects } from '../../lib/projects';
+import { resolveImage } from '../../lib/images';
+import { projects } from '../../lib/projects';
 
 export function getStaticPaths() {
   return projects.map((project, i) => ({
@@ -21,7 +23,8 @@ interface Props {
 const { project, prev, next } = Astro.props;
 const d = project.detail;
 const number = String(project.id).padStart(2, '0');
-const images = [d.detail_image].flat().filter(Boolean).map(absolutePath);
+const images = [d.detail_image].flat().filter(Boolean);
+const cover = resolveImage(project.image);
 const isCarousel = images.length > 1;
 const includeFeature = Boolean(d.feature1_desc || d.feature2_desc || d.feature3_desc);
 ---
@@ -33,7 +36,7 @@ const includeFeature = Boolean(d.feature1_desc || d.feature2_desc || d.feature3_
     ogTitle={`${project.title} | Louis MOULINET`}
     ogDescription={project.description}
     ogType="article"
-    ogImage={project.image}
+    ogImage={typeof cover === 'string' ? cover : cover.src}
     monoWeights="400"
 >
     <main class="pt-24 px-8 max-w-7xl">
@@ -64,16 +67,20 @@ const includeFeature = Boolean(d.feature1_desc || d.feature2_desc || d.feature3_
                 {isCarousel ? (
                     <div class="carousel-track">
                         {images.map((src, i) => (
-                            <img alt={d.detail_image_alt}
-                                class:list={['carousel-slide', { active: i === 0 }]}
-                                src={src} />
+                            <ProjectImage layout="banner" alt={d.detail_image_alt}
+                                class={i === 0 ? 'carousel-slide active' : 'carousel-slide'}
+                                src={src}
+                                loading={i === 0 ? 'eager' : 'lazy'}
+                                fetchpriority={i === 0 ? 'high' : 'auto'} />
                         ))}
                     </div>
                     <div class="detail-image-overlay"></div>
                     <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image">&#8249;</button>
                     <button class="carousel-arrow carousel-arrow-right" aria-label="Next image">&#8250;</button>
                 ) : images.length === 1 && (
-                    <img alt={d.detail_image_alt}
+                    <ProjectImage layout="banner" alt={d.detail_image_alt}
+                        loading="eager"
+                        fetchpriority="high"
                         class="w-full h-full transition-all duration-700"
                         style="transition: filter 0.7s ease; position: relative; object-fit: contain;"
                         onmouseover="this.style.filter='grayscale(0)'"
@@ -155,9 +162,9 @@ const includeFeature = Boolean(d.feature1_desc || d.feature2_desc || d.feature3_
         {d.detail_note && (
             <section class="detail-secondary-images">
                 <div class="bg-surface-container-low aspect-square overflow-hidden">
-                    <img alt={d.detail_image2_alt}
+                    <ProjectImage layout="square" alt={d.detail_image2_alt}
                         class="w-full h-full object-cover mix-blend-multiply opacity-80"
-                        src={absolutePath(d.detail_image2)} />
+                        src={d.detail_image2} />
                 </div>
                 <div class="detail-number-card">
                     <span class="font-headline text-5xl font-bold mb-4">{number}</span>

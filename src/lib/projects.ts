@@ -26,9 +26,6 @@ for (const { slug, title } of projects) {
   titles.set(slug, title);
 }
 
-/** Les chemins "./media/…" du JSON deviennent absolus (les URL externes restent telles quelles). */
-export const absolutePath = (src: string) => src.replace(/^\.\//, '/');
-
 /** Filtres de la liste : clé d'URL (`/projets#<clé>`) -> texte cherché dans la catégorie, sans casse. */
 export const filters = [
   { key: 'stage2026', category: 'Stage_2026', label: 'Stage 2026', style: 'color: #bb0012' },

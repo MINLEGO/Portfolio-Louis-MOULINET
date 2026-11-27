@@ -945,6 +945,8 @@ pre {
    ========================================= */
 .aspect-video {
     aspect-ratio: 16 / 9;
+    /* Sinon l'attribut `height` des images l'emporte sur le ratio. */
+    height: auto;
 }
 
 .aspect-4\/3 {

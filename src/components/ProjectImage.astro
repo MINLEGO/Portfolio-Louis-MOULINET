@@ -1,0 +1,40 @@
+---
+// Image de projet : WebP, tailles responsives et dimensions explicites, générées au build.
+import { Image } from 'astro:assets';
+import type { HTMLAttributes } from 'astro/types';
+import { resolveImage } from '../lib/images';
+
+// Emplacements, mesurés sur la mise en page (à revoir si le CSS de ces boîtes change) :
+// `box` = largeur maximale en px, atteinte à partir de `from` ; `md` (>= 768 px) et `sm` = largeur en vw en dessous.
+const slots = {
+  featured: { ratio: 16 / 9, fit: 'cover', from: 1440, box: 608, md: 43, sm: 95, widths: [400, 640, 800, 1216, 1456] },
+  card: { ratio: 16 / 10, fit: 'cover', from: 1440, box: 339, md: 27, sm: 42, widths: [240, 360, 480, 680, 960] },
+  banner: { ratio: 21 / 9, fit: 'contain', from: 1100, box: 1040, md: 95, sm: 95, widths: [400, 640, 960, 1280, 1600, 2080] },
+  square: { ratio: 1, fit: 'cover', from: 1280, box: 600, md: 47, sm: 95, widths: [400, 640, 800, 1200, 1456] },
+};
+
+type Props = Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'slot'> & {
+  src: string;
+  alt: string;
+  layout: keyof typeof slots;
+};
+
+const { src, alt, layout, ...attributes } = Astro.props;
+const { ratio, fit, from, box, md, sm, widths } = slots[layout];
+const image = resolveImage(src);
+
+// Largeur réellement peinte par rapport à la boîte : `cover` déborde si l'image est plus large qu'elle,
+// `contain` n'en remplit qu'une partie si l'image est plus étroite.
+const scale = typeof image === 'string' ? 1 : (fit === 'cover' ? Math.max : Math.min)(1, image.width / image.height / ratio);
+const scaled = (n: number) => Math.round(n * scale);
+const candidates = widths.map(scaled);
+---
+
+{typeof image === 'string' ? (
+  // URL externe : servie telle quelle, les dimensions sont celles de la boîte (le CSS les redimensionne).
+  <img {...attributes} src={image} alt={alt} width={box} height={Math.round(box / ratio)} />
+) : (
+  <Image {...attributes} src={image} alt={alt} quality={85}
+    width={Math.min(image.width, Math.max(...candidates))} widths={candidates}
+    sizes={`(min-width: ${from}px) ${scaled(box)}px, (min-width: 768px) ${scaled(md)}vw, ${scaled(sm)}vw`} />
+)}
