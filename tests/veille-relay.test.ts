@@ -245,6 +245,38 @@ describe('Cache', () => {
   });
 });
 
+describe("Après un échec de l'API", () => {
+  const MIN = 60_000;
+
+  test("ancien cache : servi sans rappeler l'API pendant 10 minutes", async () => {
+    const { api, clock, get, ids } = setup([source(1)]);
+    await get();
+    api.down = true;
+    clock.now += 11 * MIN;
+    await get();
+    api.down = false;
+    api.sources = [source(2)];
+    clock.now += 10 * MIN - 1000;
+    expect((await get()).body).toMatchObject({ results: [{ id: 1 }], stale_since: expect.any(String) });
+    expect(api.calls).toHaveLength(2);
+    clock.now += 2000;
+    expect(await ids()).toEqual([2]);
+    expect(api.calls).toHaveLength(3);
+  });
+
+  test("sans cache : 502 sans rappeler l'API pendant 1 minute seulement", async () => {
+    const { api, clock, get, ids } = setup([source(1)]);
+    api.down = true;
+    expect((await get()).status).toBe(502);
+    api.down = false;
+    clock.now += MIN - 1000;
+    expect((await get()).status).toBe(502);
+    expect(api.calls).toHaveLength(1);
+    clock.now += 2000;
+    expect(await ids()).toEqual([1]);
+  });
+});
+
 describe('Données de secours (API non configurée)', () => {
   test('la liste vient de l\'instantané, sans aucun appel sortant', async () => {
     const { api, get } = setup([], { env: {} });

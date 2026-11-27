@@ -12,6 +12,8 @@ import fixture from './veille_fixture.json';
 try { process.loadEnvFile(); } catch { /* pas de .env : environnement réel ou données de secours */ }
 
 const TTL = 10 * 60_000;
+/** Après un échec sans aucun cache : délai court, pour ne pas prolonger une panne brève. */
+const RETRY = 60_000;
 const THUMB_TTL = 30 * 86_400_000;
 const SECTIONS: Record<string, string> = {
   'What it is': "Ce que c'est",
@@ -215,17 +217,29 @@ export function createRelay({
   type Entry<T> = { data: T; at: number; stale: boolean };
   const pending = new Map<string, Promise<Entry<any>>>();
 
+  /** Échecs récents : l'API n'est pas rappelée avant `until`. */
+  const failures = new Map<string, { until: number; error: unknown }>();
+
   async function refresh<T>(key: string, ttl: number, load: () => Promise<T>): Promise<Entry<T>> {
     const file = join(cacheDir, `veille-node_${createHash('md5').update(key).digest('hex')}.json`);
     const hit: { data: T; at: number } | null = await readFile(file, 'utf8').then(JSON.parse).catch(() => null);
     if (hit && now() - hit.at < ttl) return { ...hit, stale: false };
+    const orStale = (error: unknown): Entry<T> => {
+      if (hit) return { ...hit, stale: true };
+      throw error;
+    };
+    const failed = failures.get(key);
+    if (failed && now() < failed.until) return orStale(failed.error);
     let data: T;
     try {
       data = await load();
     } catch (error) {
-      if (hit) return { ...hit, stale: true };
-      throw error;
+      // Les échecs expirés sont purgés : une clé par recherche, la table ne doit pas grossir sans fin.
+      for (const [k, f] of failures) if (f.until <= now()) failures.delete(k);
+      failures.set(key, { until: now() + (hit ? TTL : RETRY), error });
+      return orStale(error);
     }
+    failures.delete(key);
     const at = now();
     if (data !== null) {
       // Écriture puis renommage : jamais de fichier à moitié écrit. Un cache non inscriptible n'est pas fatal.
@@ -236,7 +250,7 @@ export function createRelay({
     return { data, at, stale: false };
   }
 
-  /** Cache fichier : sert l'ancien cache si `load` échoue, n'enregistre pas null, un seul appel à la fois par clé. */
+  /** Cache fichier : sert l'ancien cache si `load` échoue (et attend avant de réessayer), n'enregistre pas null, un seul appel à la fois par clé. */
   function cached<T>(key: string, ttl: number, load: () => Promise<T>): Promise<Entry<T>> {
     let entry = pending.get(key);
     if (!entry) {
