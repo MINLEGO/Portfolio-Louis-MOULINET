@@ -1,7 +1,8 @@
 import type { ImageMetadata } from 'astro';
 
 // Les images des projets sont dans src/assets/media/ pour passer par le pipeline d'images d'Astro.
-const files = import.meta.glob<ImageMetadata>('../assets/media/*.{png,jpg,jpeg,webp,avif,gif,svg}', {
+// L'Admin (Keystatic) les range dans des sous-dossiers nommés d'après leur place dans projects.json.
+const files = import.meta.glob<ImageMetadata>('../assets/media/**/*.{png,jpg,jpeg,webp,avif,gif,svg}', {
   eager: true,
   import: 'default',
 });

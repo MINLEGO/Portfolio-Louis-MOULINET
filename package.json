@@ -9,19 +9,26 @@
     "dev": "astro dev",
     "build": "node scripts/icons.mjs --check && astro build",
     "icons": "node scripts/icons.mjs",
-    "start": "node ./dist/server/entry.mjs",
+    "start": "node server.mjs",
     "test": "vitest run"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.10",
     "@astrojs/node": "^11.1.14",
+    "@astrojs/react": "^7.1.9",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.10",
     "astro": "^7.4.13",
     "markdown-it": "^14.3.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "sanitize-html": "^2.18.2"
   },
   "devDependencies": {
     "@types/markdown-it": "^14.2.0",
     "@types/node": "^22.20.7",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
     "@types/sanitize-html": "^2.16.2",
     "vitest": "^5.1.2"
   }

@@ -11,10 +11,32 @@ const slugify = (title: string) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 
-/** Projets dans l'ordre du JSON, avec le slug de leur URL `/projets/<slug>`. */
-export const projects = data.projects.map((project) => ({ ...project, slug: slugify(project.title) }));
+/** Bloc d'une page Projet, au format `fields.blocks` de Keystatic (schéma : keystatic.config.ts). */
+export type Block =
+  | { discriminant: 'images'; value: { images: (string | null)[]; alt?: string } }
+  | { discriminant: 'texte'; value: { titre?: string; contenu?: string } }
+  | { discriminant: 'features'; value: { cartes: { icone?: string; titre?: string; description?: string; style: 'large' | 'normal' | 'accent' }[] } }
+  | { discriminant: 'code'; value: { fichier?: string; version?: string; tags: string[]; code?: string } }
+  | { discriminant: 'note'; value: { image?: string | null; alt?: string; texte?: string } };
+// Les champs facultatifs : Keystatic n'écrit pas un texte vide.
+
+/** Projets publiés dans l'ordre du JSON, avec le slug de leur URL `/projets/<slug>` et leur numéro (« 01 ») tiré de leur position. */
+export const projects = data.projects
+  .filter((project) => !project.brouillon)
+  .map((project, i) => ({
+    ...project,
+    detail: { ...project.detail, blocs: project.detail.blocs as Block[] },
+    slug: slugify(project.title),
+    number: String(i + 1).padStart(2, '0'),
+  }));
+
 
 // Vérifié au chargement du module : le build échoue au lieu de publier une page qui en masque une autre.
+const ids = new Set<number>();
+for (const { id, title } of data.projects) {
+  if (ids.has(id)) throw new Error(`projects.json : l'identifiant ${id} est utilisé deux fois (dont « ${title} »).`);
+  ids.add(id);
+}
 const titles = new Map<string, string>();
 for (const { slug, title } of projects) {
   if (!slug) throw new Error(`projects.json : le titre « ${title} » ne donne aucun slug.`);

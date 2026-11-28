@@ -33,3 +33,23 @@ _À éviter_ : Catégorie, tag, thème
 
 **Source privée** :
 Une Source portant le mot-clé `privé`, jamais affichée sur le portfolio.
+
+## Projets
+
+**Projet** :
+Une réalisation présentée sur le portfolio, avec une carte dans la liste des projets et une page détaillée.
+_À éviter_ : Réalisation, travail
+
+**Bloc** :
+Un élément de contenu d'une page Projet (texte, features, code, images, note…). Une page Projet est une suite ordonnée de Blocs.
+_À éviter_ : Section, composant, widget
+
+## Administration
+
+**Admin** :
+L'interface protégée qui sert à créer, modifier et supprimer les Projets et les Expérimentations depuis le site en ligne. Chaque enregistrement est publié au déploiement suivant.
+_À éviter_ : Éditeur, back-office, CMS
+
+**Brouillon** :
+Un Projet ou une Expérimentation pas encore publié : invisible sur le site public, visible seulement depuis l'Admin.
+_À éviter_ : Caché, privé (réservé aux Sources privées)
