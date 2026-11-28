@@ -1,11 +1,11 @@
-// Expérimentations : public/experimentations/<slug>/{meta.json,index.md}, lues au build et liées à leur Source par URL.
+// Expérimentations : public/experimentations/<slug>/index.md (en-tête JSON et texte), lues au build et liées à leur Source par URL.
 import type { ImageMetadata, MarkdownInstance } from 'astro';
 import { builtExperiments, isSourceOf, type ExperimentMeta } from './experiment-meta';
 import type { Source } from './veille';
 
 // Dimensions des images, mesurées au build par Astro : leur place est réservée avant le chargement.
 // Seules les dimensions servent : les fichiers restent servis depuis /experimentations/<slug>/.
-const images = import.meta.glob<ImageMetadata>('/public/experimentations/*/*.{png,jpg,jpeg,gif,webp,avif,svg}', {
+const images = import.meta.glob<ImageMetadata>('/public/experimentations/*/**/*.{png,jpg,jpeg,gif,webp,avif,svg}', {
   eager: true,
   import: 'default',
 });

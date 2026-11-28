@@ -1,4 +1,4 @@
-// Métadonnées des Expérimentations (public/experimentations/<slug>/meta.json), lues au build,
+// Métadonnées des Expérimentations (en-tête JSON de public/experimentations/<slug>/index.md, écrit par l'Admin), lues au build,
 // et règle qui lie une Expérimentation à sa Source.
 
 export type Demo =
@@ -6,22 +6,60 @@ export type Demo =
   | { type: 'video'; url: string }
   | { type: 'html'; fichier: string; hauteur?: number };
 
-/** Contenu de meta.json. */
+/** Métadonnées d'une Expérimentation, telles que les reçoit la page. */
 export interface ExperimentMeta {
   titre: string;
   date?: string;
   source_url?: string;
-  /** Numéro de la Démonstration placée sous le titre. */
+  /** Nombre de Démonstrations placées sous le titre. */
   entete?: number;
   demos?: Demo[];
 }
 
-const metas = import.meta.glob<ExperimentMeta>('/public/experimentations/*/meta.json', {
-  eager: true,
-  import: 'default',
-});
+/** En-tête de index.md, au format de Keystatic (schéma : keystatic.config.ts). */
+interface StoredMeta {
+  titre: string;
+  date?: string | null;
+  brouillon?: boolean;
+  source_url?: string | null;
+  entete?: number | null;
+  demos?: (
+    | { discriminant: 'galerie'; value: { images: { image: string | null; legende: string }[] } }
+    | { discriminant: 'video'; value: { url: string | null } }
+    | { discriminant: 'html'; value: { fichier: string | null; hauteur: number | null } }
+  )[];
+}
 
-export const builtExperiments = Object.entries(metas).map(([file, meta]) => ({ ...meta, slug: file.split('/').at(-2)! }));
+const files = import.meta.glob<string>('/public/experimentations/*/index.md', { eager: true, query: '?raw', import: 'default' });
+const metas = Object.fromEntries(
+  Object.entries(files).map(([file, text]) => {
+    const frontmatter = text.match(/^---\r?\n([^]*?)\r?\n---/)?.[1];
+    if (!frontmatter) throw new Error(`${file} : en-tête --- manquant (il est écrit par l'Admin).`);
+    return [file, JSON.parse(frontmatter) as StoredMeta];
+  }),
+);
+
+/** Blocs de Keystatic -> Démonstrations au format attendu par le script de la Veille. */
+const toDemo = (demo: NonNullable<StoredMeta['demos']>[number]): Demo => {
+  if (demo.discriminant === 'galerie') {
+    const images = demo.value.images.filter((i) => i.image);
+    return { type: 'galerie', images: images.map((i) => i.image!), legendes: images.map((i) => i.legende) };
+  }
+  if (demo.discriminant === 'video') return { type: 'video', url: demo.value.url ?? '' };
+  return { type: 'html', fichier: demo.value.fichier ?? '', hauteur: demo.value.hauteur ?? undefined };
+};
+
+/** Expérimentations publiées (les Brouillons sont exclus). */
+export const builtExperiments = Object.entries(metas)
+  .filter(([, meta]) => !meta.brouillon)
+  .map(([file, { titre, date, source_url, entete, demos }]) => ({
+    titre,
+    date: date ?? undefined,
+    source_url: source_url ?? undefined,
+    entete: entete ?? undefined,
+    demos: demos?.map(toDemo),
+    slug: file.split('/').at(-2)!,
+  }));
 
 const normUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '');
 

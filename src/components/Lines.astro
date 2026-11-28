@@ -1,10 +1,10 @@
 ---
 interface Props {
-  text: string;
+  text?: string;
 }
 
 // Équivalent de nl2br : les retours à la ligne du texte deviennent des <br>, le reste est échappé.
-const lines = Astro.props.text.split(/\r\n|\r|\n/);
+const lines = (Astro.props.text ?? '').split(/\r\n|\r|\n/);
 ---
 
 {lines.map((line, i) => <Fragment>{i > 0 && <br />}{line}</Fragment>)}

@@ -3,7 +3,8 @@ import Lines from '../../components/Lines.astro';
 import ProjectImage from '../../components/ProjectImage.astro';
 import Layout from '../../layouts/Layout.astro';
 import { resolveImage } from '../../lib/images';
-import { projects } from '../../lib/projects';
+import { projects, type Block } from '../../lib/projects';
+import MarkdownIt from 'markdown-it';
 
 export function getStaticPaths() {
   return projects.map((project, i) => ({
@@ -22,17 +23,24 @@ interface Props {
 
 const { project, prev, next } = Astro.props;
 const d = project.detail;
-const number = String(project.id).padStart(2, '0');
-const images = [d.detail_image].flat().filter(Boolean);
-const cover = resolveImage(project.image);
-const isCarousel = images.length > 1;
-const includeFeature = Boolean(d.feature1_desc || d.feature2_desc || d.feature3_desc);
+const cover = resolveImage(project.image ?? '');
+// Contenu de confiance, écrit dans l'Admin : HTML gardé, retours à la ligne conservés comme avec <Lines>.
+const md = new MarkdownIt({ html: true, breaks: true });
+
+// Un Texte suivi de Features forme un seul groupe, affiché côte à côte.
+const groups: Block[][] = [];
+for (const block of d.blocs) {
+  const last = groups.at(-1);
+  if (block.discriminant === 'features' && last?.length === 1 && last[0].discriminant === 'texte') last.push(block);
+  else groups.push([block]);
+}
+const isCarousel = d.blocs.some((block) => block.discriminant === 'images' && block.value.images.length > 1);
 ---
 
 <Layout
     active="projets"
     title={`${project.title} | Projets - Louis MOULINET`}
-    description={project.description.slice(0, 160)}
+    description={(project.description ?? '').slice(0, 160)}
     ogTitle={`${project.title} | Louis MOULINET`}
     ogDescription={project.description}
     ogType="article"
@@ -43,7 +51,7 @@ const includeFeature = Boolean(d.feature1_desc || d.feature2_desc || d.feature3_
         <header class="detail-hero mb-20">
             <div class="md:col-span-8">
                 <span class="font-label text-primary font-semibold tracking-widest uppercase text-xs mb-4 block">
-                    {number} / BTS-SIO / {project.category}
+                    {project.number} / BTS-SIO / {project.category}
                 </span>
                 <h1 class="font-headline text-6xl font-bold tracking-tighter leading-none mb-6">
                     {project.title}
@@ -60,119 +68,118 @@ const includeFeature = Boolean(d.feature1_desc || d.feature2_desc || d.feature3_
                 </div>
             </div>
         </header>
-        <!-- High-Res Project Image -->
-        <section>
-            <div class="detail-image-banner glass-surface big-glass" id={isCarousel ? 'detail-carousel' : undefined}>
-                {isCarousel ? (
-                    <div class="carousel-track">
-                        {images.map((src, i) => (
-                            <ProjectImage layout="banner" alt={d.detail_image_alt}
-                                class={i === 0 ? 'carousel-slide active' : 'carousel-slide'}
-                                src={src}
-                                loading={i === 0 ? 'eager' : 'lazy'}
-                                fetchpriority={i === 0 ? 'high' : 'auto'} />
-                        ))}
-                    </div>
-                    <div class="detail-image-overlay"></div>
-                    <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image">&#8249;</button>
-                    <button class="carousel-arrow carousel-arrow-right" aria-label="Next image">&#8250;</button>
-                ) : images.length === 1 && (
-                    <ProjectImage layout="banner" alt={d.detail_image_alt}
-                        loading="eager"
-                        fetchpriority="high"
-                        class="w-full h-full transition-all duration-700"
-                        style="transition: filter 0.7s ease; position: relative; object-fit: contain;"
-                        onmouseover="this.style.filter='grayscale(0)'"
-                        onmouseout="this.style.filter='grayscale(100%)'"
-                        src={images[0]} />
-                    <div class="detail-image-overlay"></div>
-                )}
-            </div>
-        </section>
-        <!-- Project Narrative Grid -->
-        <div class="detail-narrative">
-            <!-- Left Column: The Challenge -->
-            {(d.challenge || d.challenge2) && (
-                <div class={includeFeature ? 'md:col-span-5' : 'md:col-span-10'}>
-                    <h2 class="font-headline text-3xl font-bold mb-8 flex items-center gap-3">
-                        <span class="w-8 h-px bg-primary"></span> Le Défi
-                    </h2>
-                    <div class="space-y-6 text-on-surface-variant leading-loose font-light">
-                        <p><Lines text={d.challenge} /></p>
-                        <p><Lines text={d.challenge2} /></p>
-                    </div>
-                </div>
-            )}
-            <!-- Right Column: Key Features (Bento Style) -->
-            {includeFeature && (
-                <div class="md:col-span-7 feature-grid">
-                    {d.feature1_desc && (
-                        <div class="glass-surface small-glass feature-card feature-card--span-2">
-                            <span class="material-symbols-outlined text-primary mb-4">{d.feature1_icon}</span>
-                            <h3 class="font-headline font-bold text-lg mb-2">{d.feature1_title}</h3>
-                            <p class="text-sm text-on-surface-variant font-medium"><Lines text={d.feature1_desc} /></p>
+        {groups.map((group, g) => {
+            const [block] = group;
+            const first = g === 0;
+            if (block.discriminant === 'texte' || block.discriminant === 'features') return (
+                <div class="detail-narrative">
+                    {group.map((block) => block.discriminant === 'texte' ? (
+                        <div class={group.length > 1 ? 'md:col-span-5' : 'md:col-span-10'}>
+                            <h2 class="font-headline text-3xl font-bold mb-8 flex items-center gap-3">
+                                <span class="w-8 h-px bg-primary"></span> {block.value.titre}
+                            </h2>
+                            <div class="space-y-6 text-on-surface-variant leading-loose font-light" set:html={md.render(block.value.contenu ?? '')} />
                         </div>
-                    )}
-                    {d.feature2_desc && (
-                        <div class="glass-surface small-glass feature-card">
-                            <span class="material-symbols-outlined text-primary mb-4">{d.feature2_icon}</span>
-                            <h3 class="font-headline font-bold text-lg mb-2">{d.feature2_title}</h3>
-                            <p class="text-sm text-on-surface-variant font-medium"><Lines text={d.feature2_desc} /></p>
-                        </div>
-                    )}
-                    {d.feature3_desc && (
-                        <div class="feature-card feature-card--primary glass-btn shadow-lg" style="display:inline">
-                            <span class="material-symbols-outlined mb-4 opacity-70">{d.feature3_icon}</span>
-                            <h3 class="font-headline font-bold text-lg mb-2">{d.feature3_title}</h3>
-                            <p class="text-sm font-medium opacity-90"><Lines text={d.feature3_desc} /></p>
-                        </div>
-                    )}
-                </div>
-            )}
-        </div>
-        <!-- Technical Specification / Code Block -->
-        {d.code_block && (
-            <section class="mb-32">
-                <div class="tech-spec-section">
-                    <div class="tech-spec-sidebar">
-                        <h2 class="font-headline text-3xl font-bold mb-6">Architecture Technique</h2>
-                        <p class="text-on-surface-variant mb-8 font-body">
-                            Extrait de code principal illustrant le modèle d'implémentation clé de ce projet.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            {d.tech_tags.map((tag) => (
-                                <span class="tech-tag-pill">{tag}</span>
+                    ) : block.discriminant === 'features' && (
+                        <div class="md:col-span-7 feature-grid">
+                            {block.value.cartes.map((card) => card.style === 'accent' ? (
+                                <div class="feature-card feature-card--primary glass-btn shadow-lg" style="display:inline">
+                                    <span class="material-symbols-outlined mb-4 opacity-70">{card.icone}</span>
+                                    <h3 class="font-headline font-bold text-lg mb-2">{card.titre}</h3>
+                                    <p class="text-sm font-medium opacity-90"><Lines text={card.description} /></p>
+                                </div>
+                            ) : (
+                                <div class={card.style === 'large' ? 'glass-surface small-glass feature-card feature-card--span-2' : 'glass-surface small-glass feature-card'}>
+                                    <span class="material-symbols-outlined text-primary mb-4">{card.icone}</span>
+                                    <h3 class="font-headline font-bold text-lg mb-2">{card.titre}</h3>
+                                    <p class="text-sm text-on-surface-variant font-medium"><Lines text={card.description} /></p>
+                                </div>
                             ))}
                         </div>
-                    </div>
-                    <div class="tech-spec-code">
-                        <div class="glass-surface shadow-lg code-block-wrap">
-                            <div class="code-block-header">
-                                <span>{d.code_file}</span>
-                                <span>{d.code_version}</span>
+                    ))}
+                </div>
+            );
+            if (block.discriminant === 'images') {
+                const images = block.value.images.filter((src): src is string => Boolean(src));
+                return (
+                    <section>
+                        {images.length > 1 ? (
+                            <div class="detail-image-banner glass-surface big-glass detail-carousel">
+                                <div class="carousel-track">
+                                    {images.map((src, i) => (
+                                        <ProjectImage layout="banner" alt={block.value.alt}
+                                            class={i === 0 ? 'carousel-slide active' : 'carousel-slide'}
+                                            src={src}
+                                            loading={i === 0 && first ? 'eager' : 'lazy'}
+                                            fetchpriority={i === 0 && first ? 'high' : 'auto'} />
+                                    ))}
+                                </div>
+                                <div class="detail-image-overlay"></div>
+                                <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image">&#8249;</button>
+                                <button class="carousel-arrow carousel-arrow-right" aria-label="Next image">&#8250;</button>
                             </div>
-                            <pre class="leading-relaxed text-on-surface-variant font-bold">{d.code_block}</pre>
+                        ) : (
+                            <div class="detail-image-banner glass-surface big-glass">
+                                {images.length === 1 && (
+                                    <ProjectImage layout="banner" alt={block.value.alt}
+                                        loading={first ? 'eager' : 'lazy'}
+                                        fetchpriority={first ? 'high' : 'auto'}
+                                        class="w-full h-full transition-all duration-700"
+                                        style="transition: filter 0.7s ease; position: relative; object-fit: contain;"
+                                        onmouseover="this.style.filter='grayscale(0)'"
+                                        onmouseout="this.style.filter='grayscale(100%)'"
+                                        src={images[0]} />
+                                    <div class="detail-image-overlay"></div>
+                                )}
+                            </div>
+                        )}
+                    </section>
+                );
+            }
+            if (block.discriminant === 'code') return (
+                <section class="mb-32">
+                    <div class="tech-spec-section">
+                        <div class="tech-spec-sidebar">
+                            <h2 class="font-headline text-3xl font-bold mb-6">Architecture Technique</h2>
+                            <p class="text-on-surface-variant mb-8 font-body">
+                                Extrait de code principal illustrant le modèle d'implémentation clé de ce projet.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                {block.value.tags.map((tag) => (
+                                    <span class="tech-tag-pill">{tag}</span>
+                                ))}
+                            </div>
+                        </div>
+                        <div class="tech-spec-code">
+                            <div class="glass-surface shadow-lg code-block-wrap">
+                                <div class="code-block-header">
+                                    <span>{block.value.fichier}</span>
+                                    <span>{block.value.version}</span>
+                                </div>
+                                <pre class="leading-relaxed text-on-surface-variant font-bold">{block.value.code}</pre>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        )}
-        <!-- Secondary Imagery / Detail View -->
-        {d.detail_note && (
-            <section class="detail-secondary-images">
-                <div class="bg-surface-container-low aspect-square overflow-hidden">
-                    <ProjectImage layout="square" alt={d.detail_image2_alt}
-                        class="w-full h-full object-cover mix-blend-multiply opacity-80"
-                        src={d.detail_image2} />
-                </div>
-                <div class="detail-number-card">
-                    <span class="font-headline text-5xl font-bold mb-4">{number}</span>
-                    <p class="font-body text-xl text-on-surface-variant" style="font-weight:500;">
-                        <Lines text={d.detail_note} />
-                    </p>
-                </div>
-            </section>
-        )}
+                </section>
+            );
+            return (
+                <section class="detail-secondary-images">
+                    <div class="bg-surface-container-low aspect-square overflow-hidden">
+                        {block.value.image && (
+                            <ProjectImage layout="square" alt={block.value.alt}
+                                class="w-full h-full object-cover mix-blend-multiply opacity-80"
+                                src={block.value.image} />
+                        )}
+                    </div>
+                    <div class="detail-number-card">
+                        <span class="font-headline text-5xl font-bold mb-4">{project.number}</span>
+                        <p class="font-body text-xl text-on-surface-variant" style="font-weight:500;">
+                            <Lines text={block.value.texte} />
+                        </p>
+                    </div>
+                </section>
+            );
+        })}
         <!-- Navigation between projects -->
         <nav class="project-nav">
             <div>
@@ -202,49 +209,48 @@ const includeFeature = Boolean(d.feature1_desc || d.feature2_desc || d.feature3_
         <script is:inline>
             (function () {
                 'use strict';
-                const carousel = document.getElementById('detail-carousel');
-                if (!carousel) return;
+                document.querySelectorAll('.detail-carousel').forEach(function (carousel) {
+                    const slides = carousel.querySelectorAll('.carousel-slide');
+                    if (slides.length === 0) return;
 
-                const slides = carousel.querySelectorAll('.carousel-slide');
-                if (slides.length === 0) return;
+                    var currentIndex = 0;
+                    var intervalId = setInterval(autoAdvance, 10000);
 
-                var currentIndex = 0;
-                var intervalId = setInterval(autoAdvance, 10000);
-
-                function goToSlide(index) {
-                    for (var i = 0; i < slides.length; i++) {
-                        slides[i].classList.toggle('active', i === index);
+                    function goToSlide(index) {
+                        for (var i = 0; i < slides.length; i++) {
+                            slides[i].classList.toggle('active', i === index);
+                        }
+                        currentIndex = index;
                     }
-                    currentIndex = index;
-                }
 
-                function autoAdvance() {
-                    var next = (currentIndex + 1) % slides.length;
-                    goToSlide(next);
-                }
+                    function autoAdvance() {
+                        var next = (currentIndex + 1) % slides.length;
+                        goToSlide(next);
+                    }
 
-                function prevSlide() {
-                    var prev = (currentIndex - 1 + slides.length) % slides.length;
-                    goToSlide(prev);
-                    resetTimer();
-                }
+                    function prevSlide() {
+                        var prev = (currentIndex - 1 + slides.length) % slides.length;
+                        goToSlide(prev);
+                        resetTimer();
+                    }
 
-                function nextSlide() {
-                    var next = (currentIndex + 1) % slides.length;
-                    goToSlide(next);
-                    resetTimer();
-                }
+                    function nextSlide() {
+                        var next = (currentIndex + 1) % slides.length;
+                        goToSlide(next);
+                        resetTimer();
+                    }
 
-                function resetTimer() {
-                    clearInterval(intervalId);
-                    intervalId = setInterval(autoAdvance, 10000);
-                }
+                    function resetTimer() {
+                        clearInterval(intervalId);
+                        intervalId = setInterval(autoAdvance, 10000);
+                    }
 
-                var leftArrow = carousel.querySelector('.carousel-arrow-left');
-                var rightArrow = carousel.querySelector('.carousel-arrow-right');
+                    var leftArrow = carousel.querySelector('.carousel-arrow-left');
+                    var rightArrow = carousel.querySelector('.carousel-arrow-right');
 
-                if (leftArrow) leftArrow.addEventListener('click', prevSlide);
-                if (rightArrow) rightArrow.addEventListener('click', nextSlide);
+                    if (leftArrow) leftArrow.addEventListener('click', prevSlide);
+                    if (rightArrow) rightArrow.addEventListener('click', nextSlide);
+                });
             })();
         </script>
     )}

@@ -15,11 +15,12 @@ const slots = {
 
 type Props = Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'slot' | 'width' | 'height'> & {
   src: string;
-  alt: string;
+  /** Absent ou vide : image décorative. */
+  alt?: string;
   layout: keyof typeof slots;
 };
 
-const { src, alt, layout, ...attributes } = Astro.props;
+const { src, alt = '', layout, ...attributes } = Astro.props;
 const { ratio, fit, from, box, md, sm, widths } = slots[layout];
 const image = resolveImage(src);
 
